@@ -1,0 +1,178 @@
+:root {
+    --primary-color: #F4C66B;
+    --secondary-color: #F8E2A5;
+    --thirdly-color: #DEA206;
+    --fourthy-color: #AA7538;
+    --background: #182E35;
+    --primaryBackground: rgb(72, 89, 94);
+    --secondaryBackground: rgb(37, 67, 77);
+    --font-size: 24px;
+    --font-MAX: 7em;
+    --font-big: 4em;
+    --font-medium: 1.7em;
+    --font-small: 1.2em;
+}
+
+@font-face {
+    font-family: Londrina-Black;
+    src: url(fonts/LondrinaSolid-Black.ttf);
+}
+
+@font-face {
+    font-family: Londrina-Thin;
+    src: url(fonts/LondrinaSolid-Thin.ttf);
+}
+
+
+@font-face {
+    font-family: Londrina-Light;
+    src: url(fonts/LondrinaSolid-Light.ttf);
+}
+
+@font-face {
+    font-family: Londrina-Regular;
+    src: url(fonts/LondrinaSolid-Regular.ttf);
+}
+
+@font-face {
+    font-family: Londrina-Shadow;
+    src: url(fonts/LondrinaShadow-Regular.ttf);
+}
+
+@font-face {
+    font-family: LongCang;
+    src: url(fonts/LongCang-Regular.ttf);
+}
+
+@font-face {
+    font-family: Sedgwick;
+    src: url(fonts/SedgwickAve-Regular.ttf);
+}
+
+@font-face {
+    font-family: Forza;
+    src: url(fonts/Forza.ttf);
+}
+
+O {
+    font-family: Londrina-Thin;
+    font-weight: 600;
+    font-size: var(--font-MAX);
+    color: transparent;
+    -webkit-text-stroke: 2px var(--secondary-color);
+    text-shadow: var(--secondaryBackground) 3px 5px 0px;
+    padding: 0;
+    margin: 0;
+    justify-self: top;
+    overflow: visible;
+}
+
+h1 {
+    color: var(--secondary-color);
+    font-family: Forza;
+    font-size: var(--font-MAX);
+    font-weight: 100;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+}
+
+h2 {
+    color: var(--thirdly-color);
+    font-family: Londrina-Regular;
+    font-weight: 300;
+    padding: 0;
+    margin: 0;
+    font-size: var(--font-medium);
+    text-align: center;
+}
+
+h3 {
+    font-family: Londrina-Black;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    font-size: var(--font-medium);
+}
+
+p {
+    font-family: Londrina-Light;
+    letter-spacing: 0.2vw;
+    padding: 0;
+    margin: 0;
+    font-size: var(--font-small);
+    color: var(--thirdly-color);
+}
+
+customBorder {
+    position: relative;
+    overflow: hidden;
+    padding: 1.5vw;
+    border: 6px double #f4c66b80;
+    outline: 6px solid #dea106;
+    outline-offset: -20px;
+    border-radius: 10px;
+    transition: 0.5s;
+    width: 100%;
+    margin-top: 1vw;
+}
+
+customBorder:hover {
+    border: 20px double #dea106;
+    outline: 6px solid var(--secondary-color);
+    outline-offset: -30px;
+    border-radius: 25px;
+}
+
+customBorderSecondary {
+    position: relative;
+    overflow: hidden;
+    padding: 0.5vw;
+    border: 20px double #dea106;
+    border-radius: 50px;
+    outline: 6px solid var(--secondary-color);
+    outline-offset: -20px;
+    transition: 0.5s;
+    color: #dea106;
+    text-decoration: none;
+    text-align: center;
+    display: inline-flex;
+    justify-content: center;
+    gap: 1vw;
+    height: max-content;
+}
+
+customBorderSecondary:hover {
+    position: relative;
+    overflow: hidden;
+    padding: 1.5vw;
+    border: 20px double #ffdf8e;
+    border-radius: 50px;
+    outline: 6px solid #ffdf8e;
+    outline-offset: -20px;
+    transition: 0.5s;
+    color: #ffdf8e;
+    text-decoration: underline;
+}
+
+customBorder:hover h1 {
+    opacity: 40%;
+}
+
+headerBorder {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow: visible;
+    border-radius: 70px;
+    box-shadow: var(--secondary-color) inset 0px -6px 0px 10px;
+    padding: 2vw;
+    color: var(--primary-color);
+    position: relative;
+    gap: 2vw;
+    width: 90vw;
+}
+
+headerBorder span {
+    display: flex;
+}

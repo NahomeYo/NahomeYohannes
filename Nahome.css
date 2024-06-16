@@ -1,0 +1,158 @@
+.popUp {
+    position: relative;
+    width: 50%;
+}
+
+.nahomeProfile {
+    position: relative;
+    width: 100%;
+}
+
+.nahomeProfileTrace {
+    z-index: -1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 2s linear forwards 0.7s, fadeAway 1s linear forwards 3.5s;
+    opacity: 1;
+}
+
+@keyframes fadeAway {
+    to {
+        opacity: 0 !important;
+    }
+}
+
+#profileHair {
+    fill: #352f2f;
+    stroke: #352f2f;
+    stroke-width: 4px;
+    fill-opacity: 0;
+    stroke-dasharray: 9000;
+    stroke-dashoffset: 9000;
+    animation: draw 4s linear forwards 2.5s, fadeIn 0.5s linear forwards 3s;
+}
+
+#profileSkin {
+    fill: #a5705b;
+    fill-opacity: 0;
+    stroke: #a5705b;
+    stroke-width: 5px;
+    stroke-dasharray: 9000;
+    stroke-dashoffset: 9000;
+    animation: draw 4s linear forwards 2.5s, fadeIn 0.5s linear forwards 3.5s;
+}
+
+@keyframes draw {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+@keyframes fadeIn {
+    to {
+        fill-opacity: 1;
+    }
+}
+
+@keyframes strokeFade {
+    to {
+        stroke-opacity: 1;
+    }
+}
+
+#eyebrowFil {
+    fill-opacity: 0;
+    animation: fadeIn 0.5s linear forwards 3.5s;
+}
+
+#shades {
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    fill-opacity: 0;
+    stroke-width: 1px;
+    animation: draw 2s linear forwards 3s, fadeIn 0.5s linear forwards 4s;
+}
+
+#outline {
+    stroke-dasharray: 1200;
+    stroke-dashoffset: 1200;
+    animation: draw 2s linear forwards 2.5s;
+}
+
+#Layer_12 {
+    stroke-dasharray: 2500;
+    stroke-dashoffset: 2500;
+    animation: draw 1.5s linear forwards 2.5s;
+}
+
+#eyeL,
+#eyeR {
+    stroke-dasharray: 800;
+    stroke-dashoffset: 800;
+    animation: draw 2s linear forwards 1.2s, fadeIn 0.5s linear forwards 3s;
+    stroke: white;
+    fill: white;
+    stroke-opacity: 0;
+    fill-opacity: 0;
+    stroke-width: 0.5px;
+}
+
+#irisL,
+#irisR {
+    stroke-dasharray: 9000;
+    stroke-dashoffset: 9000;
+    animation: draw 4s linear forwards 2.5s;
+}
+
+#profileShirt,
+#hairBack {
+    stroke-dasharray: 9000;
+    stroke-dashoffset: 9000;
+    animation: draw 4s linear forwards 2.5s, fadeIn 1s linear forwards 3.5s;
+    fill-opacity: 0;
+}
+
+#hairFront {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 2000;
+    animation: draw 2s linear forwards 2s, fadeIn 0.5s linear forwards 3s;
+    fill-opacity: 0;
+}
+
+#rightEyebrowProfile,
+#leftEyebrowProfile {
+    animation: fadeIn 0.5s linear forwards 3s;
+    fill-opacity: 0;
+    fill: #262626;
+}
+
+#eyeLeft,
+#eyeRight {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: draw 3s linear forwards 2.5s, fadeIn 0.5s linear forwards 3s;
+    stroke: #774632;
+    fill: #774632;
+    fill-opacity: 0;
+}
+
+#eyelidLeft,
+#eyelidRight {
+    animation: fadeIn 0.5s linear forwards 3s;
+    fill-opacity: 0;
+}
+
+#lightShades {
+    stroke-dasharray: 9000;
+    stroke-dashoffset: 9000;
+    animation: draw 4s linear forwards 3s, fadeIn 0.5s linear forwards 4s;
+    fill-opacity: 0;
+    fill: #ad7a66;
+    stroke: #ad7a66;
+    stroke-width: 2px;
+}

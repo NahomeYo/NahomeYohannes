@@ -1,0 +1,102 @@
+.columnContainer {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
+    justify-content: space-evenly;
+    margin: 0vw 7.5vw;
+    margin-bottom: 10vw;
+    height: 800px;
+}
+
+.columnContainer gradient {
+    background: linear-gradient(180deg, var(--background) 0%, var(--background) 35%, rgba(24, 46, 53, 0.9099765586853027) 70%, rgba(24, 46, 53, 0) 100%);
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    top: 0;
+    height: 10%;
+    z-index: 100;
+}
+
+.columnContainer southGradient {
+    background: linear-gradient(0deg, var(--background) 0%, var(--background) 35%, rgba(24, 46, 53, 0.9099765586853027) 70%, rgba(24, 46, 53, 0) 100%);
+    bottom: 0;
+    height: 10%;
+    z-index: 101;
+    position: absolute;
+    left: 0%;
+    width: 100%;
+}
+
+.titles {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    overflow: visible;
+    z-index: -1;
+    top: 15%;
+}
+
+.titles>O {
+    transform: rotate(90deg);
+    width: 25vw;
+    overflow: visible;
+    text-align: center;
+    font-family: Londrina-Regular;
+    -webkit-text-stroke: 2px var(--thirdly-color);
+    text-shadow: transparent 0px 0px 0px;
+    font-size: 15em;
+}
+
+.columnContainer .col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 20vw;
+    padding: 0;
+    position: relative;
+    scale: 2;
+}
+
+.columnContainer .col li {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    margin-top: 2vw;
+}
+
+.columnContainer .col li p {
+    position: absolute;
+    color: var(--secondary-color);
+    font-size: var(--font-medium);
+    top: 50%;
+    text-align: center;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.imgHover {
+    transform: scale(1.2);
+    transition: transform 0.5s ease;
+}
+
+@keyframes scroll {
+    from {
+        top: -200%;
+    }
+
+    to {
+        top: 200%;
+    }
+}
+
+@keyframes scrollReverse {
+    from {
+        top: 100%;
+    }
+
+    to {
+        top: -400%;
+    }
+}
