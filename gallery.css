@@ -4,29 +4,32 @@
     flex-direction: row;
     overflow: hidden;
     justify-content: space-evenly;
-    margin: 0vw 7.5vw;
     margin-bottom: 10vw;
-    height: 800px;
+    height: 50vw;
+    margin: 0vw 5vw;
+    gap: 1vw;
+    z-index: -1;
+}
+
+.columnContainer gradient,
+.columnContainer southGradient {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 10%;
+    z-index: -11;
 }
 
 .columnContainer gradient {
-    background: linear-gradient(180deg, var(--background) 0%, var(--background) 35%, rgba(24, 46, 53, 0.9099765586853027) 70%, rgba(24, 46, 53, 0) 100%);
+    background: linear-gradient(180deg, var(--background) 0%, var(--background) 35%, var(--background) 70%, var(--background) 100%);
     position: absolute;
-    left: 0%;
-    width: 100%;
     top: 0;
-    height: 10%;
-    z-index: 100;
 }
 
 .columnContainer southGradient {
-    background: linear-gradient(0deg, var(--background) 0%, var(--background) 35%, rgba(24, 46, 53, 0.9099765586853027) 70%, rgba(24, 46, 53, 0) 100%);
-    bottom: 0;
-    height: 10%;
-    z-index: 101;
+    background: linear-gradient(0deg, var(--background) 0%, var(--background) 35%, var(--background) 70%, var(--background) 100%);
     position: absolute;
-    left: 0%;
-    width: 100%;
+    bottom: 0;
 }
 
 .titles {
@@ -44,59 +47,125 @@
     overflow: visible;
     text-align: center;
     font-family: Londrina-Regular;
-    -webkit-text-stroke: 2px var(--thirdly-color);
+    -webkit-text-stroke: 2px var(--primary-color);
     text-shadow: transparent 0px 0px 0px;
     font-size: 15em;
 }
 
-.columnContainer .col {
+.columnContainer .column {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: visible;
+    width: 25vw;
+}
+
+.columnContainer .column .columnOverlap .col {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 20vw;
-    padding: 0;
     position: relative;
-    scale: 2;
-}
-
-.columnContainer .col li {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    margin-top: 2vw;
-}
-
-.columnContainer .col li p {
-    position: absolute;
-    color: var(--secondary-color);
-    font-size: var(--font-medium);
-    top: 50%;
-    text-align: center;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.imgHover {
-    transform: scale(1.2);
-    transition: transform 0.5s ease;
+    list-style: none;
+    gap: 10vw;
+    overflow: visible;
+    transform: translateY(0);
+    width: 100%;
 }
 
 @keyframes scroll {
-    from {
-        top: -200%;
+    0% {
+        transform: translateY(-150vw);
     }
 
-    to {
-        top: 200%;
+    100% {
+        transform: translateY(150vw);
     }
 }
 
 @keyframes scrollReverse {
-    from {
-        top: 100%;
+    0% {
+        transform: translateY(225vw);
     }
 
-    to {
-        top: -400%;
+    100% {
+        transform: translateY(-225vw);
     }
+}
+
+.columnContainer .column .columnOverlap {
+    position: relative;
+    overflow: visible;
+    width: 100%;
+}
+
+.columnContainer .column:nth-of-type(odd) .columnOverlap .col:nth-of-type(2),
+.columnContainer .column:nth-of-type(even) .columnOverlap .col:nth-of-type(2) {
+    animation-duration: 20s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    transform: translateY(-150vw);
+    animation-play-state: running;
+}
+
+
+.columnContainer .column:nth-of-type(odd) .columnOverlap .col:nth-of-type(1),
+.columnContainer .column:nth-of-type(even) .columnOverlap .col:nth-of-type(1) {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    list-style: none;
+    animation-duration: 20s;
+    animation-delay: 10s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-play-state: running;
+}
+
+.columnContainer .column:nth-of-type(odd) .columnOverlap .col:nth-of-type(1) {
+    animation-name: scroll;
+    transform: translateY(-150vw);
+}
+
+.columnContainer .column:nth-of-type(even) .columnOverlap .col:nth-of-type(1) {
+    animation-name: scrollReverse;
+    transform: translateY(225vw);
+}
+
+.columnContainer .column:nth-of-type(odd) .columnOverlap .col:nth-of-type(2) {
+    animation-name: scroll;
+    max-height: 300vh;
+}
+
+.columnContainer .column:nth-of-type(even) .columnOverlap .col:nth-of-type(2) {
+    animation-name: scrollReverse;
+    max-height: 500vh;
+    transform: translateY(225vw);
+}
+
+.columnContainer .column .columnOverlap .col li {
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.columnContainer .column .columnOverlap .col li img {
+    width: 90%;
+    overflow: hidden;
+}
+
+.columnContainer .column .columnOverlap .col li p {
+    position: absolute;
+}
+
+.hexagon {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.imgHover {
+    background: red;
 }

@@ -54,6 +54,7 @@
     position: relative;
     overflow: hidden;
     outline: 4px solid var(--secondary-color);
+    z-index: 1000;
 }
 
 .modeButtonContainer circle {

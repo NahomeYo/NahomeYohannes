@@ -44,14 +44,4 @@ window.onload = () => {
             root.style.setProperty('--primary-color', primaryColor)
         }
     }
-
-    window.addEventListener('resize', function changeFontSize() {
-        if (window.innerWidth <= 768) {
-            root.style.setProperty('--font-size', '16px');
-        } else {
-            root.style.setProperty('--font-size', '24px');
-        }
-    });
-
-    changeFontSize();
 }    

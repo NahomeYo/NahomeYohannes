@@ -1,8 +1,8 @@
 :root {
     --primary-color: #F4C66B;
-    --secondary-color: #F8E2A5;
+    --secondary-color: #efd797;
     --thirdly-color: #DEA206;
-    --fourthy-color: #AA7538;
+    --fourthy-color: #b06f26;
     --background: #182E35;
     --primaryBackground: rgb(72, 89, 94);
     --secondaryBackground: rgb(37, 67, 77);
@@ -108,8 +108,8 @@ customBorder {
     position: relative;
     overflow: hidden;
     padding: 1.5vw;
-    border: 6px double #f4c66b80;
-    outline: 6px solid #dea106;
+    border: 6px double var(--secondary-color);
+    outline: 6px solid var(--thirdly-color);
     outline-offset: -20px;
     border-radius: 10px;
     transition: 0.5s;
@@ -146,12 +146,12 @@ customBorderSecondary:hover {
     position: relative;
     overflow: hidden;
     padding: 1.5vw;
-    border: 20px double #ffdf8e;
+    border: 20px double var(--secondary-color);
     border-radius: 50px;
-    outline: 6px solid #ffdf8e;
+    outline: 6px solid var(--secondary-color);
     outline-offset: -20px;
     transition: 0.5s;
-    color: #ffdf8e;
+    color: var(--secondary-color);
     text-decoration: underline;
 }
 
@@ -171,6 +171,7 @@ headerBorder {
     position: relative;
     gap: 2vw;
     width: 90vw;
+    height: max-content;
 }
 
 headerBorder span {

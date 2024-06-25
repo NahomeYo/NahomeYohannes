@@ -24,28 +24,6 @@ body {
     overflow: hidden;
 }
 
-outsideBorder {
-    background: transparent;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    z-index: 999;
-    box-shadow: inset 0vw 0vw 0vw 5vw var(--background);
-}
-
-border {
-    background: transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 999;
-    box-shadow: inset 0vw 0vw 0vw 5vw var(--background);
-    border-radius: 10vw;
-}
-
 #aboutContainer {
     display: flex;
     flex-direction: column;
@@ -59,8 +37,16 @@ border {
 
 .aboutInterior {
     margin: 0vw 10vw;
+    margin-bottom: 6vw;
     overflow: visible;
     position: relative;
+    z-index: 2;
+}
+
+.applicationInterior {
+    overflow: visible;
+    position: relative;
+    z-index: 2;
 }
 
 .aboutHeader {
@@ -71,6 +57,7 @@ border {
     width: 100%;
     flex-wrap: wrap;
     gap: 2vw;
+    height: max-content;
 }
 
 .aboutHeader span {
@@ -106,7 +93,7 @@ headerBorder span img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: flex-start;
+    align-content: center;
     margin: 10vw 5vw;
     position: relative;
 }
@@ -114,8 +101,7 @@ headerBorder span img {
 .appsContainer {
     position: relative;
     overflow-y: hidden;
-    border-radius: 10px solid blue;
-    margin: 0vw 7.5vw 4vw 7.5vw;
+    margin: 0vw 7.5vw 10vw 7.5vw;
 }
 
 .appCarousel {
@@ -238,7 +224,6 @@ headerBorder span img {
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    align-content: flex-start;
     margin: 10vw 5vw;
     position: relative;
 }
@@ -247,9 +232,10 @@ headerBorder span img {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-content: flex-start;
+    align-content: center;
     margin: 10vw 5vw;
     position: relative;
+    height: 100%;
 }
 
 .headerContainer {
@@ -261,9 +247,32 @@ headerBorder span img {
     display: flex;
     justify-content: center;
     align-items: top;
+    justify-content: center;
     overflow: visible;
+    flex-direction: column;
     z-index: 999;
     gap: 1vw;
+    position: relative;
+    width: 70vw;
+    margin: 0 10vw;
+}
+
+.sectionTitle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+rect {
+    z-index: -10;
+    position: absolute;
+    padding: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent 0%, var(--background) 15%, var(--background) 50%, var(--background) 85%, transparent 100%);
 }
 
 .tabsContainer {
@@ -430,40 +439,12 @@ headerBorder span img {
     width: 90%;
 }
 
-.quotesContainer {
-    position: relative;
-    display: flex;
-    align-items: center;
-    border-radius: -20px;
-    margin-right: 2vw;
-}
-
-.quotesContainer O {
-    text-shadow: transparent 0px 0px 0px;
-}
-
-.quotesContainer p {
-    margin-left: -50px;
-    margin-top: 5vw;
-    padding: 2vw;
-    border: 6px solid var(--fourthy-color);
-    outline: 6px solid var(--fourthy-color);
-    outline-offset: -20px;
-    border-radius: 10px;
-}
-
-.quoteRow {
-    display: flex;
-    flex-direction: row;
-    overflow: visible;
-}
-
 .seattle {
     left: 0;
     position: absolute;
     top: 8vw;
     z-index: -23;
-    width: 60vw;
+    width: 100vw;
 }
 
 .nahome-standing {
@@ -484,13 +465,13 @@ headerBorder span img {
 }
 
 home-background {
-    background-color: var(--thirdly-color);
-    height: 100%;
+    background: var(--thirdly-color);
+    top: 0;
     left: 0;
-    position: absolute;
-    top: 0vw;
     width: 100%;
-    z-index: -25;
+    height: 100vh;
+    z-index: 999;
+    z-index: -100;
 }
 
 .leftTreeFront {
@@ -638,20 +619,16 @@ home-background {
     overflow: visible;
 }
 
-.nameTitle t {
-    text-align: center;
-    white-space: wrap;
-    font-family: Forza;
-    margin: 0;
-    padding: 0;
-    width: 60vw;
+.nameTitle h1 {
+    color: rgb(255, 221, 169);
+    font-size: 9em;
 }
 
 #homeContainer .machineryRight {
     font-family: Londrina-Thin;
     padding: 0;
     margin: 0;
-    fill: var(--secondary-color);
+    fill: rgb(255, 221, 169);
     width: 10vw;
     position: absolute;
     right: 0;
@@ -663,7 +640,7 @@ home-background {
     font-family: Londrina-Thin;
     padding: 0;
     margin: 0;
-    fill: var(--secondary-color);
+    fill: rgb(255, 221, 169);
     width: 10vw;
     position: absolute;
     left: 0;
@@ -746,9 +723,10 @@ footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-content: center;
     position: relative;
     overflow: hidden;
-    margin: 0vw 15vw;
+    margin: 0vw 5vw;
     margin-bottom: 2vw;
 }
 
@@ -756,12 +734,16 @@ footer .footerHeader {
     display: flex;
     justify-content: center;
     fill: var(--secondary-color);
+    width: 50vw;
+    margin: 0vw 20vw;
 }
 
 .footerInqueries {
     display: flex;
     justify-content: space-between;
     fill: var(--secondary-color);
+    width: 50vw;
+    margin: 0vw 20vw;
 }
 
 .footerInqueries svg:hover {
@@ -771,6 +753,8 @@ footer .footerHeader {
 
 .footerBody {
     display: flex;
+    width: 60vw;
+    margin: 0vw 15vw;
 }
 
 .footerBody form {
@@ -801,10 +785,10 @@ footer .footerHeader {
 }
 
 .footerBody form span .inputContainer {
-    padding: 1vw;
+    padding: 3vw 1vw;
     display: flex;
     align-items: center;
-    margin-bottom: 2vh;
+    margin-bottom: 4vh;
     margin-top: 1vh;
     border-radius: 20px;
     box-shadow: inset 0vw 0vw 0vw 0.4vw var(--secondary-color);
@@ -860,48 +844,9 @@ input[type="submit"] {
     gap: 2vw;
 }
 
-.inStroke {
+.containerBorder {
     position: absolute;
-    width: 90%;
-    height: 85%;
-    margin: 5vw;
-    border: var(--primaryBackground) 2vw double;
-    border-radius: 50px;
-    z-index: 996;
-    background: none;
-}
-
-.outStroke {
-    position: absolute;
-    width: 90vw;
-    height: 100%;
-    padding: 0;
-    margin: 0;
-    border: var(--secondaryBackground) 2vw solid;
-    border-radius: 50px;
-    z-index: 996;
-    background: none;
-}
-
-#aboutContainer .inStroke,
-#aboutContainer .outStroke {
-    z-index: -6;
-}
-
-rect {
-    z-index: 997;
-    padding: 0;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 75vw;
-    height: 20%;
-    background: linear-gradient(90deg, transparent 0%, var(--background) 15%, var(--background) 50%, var(--background) 85%, transparent 100%);
-    margin: 0vw 7.5vw 0vw 7.5vw;
-}
-
-#aboutContainer rect {
-    z-index: -4;
+    overflow: visible;
 }
 
 .loadingScreen {

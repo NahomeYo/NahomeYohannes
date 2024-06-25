@@ -13,61 +13,25 @@ window.onload = () => {
         }
     });
 
+    const applicationContainer = document.getElementById('applicationContainer');
     const footerHeader = document.querySelector('.footerHeader');
+    const clonedFooterHeader = footerHeader.cloneNode(true);
     const projectTabs = document.querySelectorAll('.tabsContainer .tab');
 
-    footerHeader.style.width = "100%";
-    footerHeader.style.height = "10%";
-    footerHeader.style.marginBottom = "1vw";
+    clonedFooterHeader.style.fill = "var(--primaryBackground)";
+    clonedFooterHeader.style.width = "30vw";
+    clonedFooterHeader.style.margin = "0vw 30vw 5vw 30vw";
+
+
+    applicationContainer.appendChild(clonedFooterHeader);
 
     projectTabs.forEach((tab) => {
         if (tab.firstElementChild) {
-            tab.insertBefore(footerHeader.cloneNode(true), tab.firstElementChild);
+            const clonedHeaderTab = footerHeader.cloneNode(true);
+            tab.insertBefore(clonedHeaderTab, tab.firstElementChild);
+            clonedHeaderTab.style.width = "100%";
+            clonedHeaderTab.style.height = "max-content";
+            clonedHeaderTab.style.marginBottom = "1vw";
         }
     });
-
-    const galleryImgs = document.querySelectorAll('.columnContainer .col li');
-    const imgTitles = new Map();
-
-    galleryImgs.forEach((img) => {
-        const title = img.querySelector('.columnContainer .col li p');
-        if (title) {
-            imgTitles.set(img, title);
-            title.remove();
-        }
-    });
-
-    galleryImgs.forEach((img) => {
-        img.addEventListener('mouseenter', imgHover);
-        img.addEventListener('mouseleave', imgLeave);
-    });
-
-    function imgHover(event) {
-        const selection = event.target;
-        const title = imgTitles.get(selection);
-        const image = selection.querySelector('.columnContainer .col li img');
-        if (title) {
-            selection.appendChild(title);
-            selection.classList.add('imgHover');
-            if (image) {
-                image.style.filter = "blur(2px)";
-            }
-        }
-    }
-
-    function imgLeave(event) {
-        const selection = event.target;
-        const title = imgTitles.get(selection);
-        const image = selection.querySelector('.columnContainer .col li img');
-        if (title) {
-            title.remove();
-            selection.classList.remove('imgHover');
-            if (image) {
-                image.style.filter = "blur(0px)";
-            }
-        }
-    }
-
-    imgHover();
-    imgLeave();
 }
