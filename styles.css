@@ -1,0 +1,150 @@
+body {
+    margin: 0;
+    background: var(--background);
+    overflow-x: hidden;
+    width: 100vw;
+}
+
+.home {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin: 0px 140px;
+}
+
+.about {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+}
+
+.applications {
+    position: relative;
+    height: 100vh;
+    width: 90.278vw;
+    margin: 0 4.861vw;
+}
+
+.projects {
+    position: relative;
+    height: 100vh;
+    width: 90.278vw;
+    margin: 0 4.861vw;
+}
+
+.gallery {
+    position: relative;
+    height: 100vh;
+    width: 90.278vw;
+    margin: 0 4.861vw;
+}
+
+.footer {
+    position: relative;
+    height: 100vh;
+    width: 90.278vw;
+    margin: 0 4.861vw;
+}
+
+.about ol {
+    mask-image: url('./brush/infoBrush.svg');
+    mask-size: 100% 100%;
+    mask-repeat: no-repeat;
+    mask-position: 50% 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 5vw 11vw;
+    width: 78vw;
+    height: min-content;
+    background: var(--fourthly);
+}
+
+.about ol li {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.about ol li img {
+    width: 30px;
+    height: 30px;
+}
+
+.table {
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    grid-template-rows: auto auto;
+    width: 90.278vw;
+    margin: 0 4.861vw;
+    height: 100%;
+}
+
+.rsmCol:nth-of-type(1) button {
+    width: 100%;
+    background: transparent;
+    border: 6px solid var(--fourthly);
+    border-radius: 60px;
+    padding: 0;
+}
+
+.rsmCol:nth-of-type(1) button h2 {
+    color: var(--fourthly);
+    margin: 0;
+}
+
+.rsmCol row:nth-of-type(2) .progressContainer {
+    height: 100%;
+    border: 6px solid var(--fourthly);
+    border-radius: 20px;
+    position: relative;
+    padding: 0;
+    margin: 0;
+}
+
+.rsmCol row:nth-of-type(2) .progressContainer row {
+    display: flex;
+    height: 100%;
+    width: min-content;
+}
+
+.rsmCol row:nth-of-type(2) .progressContainer row li {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    height: 100%;
+}
+
+.rsmCol row:nth-of-type(2) .progressContainer row li h2 {
+    width: 100%;
+    max-height: 20%;
+    margin: 0;
+ }
+
+.rsmCol row:nth-of-type(2) .progressContainer row li bar {
+   width: 100%;
+   background: var(--primary);
+   margin: 0;
+}
+
+.rsmCol row:nth-of-type(2) .progressContainer row li bar:nth-of-type(1) {
+    height: 80%;
+}
+
+
+@keyframes erase {
+    from {
+        stroke-dashoffset: 0;
+    }
+
+    to {
+        stroke-dashoffset: var(--pathLength);
+    }
+}

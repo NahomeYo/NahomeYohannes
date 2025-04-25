@@ -1,0 +1,44 @@
+:root {
+    --background: #BC6654;
+    --primary: #FCAB4D;
+    --secondary: #FFF191;
+    --thirdly: #D17D54;
+    --fourthly: #985142;
+}
+
+@font-face {
+    font-family: LondrinaSketch;
+    src: url(./fonts/LondrinaSketch-Regular.ttf);
+}
+
+@font-face {
+    font-family: LondrinaSolid;
+    src: url(./fonts/LondrinaSolid-Regular.ttf);
+}
+
+@font-face {
+    font-family: LondrinaSolidLight;
+    src: url(./fonts/LondrinaSolid-Light.ttf);
+}
+
+h1 {
+    font-family: LondrinaSketch;
+    font-size: 96px;
+    text-transform: uppercase;
+    color: var(--secondary);
+    font-weight: 100;
+}
+
+h2 {
+    font-family: LondrinaSolid;
+    font-size: 24px;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+p {
+    font-family: LondrinaSolidLight;
+    font-size: 24px;
+    color: var(--secondary);
+}

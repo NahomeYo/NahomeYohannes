@@ -1,0 +1,263 @@
+<html lang="en">
+
+<head>
+    <title>Nahome Yohannes portfolio</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./stylesheet.css" />
+</head>
+
+<body>
+    <div class="home">
+    </div>
+    <div class="about">
+        <ol>
+            <li>
+                <img src='./icons/crib.svg' />
+                <h2>22 yrs</h2>
+            </li>
+            <li>
+                <img src='./icons/house.svg' />
+                <h2>Seattle, Wa</h2>
+            </li>
+            <li>
+                <img src='./icons/graduation.svg' />
+                <h2>Seattle Pacific <br />
+                    University
+                </h2>
+            </li>
+            <li>
+                <img src='./icons/mail.svg' />
+                <h2>NahomeYo2002<br />
+                    @gmail.com
+                </h2>
+            </li>
+        </ol>
+
+        <div class="table">
+            <div class="rsmCol">
+                <row>
+                    <button>
+                        <h2>resume</h2>
+                    </button>
+                </row>
+
+                <row>
+                    <div class="progressContainer">
+                        <row>
+                            <li>
+                                <bar></bar>
+                                <h2>HTML & CSS</h2>
+                            </li>
+                        </row>
+                    </div>
+                </row>
+            </div>
+
+            <div class="rsmCol">
+                <row>
+                </row>
+
+                <row>
+                </row>
+            </div>
+        </div>
+
+    </div>
+    <div class="applications">
+    </div>
+    <div class="projects">
+    </div>
+    <div class="gallery">
+    </div>
+    <div class="footer">
+    </div>
+    <script type="module">
+        import shapes from "./shapes.js";
+
+        document.addEventListener("DOMContentLoaded", async () => {
+            try {
+                const {
+                    aboutBrush,
+                    aboutBrushStroke,
+                    galleryBrush,
+                    galleryStroke,
+                    infoBrush,
+                    infoStroke,
+                    regularBrush,
+                    regularStroke,
+                } = shapes();
+
+                const shapeArray = [
+                    aboutBrush,
+                    aboutBrushStroke,
+                    galleryBrush,
+                    galleryStroke,
+                    infoBrush,
+                    infoStroke,
+                    regularBrush,
+                    regularStroke,
+                ];
+
+                function createSvg(string) {
+                    let parser = new DOMParser();
+                    let svg = parser.parseFromString(string, 'image/svg+xml');
+                    return svg.documentElement;
+                }
+
+                const home = document.querySelector(".home");
+                const about = document.querySelector(".about");
+                const applications = document.querySelector(".applications");
+                const projects = document.querySelector(".projects");
+                const gallery = document.querySelector(".gallery");
+
+                let containers = [about, applications, projects, gallery];
+
+                containers.forEach((c, index) => {
+                    const titleContainer = document.createElement("div");
+                    titleContainer.style.position = "relative";
+                    titleContainer.style.width = '100%';
+                    titleContainer.style.height = 'min-content';
+
+                    const textContainer = document.createElement("div");
+                    textContainer.style.width = "100%";
+                    textContainer.style.height = "100%";
+                    textContainer.style.position = "absolute";
+                    textContainer.style.left = "0";
+                    textContainer.style.textAlign = "center";
+                    textContainer.style.zIndex = "1";
+                    textContainer.style.display = "flex";
+                    textContainer.style.flexDirection = "column";
+                    textContainer.style.justifyContent = "center";
+
+                    titleContainer.appendChild(textContainer);
+                    c.prepend(titleContainer);
+
+                    function createTitle(title, description) {
+                        let h1 = document.createElement('h1');
+                        h1.style.margin = '-20px';
+                        h1.style.padding = '0';
+                        h1.textContent = title;
+
+                        if (index === 0) {
+                            h1.remove();
+
+                            function header(main, side) {
+                                let piece = document.createElement('div');
+
+                                let h1 = document.createElement('h1');
+                                h1.textContent = main;
+                                h1.style.fontSize = '200px';
+
+                                let h2 = document.createElement('h2');
+                                h2.textContent = side;
+                                h2.style.order = '2';
+                                h2.style.transform = 'rotateZ(90deg)'
+                                h2.style.height = 'min-content';
+
+                                piece.appendChild(h1);
+                                piece.appendChild(h2);
+
+                                piece.style.display = 'flex';
+                                piece.style.flexDirection = 'row';
+                                piece.style.alignItems = 'center';
+
+                                textContainer.appendChild(piece);
+                                textContainer.style.flexDirection = 'row';
+                            }
+
+                            header('WEB', 'developer');
+                            header('GRAPHIC', 'designer');
+                            header('UI/UX', 'designer');
+                        }
+
+                        let p = document.createElement('p');
+                        p.textContent = description;
+                        p.style.margin = '0';
+                        textContainer.appendChild(h1);
+                        textContainer.appendChild(p);
+                    }
+
+                    function addBrush(brush, stroke) {
+                        const newBrush = brush.cloneNode(true);
+                        const newStroke = stroke.cloneNode(true);
+
+                        newBrush.style.width = '100%';
+                        newBrush.style.height = '100%';
+                        newBrush.style.position = "relative";
+                        newBrush.style.zIndex = "0";
+
+                        const strokeNewPath = newStroke.querySelector('path.stroke');
+                        const pathLength = strokeNewPath.getTotalLength();
+
+                        strokeNewPath.style.setProperty('--pathLength', pathLength);
+                        strokeNewPath.style.strokeDasharray = pathLength;
+                        strokeNewPath.style.strokeDashoffset = pathLength;
+                        strokeNewPath.style.stroke = "red";
+                        strokeNewPath.style.animation = `erase 2s linear forwards`;
+                        strokeNewPath.style.zIndex = "99";
+                        strokeNewPath.style.width = "100%";
+                        strokeNewPath.style.position = "absolute";
+                        strokeNewPath.style.left = "0";
+                        strokeNewPath.style.top = "0";
+
+                        titleContainer.appendChild(newBrush);
+                        titleContainer.appendChild(strokeNewPath);
+                    }
+
+                    let mask,
+                        animation,
+                        title,
+                        description
+
+                    switch (index) {
+                        case 0:
+                            title = '';
+                            description = '';
+                            addBrush(createSvg(shapeArray[0]), createSvg(shapeArray[1]));
+                            mask = "aboutBrush";
+                            createTitle(title, description);
+                            break;
+
+                        case 1:
+                            title = "<Applications/>";
+                            description = "Below are the applications in which I have expertise and experience";
+                            addBrush(createSvg(shapeArray[6]), createSvg(shapeArray[7]));
+                            mask = "regularBrush";
+                            createTitle(title, description);
+                            break;
+
+                        case 2:
+                            title = "<Projects/>";
+                            addBrush(createSvg(shapeArray[6]), createSvg(shapeArray[7]));
+                            mask = "regularBrush";
+                            description = "Below are the projects in which I have expertise and experience";
+                            createTitle(title, description);
+                            break;
+
+                        case 3:
+                            title = "<Gallery/>";
+                            addBrush(createSvg(shapeArray[6]), createSvg(shapeArray[7]));
+                            mask = "regularBrush";
+                            description = "Below are the projects in which I have expertise and experience";
+                            createTitle(title, description);
+                            break;
+                    }
+
+                    titleContainer.style.maskImage = `url(./brush/${mask}.svg)`;
+                    titleContainer.style.maskSize = '100% 100%';
+                    titleContainer.style.maskRepeat = 'no-repeat';
+                    titleContainer.style.maskPosition = '0% 50%';
+                    titleContainer.style.overflow = 'hidden';
+
+                })
+
+            } catch (error) {
+                console.error(error);
+            }
+
+            const chartRow = document.querySelector('.rsmCol row:nth-of-type(2) .progressContainer row');
+        })
+    </script>
+</body>
+
+</html>
