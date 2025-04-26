@@ -9,29 +9,32 @@
 <body>
     <div class="home">
     </div>
+
     <div class="about">
-        <ol>
-            <li>
-                <img src='./icons/crib.svg' />
-                <h2>22 yrs</h2>
-            </li>
-            <li>
-                <img src='./icons/house.svg' />
-                <h2>Seattle, Wa</h2>
-            </li>
-            <li>
-                <img src='./icons/graduation.svg' />
-                <h2>Seattle Pacific <br />
-                    University
-                </h2>
-            </li>
-            <li>
-                <img src='./icons/mail.svg' />
-                <h2>NahomeYo2002<br />
-                    @gmail.com
-                </h2>
-            </li>
-        </ol>
+        <div class="maskGroup">
+            <ol>
+                <li>
+                    <img src='./icons/crib.svg' />
+                    <h2>22 yrs</h2>
+                </li>
+                <li>
+                    <img src='./icons/house.svg' />
+                    <h2>Seattle, Wa</h2>
+                </li>
+                <li>
+                    <img src='./icons/graduation.svg' />
+                    <h2>Seattle Pacific <br />
+                        University
+                    </h2>
+                </li>
+                <li>
+                    <img src='./icons/mail.svg' />
+                    <h2>NahomeYo2002<br />
+                        @gmail.com
+                    </h2>
+                </li>
+            </ol>
+        </div>
 
         <div class="table">
             <div class="rsmCol">
@@ -62,15 +65,23 @@
             </div>
         </div>
 
+        <!--<div class="bottomMask">
+            <img src="./images/upsideDownSkyline.svg"/>
+        </div>-->
     </div>
+
     <div class="applications">
     </div>
+
     <div class="projects">
     </div>
+
     <div class="gallery">
     </div>
+
     <div class="footer">
     </div>
+
     <script type="module">
         import shapes from "./shapes.js";
 
@@ -111,6 +122,8 @@
                 const gallery = document.querySelector(".gallery");
 
                 let containers = [about, applications, projects, gallery];
+
+                const maskDiv = document.querySelector('.maskGroup');
 
                 containers.forEach((c, index) => {
                     const titleContainer = document.createElement("div");
@@ -168,6 +181,10 @@
                             header('WEB', 'developer');
                             header('GRAPHIC', 'designer');
                             header('UI/UX', 'designer');
+
+                            maskDiv.appendChild(titleContainer);
+                            c.prepend(maskDiv);
+
                         }
 
                         let p = document.createElement('p');
@@ -184,7 +201,6 @@
                         newBrush.style.width = '100%';
                         newBrush.style.height = '100%';
                         newBrush.style.position = "relative";
-                        newBrush.style.zIndex = "0";
 
                         const strokeNewPath = newStroke.querySelector('path.stroke');
                         const pathLength = strokeNewPath.getTotalLength();
@@ -256,6 +272,20 @@
             }
 
             const chartRow = document.querySelector('.rsmCol row:nth-of-type(2) .progressContainer row');
+            let progressContainer = document.querySelector('.progressContainer');
+            for (let i = 0; i < 10; i++) {
+                progressContainer.appendChild(chartRow.cloneNode(true));
+            }
+
+            const table = document.querySelector('.table');
+            const maskDiv = document.querySelector('.maskGroup');
+            const aboutCon = document.querySelector('.about');
+
+            if (table && maskDiv && aboutCon) {
+                let maskHeight = getComputedStyle(maskDiv).getPropertyValue('height');
+                let aboutHeight = getComputedStyle(aboutCon).getPropertyValue('height');
+                table.style.height = `calc(${aboutHeight - maskHeight})`;
+            }
         })
     </script>
 </body>
