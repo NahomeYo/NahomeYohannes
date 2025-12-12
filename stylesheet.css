@@ -1,0 +1,74 @@
+* {
+  font-size: 24px;
+}
+
+:root {
+  --background: #bc6654;
+  --primary: #fcab4d;
+  --secondary: #fff191;
+  --thirdly: #d17d54;
+  --fourthly: #7f3f32;
+  --g: 0.5rem;
+  --b: 0.5rem;
+  --title: 4rem;
+  --header: 1rem;
+  --paragraph: 0.8rem;
+}
+
+@font-face {
+  font-family: LondrinaSketch;
+  src: url(./fonts/LondrinaSketch-Regular.ttf);
+}
+
+@font-face {
+  font-family: LondrinaSolid;
+  src: url(./fonts/LondrinaSolid-Regular.ttf);
+}
+
+@font-face {
+  font-family: LondrinaSolidLight;
+  src: url(./fonts/LondrinaSolid-Light.ttf);
+}
+
+h1 {
+  font-family: LondrinaSketch;
+  font-size: var(--title);
+  text-transform: uppercase;
+  color: var(--secondary);
+  font-weight: 100;
+}
+
+h2 {
+  font-family: LondrinaSolid;
+  font-size: (--header);
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-family: LondrinaSolidLight;
+  font-size: var(--paragraph);
+  color: var(--secondary);
+}
+
+p {
+  font-family: LondrinaSolidLight;
+  font-size: var(--paragraph);
+  color: var(--secondary);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.footer ol a {
+  display: inline-flex;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.footer ol a:hover {
+  transform: translateY(-3px) rotate(-2deg);
+  filter: brightness(1.1);
+}
+

@@ -1,0 +1,339 @@
+.home {
+    position: relative;
+    width: 100vw;
+    height: 90vh;
+    overflow: hidden;
+    background: linear-gradient(0deg, rgba(252, 171, 77, 1) 0%, rgba(209, 125, 84, 1) 100%);
+}
+
+.infoHeader {
+    z-index: 0;
+    position: relative;
+}
+
+.infoHeader ul {
+    padding-bottom: 2rem;
+}
+
+.infoHeader ul ol li img {
+    width: 40px;
+    height: 40px;
+}
+
+.navBar {
+    z-index: 999;
+    display: flex;
+    width: 100%;
+    position:fixed;
+}
+
+.navBar span {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navBar span:nth-of-type(1) {
+    width: 70%;
+}
+
+.navBar span:nth-of-type(2) {
+    width: 30%;
+    padding: 1% 5% 1% 4%;
+    background: var(--fourthly);
+    border-radius: 0 0 0 50px;
+}
+
+.navBar span li a {
+    text-decoration: none;
+}
+
+.navBar h2 {
+    color: var(--secondary);
+}
+
+.upsideDown {
+    position: absolute;
+    width: 100%;
+    height: min-content;
+    left: 0;
+    transform: translate(0%, 0%);
+}
+
+.home img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform-origin: center center;
+    margin: 0;
+    will-change: transform;
+}
+
+.home .frontTree {
+    object-fit: cover;
+    height: 20vh;
+    z-index: 10;
+    width: 100vw;
+    transform: translate(0%, 80vh) translateY(var(--parallax-y, 0px));
+    overflow: visible;
+}
+
+.home .fog {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.home .sun {
+    left: 25%;
+    height: 50vh;
+    width: 50vw;
+    scale: 2;
+    transform: translate(0%, 8.681vw) translateY(var(--parallax-y, 0px));
+    overflow: visible;
+}
+
+.Seattle {
+    object-fit: cover;
+    bottom: 0;
+    height: 50vh;
+    width: 100vw;
+    z-index: 2;
+    transform: translate(0%, 50vh) translateY(var(--parallax-y, 0px));
+    overflow: visible;
+}
+
+.house {
+    object-fit: cover;
+    height: 50vh;
+    width: 75vw;
+    transform: translate(12.5vw, 50vh) translateY(var(--parallax-y, 0px));
+    overflow: visible;
+    z-index: 9;
+}
+
+.Nahome {
+    overflow: visible;
+    width: 10vw;
+    height: 35vh;
+    object-fit: cover;
+    transform: translate(45vw, 12vh);
+    position: absolute;
+    z-index: 8;
+}
+
+.backTree {
+    object-fit: cover;
+    height: 20vh;
+    width: 100vw;
+    transform: translate(0vw, 80vh) translateY(var(--parallax-y, 0px));
+    overflow: visible;
+    z-index: 3;
+}
+
+.home .banner {
+    height: 30vw;
+    width: 50vw;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(25vw, 6vh) translateY(var(--parallax-y, 0px));
+    z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.home .banner span {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    position: relative;
+    height: min-content;
+}
+
+.home .banner span img {
+    z-index: 1;
+    position: relative;
+    height: min-content;
+}
+
+.home .banner span img:nth-of-type(2) {
+    width: 50%;
+    transform: translateX(100%) translateY(-30px);
+}
+
+.home .banner .eritrean {
+    position: absolute;
+    left: 25%;
+    top: 0;
+    transform: translate(25%, 0%);
+    z-index: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.cloud001 {
+    width: 533.53px;
+    height: 136.99px;
+    left: 0;
+    top: 30vh;
+    transform: translate(30%, 30vh) translateY(var(--parallax-y, 0px));
+    z-index: 1;
+}
+
+.cloud005 {
+    object-fit: cover;
+    left: -20%;
+    top: 0;
+    margin: 0;
+    transform: translate(-20%, 0) translateY(var(--parallax-y, 0px));
+    overflow: visible;
+    z-index: 0;
+}
+
+.cloud003 {
+    object-fit: cover;
+    top: 0;
+    right: 0;
+    margin: 0;
+    height: 50vh;
+    width: 30vw;
+    transform: translate(70vw, 20vh) translateY(var(--parallax-y, 0px));
+    overflow: visible;
+    z-index: 1;
+}
+
+/* desktop screen */
+@media screen and (min-width: 1440px) {}
+
+/* ipad screen */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+    .Nahome {
+        overflow: visible;
+        width: 10vw;
+        height: 35vh;
+        object-fit: cover;
+        transform: translate(45vw, 22vh);
+        position: absolute;
+        z-index: 8;
+    }
+}
+
+/* iphone screen */
+@media screen and (min-width: 393px) and (max-width: 1023px) {
+    .home {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        background: linear-gradient(0deg, rgba(252, 171, 77, 1) 0%, rgba(209, 125, 84, 1) 100%);
+    }
+
+    .house {
+        object-fit: cover;
+        left: 0;
+        bottom: 0;
+        margin: 0;
+        height: 50vh;
+        width: 100vw;
+        transform: translate(0%, 50vh) translateY(var(--parallax-y, 0px));
+        overflow: visible;
+    }
+
+    .home .frontTree {
+        object-fit: cover;
+        left: 0;
+        top: 0;
+        height: 20vh;
+        margin: 0;
+        z-index: 10;
+        width: 100vw;
+        transform: translate(0%, 80vh) translateY(var(--parallax-y, 0px));
+        overflow: visible;
+    }
+
+    .home .backTree {
+        object-fit: cover;
+        left: 0;
+        top: 0;
+        margin: 0;
+        height: 50vh;
+        transform: translate(0%, 50vh) translateY(var(--parallax-y, 0px));
+        overflow: visible;
+        width: 100vw;
+    }
+
+    .Seattle {
+        object-fit: cover;
+        left: 0;
+        bottom: 0;
+        margin: 0;
+        height: 80vh;
+        width: 100vw;
+        transform: translate(0%, 30vh) translateY(var(--parallax-y, 0px));
+        overflow: visible;
+    }
+
+    .home .sun {
+        left: 0;
+        margin: 0;
+        height: 50vh;
+        width: 100vw;
+        transform: translate(0%, 15vh) translateY(var(--parallax-y, 0px));
+        overflow: visible;
+    }
+
+    .home .banner span {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .home .banner {
+        display: flex;
+        justify-content: center;
+        object-fit: cover;
+        left: 0;
+        top: 0;
+        margin: 0;
+        width: 100vw;
+        height: 50vw;
+        transform: translate(0%, 20%) translateY(var(--parallax-y, 0px));
+        overflow: visible;
+    }
+
+    .cloud001 {
+        object-fit: cover;
+        overflow: visible;
+        left: 0;
+        top: 0;
+        margin: 0;
+        width: 50%;
+        padding: 0% 25%;
+        transform: translate(0%, 40vh) translateY(var(--parallax-y, 0px));
+        z-index: 1;
+    }
+
+    .cloud003 {
+        object-fit: cover;
+        overflow: visible;
+        width: 617px;
+        height: 577px;
+        transform: translate(60vw, 7.639vh) translateY(var(--parallax-y, 0px));
+        z-index: 1;
+    }
+
+    .Nahome {
+        overflow: visible;
+        width: 10vw;
+        height: 35vh;
+        object-fit: cover;
+        transform: translate(45vw, 27vh);
+        position: absolute;
+        z-index: 8;
+    }
+}
