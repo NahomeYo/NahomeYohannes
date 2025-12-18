@@ -1,0 +1,68 @@
+#loadingScreen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: var(--fourthly);
+    pointer-events: none;
+  }
+  
+  #loadingScreen svg {
+    width: 25vw;
+    height: 25vh;
+  }
+  
+  #loadingScreen svg path {
+    fill: transparent;
+    animation: drawShape 2s linear forwards, fillShape 1s ease-in-out forwards 1s;
+    stroke-dashoffset: 800;
+    stroke-dasharray: 800;
+  }
+  
+  @keyframes fillShape {
+    to {
+      fill: var(--secondary);
+    }
+  }
+  
+  @keyframes drawShape {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  .fadeOut {
+    animation: fadeOut 1s linear forwards;
+  }
+  
+  .scrollControl {
+    animation: scrollVisible 0.5s linear forwards;
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+    }
+  
+    to {
+      opacity: 0;
+    }
+  }
+  
+  @keyframes scrollVisible {
+    from {
+      overflow-y: hidden;
+      overflow-x: hidden;
+    }
+  
+    to {
+      overflow-y: visible;
+      overflow-x: hidden;
+    }
+  }
+  
