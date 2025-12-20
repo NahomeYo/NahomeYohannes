@@ -1,141 +1,153 @@
 body {
-   margin: 0;
-   background: var(--background);
-   overflow-x: hidden;
-   width: 100vw;
+  margin: 0;
+  background: var(--background);
+  overflow-x: hidden;
+  width: 100vw;
 }
 
 #nahomeScreen {
-   z-index: 8;
-   width: 100vw;
-   height: 100vh;
-   left: 0;
-   top: 0;
-   position: absolute;
+  z-index: 8;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
+  position: absolute;
 }
 
 #appsFore {
-   width: 100vw;
-   height: 90vh;
-   position: absolute;
-   left: 0;
-   top: 0;
-   z-index: 10;
-   overflow: hidden;
+  width: 100vw;
+  height: 90vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 10;
+  overflow: hidden;
 }
 
 #appsMiddle {
-   width: 100vw;
-   height: 90vh;
-   position: absolute;
-   left: 0;
-   top: 0;
-   z-index: 8;
-   overflow: hidden;
+  width: 100vw;
+  height: 90vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 8;
+  overflow: hidden;
 }
 
 #appsBack {
-   width: 100vw;
-   height: 90vh;
-   position: absolute;
-   left: 0;
-   top: 0;
-   z-index: 3;
-   overflow: hidden;
+  width: 100vw;
+  height: 90vh;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
+  overflow: hidden;
 }
 
 .home {
-   position: relative;
-   width: 100vw;
-   height: 90vh;
-   overflow: hidden;
-   background: linear-gradient(0deg, rgba(252, 171, 77, 1) 0%, rgba(209, 125, 84, 1) 100%);
+  position: relative;
+  width: 100vw;
+  height: 90vh;
+  overflow: hidden;
+  background: linear-gradient(
+    0deg,
+    rgba(252, 171, 77, 1) 0%,
+    rgba(209, 125, 84, 1) 100%
+  );
 }
 
 .about ul {
-   position: relative;
-   background: var(--background);
-   width: 50vw;
-   padding: 0vw 25vw;
-   height: 100%;
-   display: flex;
-   margin: 0;
-   mask-position: 0% 100%;
-   mask-size: 100% 100%;
+  position: relative;
+  background: var(--background);
+  width: 50vw;
+  padding: 0vw 25vw;
+  display: flex;
+  margin: 0;
+}
+
+.infoHeader {
+  z-index: 1;
+  position: relative;
+  margin: 0;
+  padding: 0;
+  mix-blend-mode: darken;
+}
+
+.infoHeader ul ol li img {
+  width: 40px;
+  height: 40px;
 }
 
 .careers {
-   list-style: none;
-   background: var(--background);
-   width: 100%;
-   display: flex;
-   justify-content: space-between;
-   width: 80vw;
-   padding: 0vw 10vw;
-   height: min-content;
+  list-style: none;
+  background: var(--background);
+  display: flex;
+  justify-content: space-between;
+  width: 80vw;
+  padding: 0vw 10vw;
+  margin: 0;
 }
 
 .careers span {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   position: relative;
-
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
 }
 
 .careers h1,
 .careers span h1,
 .careers span h2 {
-   height: min-content;
-   margin: 0;
-   color: #f69361;
+  margin: 0;
+  color: #f69361;
 }
 
 .careers h1 {
-   white-space: nowrap;
-   text-align: justify;
-   text-justify: inter-word;
+  white-space: nowrap;
+  text-align: justify;
+  text-justify: inter-word;
 }
 
 .careers h2 {
-   transform-origin: center center;
-   transform: rotate(90deg);
+  transform-origin: center center;
+  transform: rotate(90deg);
 }
 
 .about {
-   position: relative;
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   justify-content: center;
-   width: 100%;
-   background: var(--secondary);
-   height: min-content;
-   padding: 0;
-   margin: 0;
-   overflow: visible;
-   gap: 0;
+  height: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  transition: height 2s ease;
+  position: relative;
+  background: var(--secondary);
+  margin: 0;
+}
+
+.about.expanded {
+  height: 130vh;
 }
 
 .about .maskBottom {
-   display: block;
-   position: relative;
-   margin: 0;
-   padding: 0;
-   width: 100%;
-   z-index: 10;
-   overflow: visible;
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  z-index: 10;
+  overflow: visible;
 }
 
 .footer {
-   position: relative;
-   display: grid;
-   justify-content: stretch;
-   width: 70.834vw;
-   margin: 0 14.583vw;
-   gap: var(--g);
-   grid-template-rows: repeat(5, auto);
-   grid-template-columns: repeat(2, auto);
+  position: relative;
+  display: grid;
+  justify-content: stretch;
+  width: 70.834vw;
+  margin: 0 14.583vw;
+  gap: var(--g);
+  grid-template-rows: repeat(5, auto);
+  grid-template-columns: repeat(2, auto);
 }
 
 /*
@@ -145,314 +157,357 @@ body {
    */
 
 .footer li:nth-of-type(1) h1 {
-   line-height: 75%;
-   margin: 0;
-   font-size: calc(var(--title) + 6rem);
-   text-shadow: 0px 5px var(--fourthly);
-   -webkit-text-stroke: 2px var(--secondary);
+  line-height: 75%;
+  margin: 0;
+  font-size: calc(var(--title) + 6rem);
+  text-shadow: 0px 5px var(--fourthly);
+  -webkit-text-stroke: 2px var(--secondary);
 }
 
-.footer+li:nth-of-type(1) h2 {
-   margin: 0;
-   color: var(--secondary);
-   white-space: nowrap;
-   font-size: calc(var(--header) + 0.5rem);
+.footer + li:nth-of-type(1) h2 {
+  margin: 0;
+  color: var(--secondary);
+  white-space: nowrap;
+  font-size: calc(var(--header) + 0.5rem);
 }
 
-.footer>li {
-   display: grid;
-   grid-template-rows: auto;
+.footer > li {
+  display: grid;
+  grid-template-rows: auto;
 }
 
 .footer li:nth-of-type(2) fieldset {
-   border-radius: var(--b);
-   border: var(--secondary) 5px solid;
-   flex-grow: 1;
+  border-radius: var(--b);
+  border: var(--secondary) 5px solid;
+  flex-grow: 1;
 }
 
 .footer li:nth-of-type(2) fieldset legend h2 {
-   margin: 0;
+  margin: 0;
 }
 
 .footer li:nth-of-type(2) fieldset input {
-   background: transparent;
-   width: 100%;
-   border: none;
+  background: transparent;
+  width: 100%;
+  border: none;
 }
 
 .footer li:nth-of-type(2) fieldset input:focus {
-   outline: none;
+  outline: none;
 }
 
 .footer li:nth-of-type(2) fieldset:nth-of-type(4) {
-   height: 10vh;
+  height: 10vh;
 }
 
 .footer li:nth-of-type(1) h2 {
-   text-align: left;
-   width: 100%;
+  text-align: left;
+  width: 100%;
 }
 
 .footer li:nth-of-type(1) h1 {
-   width: 100%;
-   text-align: left;
+  width: 100%;
+  text-align: left;
 }
 
 .footer .contactBanner {
-   grid-column: span 1;
-   grid-row: span 2;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
-   padding: 0 var(--title);
+  grid-column: span 1;
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 var(--title);
 }
 
 .footer .boxes {
-   grid-column-start: 2;
-   grid-column-end: 4;
-   grid-row-start: 2;
-   grid-row-end: 2;
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 2;
+  grid-row-end: 2;
 }
 
 .boxes fieldset input {
-   color: var(--secondary);
-   background: green;
+  color: var(--secondary);
 }
 
 .boxes input:nth-of-type(1) {
-   background: none;
-   outline: none;
-   color: var(--secondary);
+  background: none;
+  outline: none;
+  color: var(--secondary);
 }
 
 .footer button {
-   border-radius: 10px;
-   border: none;
-   background: var(--secondary);
-   padding: var(--b) var(--g);
-   grid-column-start: 2;
-   grid-column-end: 4;
-   grid-row-start: 3;
+  border-radius: 10px;
+  border: none;
+  background: var(--secondary);
+  padding: var(--b) var(--g);
+  grid-column-start: 2;
+  grid-column-end: 4;
+  grid-row-start: 3;
 }
 
 .footer ol {
-   display: flex;
-   flex-grow: 1;
-   list-style: none;
-   justify-content: space-around;
-   padding: 0;
-   align-items: center;
-   grid-column: span 3;
-   grid-row: span 1;
+  display: flex;
+  flex-grow: 1;
+  list-style: none;
+  justify-content: space-around;
+  padding: 0;
+  align-items: center;
+  grid-column: span 3;
+  grid-row: span 1;
 }
 
 .footer .Copyright {
-   color: var(--thirdly);
-   text-align: center;
-   grid-column: span 3;
+  color: var(--thirdly);
+  text-align: center;
+  grid-column: span 3;
 }
 
 .footer button p {
-   color: var(--background);
-   text-transform: uppercase;
-   margin: 0;
+  color: var(--background);
+  text-transform: uppercase;
+  margin: 0;
 }
 
 .footer ol li,
 .footer ol li img {
-   width: 4rem;
-   height: 4rem;
+  width: 4rem;
+  height: 4rem;
 }
 
-.about ul ol {
-   margin: 0;
-   padding: 0;
-   list-style: none;
-   display: flex;
-   justify-content: space-between;
-   width: 100%;
-   object-fit: cover;
-   z-index: 2;
+.about ul {
+  margin: 0;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  width: 50vw;
+  padding: 0vw 25vw;
+  object-fit: cover;
+  z-index: 2;
 }
 
-.about ul ol li {
-   display: inline-flex;
-   align-items: center;
-   gap: 10px;
+.about ul li {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.about ul ol li h2 {
-   text-align: start;
+.about ul li h2 {
+  text-align: start;
 }
 
-.about ul ol li img {
-   width: 30px;
-   height: 30px;
+.about ul li img {
+  width: 30px;
+  height: 30px;
 }
 
 .table {
-   z-index: 1;
-   display: flex;
-   width: 80.278vw;
-   margin: 2rem 9.722vw;
-   flex-direction: row;
-   position: relative;
-   height: 50vh;
-   padding: 0;
-   overflow: visible;
+  left: 0;
+  top: 0;
+  width: 80%;
+  height: 100%;
+  margin: 0 10%;
+  padding: 0;
+  z-index: 0;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  overflow: visible;
+  position: absolute;
 }
 
 .rsmCol:nth-of-type(1) {
-   flex-grow: 1;
-   position: relative;
-   width: 40.139vw;
-   display: flex;
-   flex-direction: column;
-   overflow: visible;
-   height: 100%;
-   gap: 10px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: visible;
+  height: 100%;
+  gap: 10px;
 }
 
-.rsmCol:nth-of-type(2) {
-   width: 40.139vw;
-   display: inline-flex;
-   justify-content: center;
-   align-items: center;
-   position: relative;
-   height: 100%;
+#aboutCanvas {
+  width: 100%;
+  position: relative;
+  height: 100%;
+  overflow: visible;
+  margin: 0;
+  padding: 0;
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  clip-path: circle(30% at center);
+  z-index: 2;
+}
+
+#aboutCanvas::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--thirdly);
+  clip-path: circle(20% at center);
+  z-index: -1;
+}
+
+.aboutOutline {
+  clip-path: circle(32% at center);
+  width: 100%;
+  height: 100%;
+  background: var(--fourthly);
+  z-index: -2;
 }
 
 .rsmCol:nth-of-type(1) button {
-   background: transparent;
-   display: flex;
-   align-content: center;
-   justify-content: center;
-   padding: 0.5vw;
-   border: 6px solid var(--fourthly);
-   border-radius: 50px;
-   width: 100%;
+  background: transparent;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  padding: 0.5vw;
+  border: 6px solid var(--fourthly);
+  border-radius: 50px;
+  width: 100%;
 }
 
 .rsmCol:nth-of-type(1) button h2 {
-   color: var(--fourthly);
-   margin: 0;
+  color: var(--fourthly);
+  margin: 0;
 }
 
-.rsmCol row:nth-of-type(2) .progressContainer {
-   border: 6px solid var(--fourthly);
-   border-radius: 20px;
-   position: relative;
-   display: flex;
-   justify-content: space-between;
-   margin: 0;
-   padding: 10px 20px;
-   height: 43vh;
+.progressContainer {
+  display: grid;
+  grid-template-columns: 6vw 34vw;
+  row-gap: calc(var(--b) / 2);
+  border: 5px solid var(--background);
+  border-radius: var(--b);
+  padding: var(--b);
+  height: 35%;
 }
 
-.rsmCol row:nth-of-type(2) .progressContainer li {
-   list-style: none;
-   display: flex;
-   flex-direction: column;
-   justify-content: end;
-   margin: 0;
-   padding: 0;
-   position: relative;
-   width: 5%;
-   order: 0;
+.progressContainer li {
+  display: contents;
 }
 
-.rsmCol row:nth-of-type(2) .progressContainer li text {
-   height: 10vh;
-   display: flex;
-   flex-wrap: wrap;
-   justify-content: center;
-   align-items: center;
+.progressContainer .text {
+  display: flex;
+  flex-direction: start;
+  align-items: start;
+  justify-content: start;
 }
 
-.rsmCol row:nth-of-type(2) .progressContainer li bar {
-   background: var(--primary);
-   margin: 0;
-   height: 40vh;
-   width: 100%;
+.progressContainer .text h2 {
+  margin: 0;
+  line-height: 1;
+  color: var(--fourthly);
+  font-size: 0.6rem;
+}
+
+.progressContainer .barContainer {
+  width: 100%;
+  background: var(--fourthly);
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.progressContainer li .barContainer .bar {
+  height: 100%;
+  background: var(--primary);
+  transform-origin: left top;
+}
+
+.progressContainer li .barContainer .bar.expandBar {
+  animation: barExpansion 1s ease-in-out forwards;
+}
+
+@keyframes barExpansion {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.rsmCol:nth-of-type(2) {
+  flex-grow: 1;
+  position: relative;
+  width: 50%;
+  height: 100%;
+  overflow: visible;
 }
 
 .rsmCol:nth-of-type(2) .iconCircle {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   list-style: none;
-   z-index: 999;
+  position: relative;
+  list-style: none;
+  z-index: 999;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.iconCircle li svg {
+  width: 70px;
+  height: 70px;
 }
 
 .iconCircle li {
-   position: absolute;
-   left: 0;
-   top: 0;
-   padding: 0;
-   offset-path: circle(42% at 50% 50%);
-   animation-name: circleRotate;
-   animation-duration: 12s;
-   animation-timing-function: linear;
-   animation-iteration-count: infinite;
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0;
+  offset-path: circle(53% at 50% 50%);
+  z-index: -20;
+}
+
+.iconCircle li.circleAnimation {
+  animation: circleMotion 12s linear 3s infinite;
 }
 
 .iconCircle li:nth-of-type(1) {
-   animation-delay: 0s;
+  animation-delay: 0s;
 }
 
 .iconCircle li:nth-of-type(2) {
-   animation-delay: 1s;
+  animation-delay: 1.5s;
 }
 
 .iconCircle li:nth-of-type(3) {
-   animation-delay: 2s;
+  animation-delay: 3s;
 }
 
 .iconCircle li:nth-of-type(4) {
-   animation-delay: 3s;
+  animation-delay: 4.5s;
 }
 
 .iconCircle li:nth-of-type(5) {
-   animation-delay: 4s;
+  animation-delay: 6s;
 }
 
 .iconCircle li:nth-of-type(6) {
-   animation-delay: 5s;
+  animation-delay: 7.5s;
 }
 
 .iconCircle li:nth-of-type(7) {
-   animation-delay: 6s;
+  animation-delay: 9s;
 }
 
 .iconCircle li:nth-of-type(8) {
-   animation-delay: 7s;
+  animation-delay: 10.5s;
 }
 
 .iconCircle li img {
-   width: 3rem;
-   height: 3rem;
-   margin: 0;
+  width: 3rem;
+  height: 3rem;
+  margin: 0;
 }
 
-@keyframes circleRotate {
-   0% {
-      offset-distance: 0%;
-   }
+@keyframes circleMotion {
+  0% {
+    offset-distance: 0%;
+  }
 
-   100% {
-      offset-distance: 100%;
-   }
-}
-
-@keyframes erase {
-   from {
-      stroke-dashoffset: 0;
-   }
-
-   to {
-      stroke-dashoffset: var(--pathLength);
-   }
+  100% {
+    offset-distance: 100%;
+  }
 }
