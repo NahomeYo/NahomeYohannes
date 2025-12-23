@@ -4,14 +4,23 @@ import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
 let mixers = [];
 const clock = new THREE.Clock();
-let targetFOV = 65;
-let camera;
-let nahomeMixer;
+let targetFOV = 70;
+let nahomeMixer, roomMixer;
 
-let homeCamera, aboutCamera;
+let videoTexture = null;
+let projectScreenTexture = null
+
+let homeCamera, aboutCamera, roomCamera;
 
 let currentAction;
-let nahomeModel, blender, figma, illustrator, javascript, photoshop, react;
+let nahomeModel,
+  blender,
+  figma,
+  illustrator,
+  javascript,
+  photoshop,
+  react,
+  bedroom;
 
 let nahomeNeckBone,
   nahomeWaistBone,
@@ -21,14 +30,16 @@ let nahomeNeckBone,
   landing,
   backFlip,
   smiling,
+  typing,
   blink,
   currentlyAnimating = false,
   raycaster = new THREE.Raycaster();
 
+let screenLeft, screenMiddle, screenRight;
+
 const foreground = document.getElementById("appsFore");
-const middleground = document.getElementById("appsMiddle");
+const middleGround = document.getElementById("appsMiddle");
 const background = document.getElementById("appsBack");
-const aboutFrame = document.querySelector(".rsmCol:nth-of-type(2)");
 
 let foreModels = [];
 let middleModels = [];
@@ -60,17 +71,24 @@ function createRenderer(container, camera) {
 }
 
 function addLights(scene) {
-  const dir = new THREE.HemisphereLight(0x943754, 0x80ceff, 1.0);
-  dir.position.set(0, 0, 0);
-  dir.castShadow = true;
-  dir.receiveShadow = false;
-  scene.add(dir);
-
-  const pointLight = new THREE.PointLight(0xffbfb8, 300, 0, 1.5);
-  pointLight.position.set(0, 30, 0);
-  pointLight.castShadow = true;
-  pointLight.receiveShadow = true;
+  const pointLight = new THREE.PointLight(0xe8c9c9, 30.0, 0.0, 2.0);
+  pointLight.position.set(0, 0.16, 2.98);
   scene.add(pointLight);
+
+  const light = new THREE.HemisphereLight(0x841f5a, 0xc7c3b8, 2.5);
+  scene.add(light);
+}
+
+function addLightsAbout(scene) {
+  const light = new THREE.HemisphereLight(0xffffff, 0xcf5e5e, 2.1);
+  light.position.set(0, 10, 0);
+  scene.add(light);
+}
+
+function addLightsRoom(scene) {
+  const light = new THREE.HemisphereLight(0xffffff, 0x000000, 3);
+  light.position.set(0, 10, 0);
+  scene.add(light);
 }
 
 function addModel(scene, modelPath) {
@@ -136,10 +154,11 @@ function addModel(scene, modelPath) {
 
         if (modelPath.includes("apps.glb")) {
           root.traverse((child) => {
-            if (child.name.includes("blenderglb")) {
+            if (child.name.includes("blender")) {
               middleModels.push(child);
               blender = child;
-              child.position.x -= 2;
+              child.position.x += 1;
+              child.position.y += 0.25;
             }
 
             if (child.name.includes("figmaglb")) {
@@ -177,6 +196,70 @@ function addModel(scene, modelPath) {
           });
         }
 
+        if (modelPath.includes("bedRoom.glb")) {
+          roomMixer = new THREE.AnimationMixer(root);
+          const clips = gltf.animations;
+        
+          typing = roomMixer.clipAction(
+            THREE.AnimationClip.findByName(clips, "typingAction")
+          );
+        
+          root.traverse((child) => {
+            if (!child.isMesh) return;
+            if (child.name === "screen001") screenLeft = child;
+            if (child.name === "screen002") screenMiddle = child;
+            if (child.name === "screen003") screenRight = child;
+          });
+        
+          const videoDOM = document.getElementById("theOffice");
+          if (videoDOM) {
+            videoDOM.muted = true;
+            videoDOM.loop = true;
+            videoDOM.playsInline = true;
+        
+            videoDOM.play().catch(() => {});
+            
+            videoTexture = new THREE.VideoTexture(videoDOM);
+            videoTexture.colorSpace = THREE.SRGBColorSpace;
+            videoTexture.minFilter = THREE.LinearFilter;
+            videoTexture.magFilter = THREE.LinearFilter;
+            videoTexture.generateMipmaps = false;
+          }
+        
+          const officeScreenMat = new THREE.MeshBasicMaterial({
+            map: videoTexture ?? null,
+            toneMapped: false,
+          });
+        
+          const projectsEl = document.querySelector(".projects-inner");
+
+          if (projectsEl) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1920;
+            canvas.height = 1080;
+            
+            projectScreenTexture = new THREE.CanvasTexture(canvas);
+            projectScreenTexture.colorSpace = THREE.SRGBColorSpace;
+            projectScreenTexture.minFilter = THREE.LinearFilter;
+            projectScreenTexture.magFilter = THREE.LinearFilter;
+            projectScreenTexture.generateMipmaps = false;
+          }
+
+          const projectScreenMat = new THREE.MeshBasicMaterial({
+            map: projectScreenTexture ?? null,
+            toneMapped: false,
+            transparent: false,
+          });
+        
+          if (screenLeft) screenLeft.material = officeScreenMat.clone();
+          if (screenRight) screenRight.material = officeScreenMat.clone();
+          if (screenMiddle) screenMiddle.material = projectScreenMat;
+        
+          typing?.play();
+          mixers.push(roomMixer);
+          bedroom = root;
+        }
+        
         resolve(root);
       },
       undefined,
@@ -212,7 +295,7 @@ async function homeInit() {
     1000
   );
 
-  homeCamera.position.set(0, 0, 3);
+  homeCamera.position.set(0, 0, 2);
   homeCamera.lookAt(0, 0, 0);
 
   const renderer = createRenderer(container, homeCamera);
@@ -225,20 +308,7 @@ async function homeInit() {
     ]);
 
   const nahome = nahomeModel;
-  nahome.position.set(0, 0.5, -1);
-
-  const points = [
-    new THREE.Vector3(-10, 0, 0),
-    new THREE.Vector3(-18, 6, 5),
-    new THREE.Vector3(1, 6, 20),
-    new THREE.Vector3(25, 5, 12),
-    new THREE.Vector3(24, 5, -12),
-    new THREE.Vector3(8, 5, -22),
-    new THREE.Vector3(-10, 5, 0),
-    new THREE.Vector3(-10, 0, 0),
-  ];
-
-  const path = new THREE.CatmullRomCurve3(points);
+  nahome.position.set(0, 0, -1);
 
   function animate() {
     requestAnimationFrame(animate);
@@ -266,7 +336,10 @@ function createLayer(container) {
 
   addLights(scene);
 
-  return { scene, renderer };
+  return {
+    scene,
+    renderer,
+  };
 }
 
 function addModelsToLayer(models, scene) {
@@ -282,7 +355,7 @@ async function appsInit() {
   }
 
   const foreLayer = createLayer(foreground);
-  const middleLayer = createLayer(middleground);
+  const middleLayer = createLayer(middleGround);
   const backLayer = createLayer(background);
 
   addModelsToLayer(foreModels, foreLayer.scene);
@@ -303,7 +376,7 @@ async function appsInit() {
     appLayers.forEach((layer, i) => {
       layer.forEach((mesh) => {
         mesh.position.y += Math.sin(time + i) * 0.005;
-        mesh.rotation.z += 0.005;
+        mesh.rotation.y += 0.005;
       });
     });
   }
@@ -311,8 +384,7 @@ async function appsInit() {
   animate();
 }
 
-async function aboutInit() {
-  const container = document.getElementById("aboutCanvas");
+async function aboutInit(container) {
   const scene = new THREE.Scene();
 
   aboutCamera = new THREE.PerspectiveCamera(
@@ -324,16 +396,11 @@ async function aboutInit() {
 
   aboutCamera.position.set(0, 0.14, 0);
 
+  addLightsAbout(scene);
+
   const renderer = createRenderer(container, aboutCamera);
-  addLights(scene);
 
-  [nahomeModel, blender, figma, illustrator, javascript, photoshop, react] =
-    await Promise.all([
-      addModel(scene, "./nahomeRig.glb"),
-      addModel(scene, "./apps.glb"),
-    ]);
-
-  const nahome = nahomeModel;
+  const nahome = await addModel(scene, "./nahomeRig.glb");
   nahome.position.set(0, -1.52, -1.601);
 
   currentAction = smiling;
@@ -352,6 +419,40 @@ async function aboutInit() {
   animate();
 }
 
+async function roomInit() {
+  const container = document.getElementById("bedroomCanvas");
+  const scene = new THREE.Scene();
+
+  roomCamera = new THREE.PerspectiveCamera(
+    50.0,
+    container.clientWidth / container.clientHeight,
+    0.1,
+    2000
+  );
+
+  addLightsRoom(scene);
+
+  roomCamera.position.set(0, 1.16, 0.74);
+
+  const renderer = createRenderer(container, roomCamera);
+
+  bedroom = await addModel(scene, "./bedRoom.glb");
+  const bedroomModel = bedroom;
+  bedroomModel.position.set(0, 0, 0);
+
+  function animate() {
+    requestAnimationFrame(animate);
+
+    const delta = clock.getDelta();
+
+    mixers.forEach((m) => m.update(delta));
+
+    renderer.render(scene, roomCamera);
+  }
+
+  animate();
+}
+
 document.addEventListener("mousemove", function (e) {
   var mousecoords = getMousePos(e);
   if (nahomeNeckBone && nahomeWaistBone) {
@@ -361,13 +462,16 @@ document.addEventListener("mousemove", function (e) {
 });
 
 function getMousePos(e) {
-  return { x: e.clientX, y: e.clientY };
+  return {
+    x: e.clientX,
+    y: e.clientY,
+  };
 }
 
 function moveJoint(mouse, joint, degreeLimit) {
   let degrees = getMouseDegrees(mouse.x, mouse.y, degreeLimit);
-  joint.rotation.y = THREE.Math.degToRad(degrees.x);
-  joint.rotation.x = THREE.Math.degToRad(degrees.y);
+  joint.rotation.y = THREE.MathUtils.degToRad(degrees.x);
+  joint.rotation.x = THREE.MathUtils.degToRad(degrees.y);
 }
 
 function getMouseDegrees(x, y, degreeLimit) {
@@ -378,7 +482,10 @@ function getMouseDegrees(x, y, degreeLimit) {
     ydiff,
     yPercentage;
 
-  let w = { x: window.innerWidth, y: window.innerHeight };
+  let w = {
+    x: window.innerWidth,
+    y: window.innerHeight,
+  };
 
   if (x <= w.x / 2) {
     xdiff = w.x / 2 - x;
@@ -403,12 +510,20 @@ function getMouseDegrees(x, y, degreeLimit) {
     yPercentage = (ydiff / (w.y / 2)) * 100;
     dy = (degreeLimit * yPercentage) / 100;
   }
-  return { x: dx, y: dy };
+  return {
+    x: dx,
+    y: dy,
+  };
 }
 
-export default function init() {
+export function initHome() {
   homeInit().then(() => {
     appsInit();
-    aboutInit();
   });
+  roomInit();
+}
+
+export function initAbout(container) {
+  if (!container) return;
+  aboutInit(container);
 }

@@ -8,14 +8,15 @@
     <link rel="stylesheet" href="./gallery.css" />
     <link rel="stylesheet" href="./projects.css" />
     <link rel="stylesheet" href="./loadingScreen.css" />
-    <link rel="preload" href="./main.js" as="script" />
-    <link rel="preload" href="./libs/three/build/three.module.js" as="script" />
+    <link rel="preload" href="/main.js" as="script" crossorigin="anonymous" />
+    <link
+      rel="preload"
+      href="/libs/three/build/three.module.js"
+      as="script"
+      crossorigin="anonymous"
+    />
   </head>
-
   <body>
-    <div id="appsFore"></div>
-    <div id="appsMiddle"></div>
-    <div id="appsBack"></div>
     <div id="loadingScreen">
       <svg
         width="67"
@@ -30,7 +31,6 @@
         />
       </svg>
     </div>
-
     <nav class="navBar">
       <span></span>
       <span>
@@ -56,14 +56,14 @@
         </li>
       </span>
     </nav>
-
     <div class="home" id="home">
+      <div id="appsFore"></div>
+      <div id="appsMiddle"></div>
+      <div id="appsBack"></div>
       <img class="backTree" src="./images/backTree.png" alt="backTree.svg" />
       <img class="fog" src="./images/fog.svg" alt="fog.svg" />
       <img class="frontTree" src="./images/frontTree.png" alt="frontTree.svg" />
-      <img class="house" src="./images/house.png" alt="house.svg" />
       <div id="nahomeScreen"></div>
-
       <div class="banner">
         <span>
           <img
@@ -79,14 +79,12 @@
         </span>
         <img class="eritrean" src="./images/eritrean.svg" alt="eritrean.svg" />
       </div>
-
       <img class="Seattle" src="./images/Seattle.png" alt="Seattle.svg" />
       <img class="sun" src="./images/sun.svg" alt="sun.svg" />
       <img class="cloud001" src="./images/cloud001.png" alt="cloud001.png" />
       <img class="cloud003" src="./images/cloud003.png" alt="cloud003.png" />
       <img class="cloud005" src="./images/cloud005.svg" alt="cloud005.svg" />
     </div>
-
     <div class="about">
       <div class="infoHeader">
         <li class="careers">
@@ -103,7 +101,6 @@
             <h2>DESIGNER</h2>
           </span>
         </li>
-
         <ul>
           <li>
             <img src="./icons/crib.svg" />
@@ -128,16 +125,13 @@
             </h2>
           </li>
         </ul>
-
         <img class="upsideDown" src="./images/upsideDownSeattle.png" />
       </div>
-
       <div class="table">
         <div class="rsmCol">
           <button>
             <h2>resume</h2>
           </button>
-
           <div class="progressContainer">
             <li>
               <div class="text">
@@ -147,7 +141,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>CSS</h2>
@@ -156,7 +149,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>JAVA</h2>
@@ -166,7 +158,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>React</h2>
@@ -175,7 +166,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>Node.js</h2>
@@ -184,7 +174,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>Express</h2>
@@ -193,7 +182,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>C++</h2>
@@ -202,7 +190,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>Python</h2>
@@ -211,7 +198,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>MongoDB</h2>
@@ -220,7 +206,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>MySQL</h2>
@@ -229,7 +214,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>Git</h2>
@@ -238,7 +222,6 @@
                 <div class="bar"></div>
               </div>
             </li>
-
             <li>
               <div class="text">
                 <h2>Figma</h2>
@@ -249,10 +232,7 @@
             </li>
           </div>
         </div>
-
         <div class="rsmCol">
-          <div id="aboutCanvas"></div>
-
           <div class="iconCircle">
             <li>
               <svg
@@ -494,15 +474,18 @@
               </svg>
             </li>
           </div>
-
           <div class="aboutOutline"></div>
         </div>
       </div>
-
       <img class="maskBottom" src="./images/upsideUpSeattle.png" />
     </div>
-
     <div class="projects" id="projects">
+      <video id="theOffice">
+        <source src="./theOffice.mp4" />
+      </video>
+
+      <div id="bedroomCanvas"></div>
+
       <div class="projects-inner">
         <div class="projects-window">
           <ul class="tabs">
@@ -512,13 +495,11 @@
                 alt="Little Lemon case study"
               />
               <h3>Little Lemon</h3>
-
               <p class="projInfo">
                 This web application was the final project for Meta's Full Stack
                 Developer certification, built using the React JS framework, and
                 features a fictional restaurant.
               </p>
-
               <span class="project-links">
                 <button class="figmaBtn">
                   <img
@@ -537,17 +518,14 @@
                 </a>
               </span>
             </li>
-
             <li>
               <img src="./images/nahome.svg" alt="NahomeYo personal brand" />
               <h3>NahomeYo THREEJS</h3>
-
               <p class="projInfo">
                 This web application was a personal project built using
                 JavaScript's framework, THREE.js, an interactive, 3D game
                 featuring myself and my career journey.
               </p>
-
               <span class="project-links">
                 <button>
                   <img
@@ -566,18 +544,15 @@
                 </a>
               </span>
             </li>
-
             <li>
               <img src="./images/psaltos.svg" alt="Psaltos project" />
               <h3>Psaltos</h3>
-
               <p class="projInfo">
                 This web application was a personal project built upon
                 everything I learned after completing the MongoDB DBA Associate
                 certification. It utilizes the React JS framework and fetches
                 data from a database in MongoDB Atlas.
               </p>
-
               <span class="project-links">
                 <button>
                   <img src="./icons/Figma.svg" alt="Open Psaltos in Figma" />
@@ -593,17 +568,14 @@
                 </a>
               </span>
             </li>
-
             <li>
               <img src="./images/smpk.svg" alt="SMPK project" />
               <h3>SMPK</h3>
-
               <p class="projInfo">
                 This web application, built using the React JS framework,
                 fetches data from a database and several APIs, including YouTube
                 and Google Drive, featuring a Coptic church in Woodinville, WA.
               </p>
-
               <span class="project-links">
                 <button>
                   <img src="./icons/Figma.svg" alt="Open SMPK in Figma" />
@@ -619,11 +591,9 @@
                 </a>
               </span>
             </li>
-
             <li>
               <img src="" alt="Rust Game" />
               <h3>Rust Game</h3>
-
               <span class="project-links">
                 <button>
                   <img
@@ -636,11 +606,9 @@
                 </button>
               </span>
             </li>
-
             <li>
               <img src="" alt="Pretz Allez!" />
               <h3>Pretz Allez!</h3>
-
               <span class="project-links">
                 <button>
                   <img
@@ -657,7 +625,6 @@
         </div>
       </div>
     </div>
-
     <div class="gallery" id="gallery">
       <div class="imagesGal">
         <span>
@@ -668,7 +635,6 @@
               <li><img src="./images/urban-coffee logo 2.svg" /></li>
               <li><img src="./images/king tut logo 2.svg" /></li>
             </div>
-
             <div>
               <li><img src="./images/SMSA logo 2.svg" /></li>
               <li><img src="./images/StMary logo 2.svg" /></li>
@@ -676,7 +642,6 @@
               <li><img src="./images/king tut logo 2.svg" /></li>
             </div>
           </div>
-
           <div>
             <div>
               <li><img src="./images/StMary Bazaar (3) 1.svg" /></li>
@@ -685,7 +650,6 @@
               <li><img src="./images/Pensoteer-01-1 1.svg" /></li>
               <li><img src="./images/StMary flyer(red) 1.svg" /></li>
             </div>
-
             <div>
               <li><img src="./images/StMary Bazaar (3) 1.svg" /></li>
               <li><img src="./images/Dental Van 2.svg" /></li>
@@ -694,14 +658,12 @@
               <li><img src="./images/StMary flyer(red) 1.svg" /></li>
             </div>
           </div>
-
           <div>
             <div>
               <li><img src="./images/genesis poster 2.svg" /></li>
               <li><img src="./images/pensoteer poster red 2.svg" /></li>
               <li><img src="./images/messi.svg" /></li>
             </div>
-
             <div>
               <li><img src="./images/genesis poster 2.svg" /></li>
               <li><img src="./images/pensoteer poster red 2.svg" /></li>
@@ -709,7 +671,6 @@
             </div>
           </div>
         </span>
-
         <div class="backText">
           <li>
             <h1>LOGOS</h1>
@@ -722,7 +683,6 @@
           </li>
         </div>
       </div>
-
       <div class="backText">
         <li>
           <h1>LOGOS</h1>
@@ -735,14 +695,12 @@
         </li>
       </div>
     </div>
-
     <div class="footer">
       <li class="contactBanner">
         <h2>Contact</h2>
         <h1>ME</h1>
         <h2>Let's work together!</h2>
       </li>
-
       <li class="boxes">
         <fieldset>
           <legend>
@@ -750,21 +708,18 @@
           </legend>
           <input type="text" name="from_name" id="name" required />
         </fieldset>
-
         <fieldset>
           <legend>
             <h2>EMAIL</h2>
           </legend>
           <input type="email" name="from_email" id="email" required />
         </fieldset>
-
         <fieldset>
           <legend>
             <h2>PHONE</h2>
           </legend>
           <input type="tel" name="phone" id="phone" />
         </fieldset>
-
         <fieldset>
           <legend>
             <h2>MESSAGE</h2>
@@ -772,11 +727,9 @@
           <input type="text" name="message" id="message" required />
         </fieldset>
       </li>
-
       <button type="submit" id="submit-btn">
         <p>submit</p>
       </button>
-
       <ol>
         <a
           href="https://www.linkedin.com/in/nahome-y-198b8b294/"
@@ -785,11 +738,9 @@
         >
           <img src="./icons/linkedn.svg" alt="LinkedIn" />
         </a>
-
         <a href="https://github.com/NahomeYo" target="_blank" rel="noopener">
           <img src="./icons/github.svg" alt="GitHub" />
         </a>
-
         <a
           href="https://www.fiverr.com/nahomeyohannes/buying?source=avatar_menu_profile"
           target="_blank"
@@ -797,7 +748,6 @@
         >
           <img src="./icons/fiverr.svg" alt="Fiverr" />
         </a>
-
         <a
           href="https://www.upwork.com/freelancers/~0192a71278f2b630f0"
           target="_blank"
@@ -806,12 +756,9 @@
           <img src="./icons/upwork.svg" alt="Upwork" />
         </a>
       </ol>
-
       <p class="Copyright">@Copyright 2025 All Rights Reserved</p>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
     <script type="importmap">
       {
         "imports": {
@@ -820,12 +767,11 @@
         }
       }
     </script>
-
     <script type="module">
-      import init from "./main.js";
+      import { initHome, initAbout } from "./main.js";
 
       document.addEventListener("DOMContentLoaded", () => {
-        init();
+        initHome();
 
         const observer = new IntersectionObserver(
           (entries) => {
@@ -847,6 +793,8 @@
         );
 
         const aboutContainer = document.querySelector(".about");
+        let aboutCanvasInitialized = false;
+
         const icons = document.querySelectorAll(".iconCircle li");
         const bars = document.querySelectorAll(
           ".progressContainer li .barContainer .bar"
@@ -879,6 +827,31 @@
           bar.style.width = widths[i] || "0%";
         });
 
+        function createAboutCanvas() {
+          const aboutFrame = document.querySelector(".rsmCol:nth-of-type(2)");
+          if (!aboutFrame) return;
+
+          const canvasContainer = document.createElement("div");
+          canvasContainer.id = "aboutCanvas";
+          canvasContainer.style.width = "100%";
+          canvasContainer.style.height = "100%";
+
+          aboutFrame.appendChild(canvasContainer);
+
+          initAbout(canvasContainer);
+        }
+
+        aboutContainer.addEventListener("transitionend", (e) => {
+          if (e.target !== aboutContainer) return;
+          if (e.propertyName !== "height") return;
+          if (aboutCanvasInitialized) return;
+
+          if (!aboutContainer.classList.contains("expanded")) return;
+
+          aboutCanvasInitialized = true;
+          createAboutCanvas();
+        });
+
         function loadingScreen() {
           const loadingScreen = document.getElementById("loadingScreen");
           const body = document.querySelector("body");
@@ -894,13 +867,11 @@
         }, 2000);
       });
     </script>
-
     <script>
       (function () {
         emailjs.init("4hV42YXazDbopL8FR");
       })();
     </script>
-
     <script>
       document
         .getElementById("submit-btn")
