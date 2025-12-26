@@ -62,7 +62,6 @@
       <div id="appsBack"></div>
       <img class="backTree" src="./images/backTree.png" alt="backTree.svg" />
       <img class="fog" src="./images/fog.svg" alt="fog.svg" />
-      <img class="frontTree" src="./images/frontTree.png" alt="frontTree.svg" />
       <div id="nahomeScreen"></div>
       <div class="banner">
         <span>
@@ -71,20 +70,16 @@
             src="./images/NahomeYohannes.svg"
             alt="NahomeYohannes.svg"
           />
-          <img
-            class="Japanese"
-            src="./images/japanese.svg"
-            alt="Japanese.svg"
-          />
         </span>
         <img class="eritrean" src="./images/eritrean.svg" alt="eritrean.svg" />
       </div>
       <img class="Seattle" src="./images/Seattle.png" alt="Seattle.svg" />
-      <img class="sun" src="./images/sun.svg" alt="sun.svg" />
       <img class="cloud001" src="./images/cloud001.png" alt="cloud001.png" />
       <img class="cloud003" src="./images/cloud003.png" alt="cloud003.png" />
       <img class="cloud005" src="./images/cloud005.svg" alt="cloud005.svg" />
     </div>
+    <div class="homeFill"></div>
+
     <div class="about">
       <div class="infoHeader">
         <li class="careers">
@@ -479,6 +474,7 @@
       </div>
       <img class="maskBottom" src="./images/upsideUpSeattle.png" />
     </div>
+
     <div class="projects" id="projects">
       <video id="theOffice">
         <source src="./theOffice.mp4" />
@@ -768,29 +764,11 @@
       }
     </script>
     <script type="module">
-      import { initHome, initAbout } from "./main.js";
+      import { initHome, initAbout, initRoom } from "./main.js";
 
       document.addEventListener("DOMContentLoaded", () => {
         initHome();
-
-        const observer = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
-                entry.target.classList.add("expanded");
-                entry.target.classList.add("circleAnimation");
-                entry.target.classList.add("expandBar");
-                observer.unobserve(entry.target);
-              } else {
-                entry.target.classList.remove("expanded");
-                entry.target.classList.remove("circleAnimation");
-              }
-            });
-          },
-          {
-            threshold: 0.5,
-          }
-        );
+        initRoom();
 
         const aboutContainer = document.querySelector(".about");
         let aboutCanvasInitialized = false;
@@ -799,33 +777,6 @@
         const bars = document.querySelectorAll(
           ".progressContainer li .barContainer .bar"
         );
-
-        icons.forEach((i) => {
-          observer.observe(i);
-        });
-
-        observer.observe(aboutContainer);
-
-        bars.forEach((bar, i) => {
-          observer.observe(bar);
-
-          const widths = [
-            "100%",
-            "100%",
-            "85%",
-            "90%",
-            "70%",
-            "60%",
-            "80%",
-            "60%",
-            "85%",
-            "75%",
-            "75%",
-            "100%",
-          ];
-
-          bar.style.width = widths[i] || "0%";
-        });
 
         function createAboutCanvas() {
           const aboutFrame = document.querySelector(".rsmCol:nth-of-type(2)");
@@ -841,16 +792,18 @@
           initAbout(canvasContainer);
         }
 
-        aboutContainer.addEventListener("transitionend", (e) => {
-          if (e.target !== aboutContainer) return;
-          if (e.propertyName !== "height") return;
-          if (aboutCanvasInitialized) return;
+        if (aboutContainer) {
+          aboutContainer.addEventListener("transitionend", (e) => {
+            if (e.target !== aboutContainer) return;
+            if (e.propertyName !== "height") return;
+            if (aboutCanvasInitialized) return;
 
-          if (!aboutContainer.classList.contains("expanded")) return;
+            if (!aboutContainer.classList.contains("expanded")) return;
 
-          aboutCanvasInitialized = true;
-          createAboutCanvas();
-        });
+            aboutCanvasInitialized = true;
+            createAboutCanvas();
+          });
+        }
 
         function loadingScreen() {
           const loadingScreen = document.getElementById("loadingScreen");
@@ -860,6 +813,52 @@
             loadingScreen.classList.add("fadeOut");
             body.classList.add("scrollControl");
           }
+        }
+
+        const homeImgs = document.querySelectorAll(".home img");
+
+        if (homeImgs.length > 0) {
+          window.addEventListener("scroll", () => {
+            const active = window.scrollY >= 200;
+
+            homeImgs.forEach((img, index) => {
+              if (index === 2) {
+                if (active) {
+                  img.style.top = "-200%";
+                  img.style.left = "";
+                } else {
+                  img.style.top = "";
+                  img.style.left = "";
+                }
+              }
+
+              if (index % 2 === 0) {
+                if (active) {
+                  img.style.left = "100%";
+                } else {
+                  img.style.left = "";
+                }
+              } else {
+                if (active) {
+                  img.style.left = "-100%";
+                } else {
+                  img.style.left = "";
+                }
+              }
+            });
+
+            [aboutContainer, icons, bars].forEach((entry) => {
+              if (active) {
+                entry.classList.add("expanded");
+                entry.classList.add("circleAnimation");
+                entry.classList.add("expandBar");
+              } else {
+                entry.classList.remove("expanded");
+                entry.classList.remove("circleAnimation");
+                entry.classList.remove("expandBar");
+              }
+            });
+          });
         }
 
         setTimeout(() => {

@@ -8,7 +8,7 @@ let targetFOV = 70;
 let nahomeMixer, roomMixer;
 
 let videoTexture = null;
-let projectScreenTexture = null
+let projectScreenTexture = null;
 
 let homeCamera, aboutCamera, roomCamera;
 
@@ -71,11 +71,8 @@ function createRenderer(container, camera) {
 }
 
 function addLights(scene) {
-  const pointLight = new THREE.PointLight(0xe8c9c9, 30.0, 0.0, 2.0);
-  pointLight.position.set(0, 0.16, 2.98);
-  scene.add(pointLight);
-
-  const light = new THREE.HemisphereLight(0x841f5a, 0xc7c3b8, 2.5);
+  const light = new THREE.HemisphereLight(0x000000, 0xffffff, 2);
+  light.position.set(0, 10, -30);
   scene.add(light);
 }
 
@@ -86,7 +83,7 @@ function addLightsAbout(scene) {
 }
 
 function addLightsRoom(scene) {
-  const light = new THREE.HemisphereLight(0xffffff, 0x000000, 3);
+  const light = new THREE.HemisphereLight(0x000000, 0xffffff, 3);
   light.position.set(0, 10, 0);
   scene.add(light);
 }
@@ -199,45 +196,45 @@ function addModel(scene, modelPath) {
         if (modelPath.includes("bedRoom.glb")) {
           roomMixer = new THREE.AnimationMixer(root);
           const clips = gltf.animations;
-        
+
           typing = roomMixer.clipAction(
             THREE.AnimationClip.findByName(clips, "typingAction")
           );
-        
+
           root.traverse((child) => {
             if (!child.isMesh) return;
             if (child.name === "screen001") screenLeft = child;
             if (child.name === "screen002") screenMiddle = child;
             if (child.name === "screen003") screenRight = child;
           });
-        
+
           const videoDOM = document.getElementById("theOffice");
           if (videoDOM) {
             videoDOM.muted = true;
             videoDOM.loop = true;
             videoDOM.playsInline = true;
-        
+
             videoDOM.play().catch(() => {});
-            
+
             videoTexture = new THREE.VideoTexture(videoDOM);
             videoTexture.colorSpace = THREE.SRGBColorSpace;
             videoTexture.minFilter = THREE.LinearFilter;
             videoTexture.magFilter = THREE.LinearFilter;
             videoTexture.generateMipmaps = false;
           }
-        
+
           const officeScreenMat = new THREE.MeshBasicMaterial({
             map: videoTexture ?? null,
             toneMapped: false,
           });
-        
+
           const projectsEl = document.querySelector(".projects-inner");
 
           if (projectsEl) {
-            const canvas = document.createElement('canvas');
+            const canvas = document.createElement("canvas");
             canvas.width = 1920;
             canvas.height = 1080;
-            
+
             projectScreenTexture = new THREE.CanvasTexture(canvas);
             projectScreenTexture.colorSpace = THREE.SRGBColorSpace;
             projectScreenTexture.minFilter = THREE.LinearFilter;
@@ -250,16 +247,16 @@ function addModel(scene, modelPath) {
             toneMapped: false,
             transparent: false,
           });
-        
-          if (screenLeft) screenLeft.material = officeScreenMat.clone();
-          if (screenRight) screenRight.material = officeScreenMat.clone();
-          if (screenMiddle) screenMiddle.material = projectScreenMat;
-        
+
+          if (screenLeft) screenLeft.material = officeScreenMat;
+          if (screenRight) screenRight.material = officeScreenMat;
+          if (screenMiddle) screenMiddle.material = officeScreenMat;
+
           typing?.play();
           mixers.push(roomMixer);
           bedroom = root;
         }
-        
+
         resolve(root);
       },
       undefined,
@@ -289,14 +286,16 @@ async function homeInit() {
   const scene = new THREE.Scene();
 
   homeCamera = new THREE.PerspectiveCamera(
-    targetFOV,
+    50,
     container.clientWidth / container.clientHeight,
     0.1,
-    1000
+    2000
   );
 
-  homeCamera.position.set(0, 0, 2);
-  homeCamera.lookAt(0, 0, 0);
+  homeCamera.position.set(0, 1.500, 3.500);
+  homeCamera.rotation.x = THREE.MathUtils.degToRad(-8.40);
+  homeCamera.rotation.y = 0;
+  homeCamera.rotation.z = 0;
 
   const renderer = createRenderer(container, homeCamera);
   addLights(scene);
@@ -308,7 +307,7 @@ async function homeInit() {
     ]);
 
   const nahome = nahomeModel;
-  nahome.position.set(0, 0, -1);
+  nahome.position.set(0, 0, 0);
 
   function animate() {
     requestAnimationFrame(animate);
@@ -432,7 +431,10 @@ async function roomInit() {
 
   addLightsRoom(scene);
 
-  roomCamera.position.set(0, 1.16, 0.74);
+  roomCamera.position.set(0, 1.16, 0);
+  roomCamera.rotation.x = 0;
+  roomCamera.rotation.y = THREE.MathUtils.degToRad(180);
+  roomCamera.rotation.z = 0;
 
   const renderer = createRenderer(container, roomCamera);
 
@@ -520,10 +522,13 @@ export function initHome() {
   homeInit().then(() => {
     appsInit();
   });
-  roomInit();
 }
 
 export function initAbout(container) {
   if (!container) return;
   aboutInit(container);
+}
+
+export function initRoom() {
+  roomInit();
 }
