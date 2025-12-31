@@ -9,8 +9,8 @@
   <link rel="stylesheet" href="./gallery.css" />
   <link rel="stylesheet" href="./projects.css" />
   <link rel="stylesheet" href="./loadingScreen.css" />
-  <link rel="preload" href="/main.js" as="script" crossorigin="anonymous" />
-  <link rel="preload" href="/libs/three/build/three.module.js" as="script" crossorigin="anonymous" />
+  <link rel="preload" href="./main.js" as="script" crossorigin="anonymous" />
+  <link rel="preload" href="./libs/three/build/three.module.js" as="script" crossorigin="anonymous" />
 </head>
 
 <body>
@@ -351,9 +351,9 @@
   </div>
 
   <div class="projects" id="projects">
-    <img class="upsideDownTrees" src="./images/FrontTrees.svg""/>
+    <img class="upsideDownTrees" src="./images/FrontTrees.svg" />
 
-      <video id=" theOffice">
+      <video id="theOffice">
     <source src="./theOffice.mp4" />
     </video>
 
@@ -601,11 +601,20 @@
       }
     </script>
   <script type="module">
-    import { initHome, initAbout, initRoom } from "./main.js";
+    let initHome, initAbout, initRoom;
 
-    document.addEventListener("DOMContentLoaded", () => {
-      initHome();
-      initRoom();
+    document.addEventListener("DOMContentLoaded", async () => {
+      try {
+        const mod = await import('./main.js');
+        initHome = mod.initHome;
+        initAbout = mod.initAbout;
+        initRoom = mod.initRoom;
+      } catch (err) {
+        console.error('Failed to load main.js module:', err);
+      }
+
+      if (typeof initHome === 'function') initHome();
+      if (typeof initRoom === 'function') initRoom();
 
       const aboutContainer = document.querySelector(".about");
       let aboutCanvasInitialized = false;
@@ -626,7 +635,7 @@
 
         aboutFrame.appendChild(canvasContainer);
 
-        initAbout(canvasContainer);
+        if (typeof initAbout === 'function') initAbout(canvasContainer);
       }
 
       if (aboutContainer) {
@@ -805,6 +814,7 @@
           });
       });
   </script>
+  <script type="module" src="./main.js"></script>
 </body>
 
 </html>

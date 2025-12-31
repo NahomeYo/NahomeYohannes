@@ -1,10 +1,10 @@
-import * as THREE from "three";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
-import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-import { OutlinePass } from "three/addons/postprocessing/OutlinePass.js";
-import { ShaderPass } from "three/examples/jsm/postprocessing/ShaderPass.js";
+import * as THREE from "./libs/three/build/three.module.js";
+import { GLTFLoader } from "./libs/three/examples/jsm/loaders/GLTFLoader.js";
+import { DRACOLoader } from "./libs/three/examples/jsm/loaders/DRACOLoader.js";
+import { EffectComposer } from "./libs/three/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "./libs/three/examples/jsm/postprocessing/RenderPass.js";
+import { OutlinePass } from "./libs/three/examples/jsm/postprocessing/OutlinePass.js";
+import { ShaderPass } from "./libs/three/examples/jsm/postprocessing/ShaderPass.js";
 
 let mixers = [];
 const clock = new THREE.Clock();
@@ -53,7 +53,7 @@ let backModels = [];
    RENDERER / LIGHTS
 -------------------------------------------------- */
 
-function createRenderer(container, camera) {
+function createRenderer(container, camera, composer = null) {
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
     antialias: true,
@@ -69,6 +69,9 @@ function createRenderer(container, camera) {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    if (composer) {
+      composer.setSize(window.innerWidth, window.innerHeight);
+    }
   });
 
   return renderer;
@@ -99,6 +102,7 @@ function addLightsRoom(scene) {
 
 function addModel(scene, modelPath) {
   return new Promise((resolve, reject) => {
+    console.log(`addModel: start loading ${modelPath}`);
     const loader = new GLTFLoader();
     const draco = new DRACOLoader();
     draco.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
@@ -107,6 +111,7 @@ function addModel(scene, modelPath) {
     loader.load(
       modelPath,
       (gltf) => {
+        console.log(`addModel: loaded ${modelPath}`, gltf);
         const root = gltf.scene;
         scene.add(root);
 
@@ -124,6 +129,17 @@ function addModel(scene, modelPath) {
             if (child.isMesh) {
               child.castShadow = true;
               child.receiveShadow = true;
+
+              const originalMaterial = child.material;
+              const toonMaterial = new THREE.MeshToonMaterial({
+                color: originalMaterial.color,
+                map: originalMaterial.map,
+                gradientMap: null,
+              });
+
+              const overlayColor = new THREE.Color(0x21c4ed);
+              toonMaterial.color.lerp(overlayColor, 0.1);
+              child.material = toonMaterial;
             }
           });
 
@@ -270,7 +286,10 @@ function addModel(scene, modelPath) {
         resolve(root);
       },
       undefined,
-      (err) => reject(err)
+      (err) => {
+        console.error(`addModel: error loading ${modelPath}`, err);
+        reject(err);
+      }
     );
   });
 }
@@ -291,50 +310,6 @@ function switchAnimation(newAction) {
   currentAction.fadeIn(0.25).play();
 }
 
-function addModelColorOverlay(object, options = {}) {
-  const {
-    color = 0xff009d,
-    opacity = 0.15,
-    blend = THREE.NormalBlending
-  } = options;
-
-  object.traverse((child) => {
-    if (!child.isMesh) return;
-
-    const overlayMaterial = new THREE.MeshBasicMaterial({
-      color,
-      transparent: true,
-      opacity,
-      blending: blend,
-      depthWrite: false,
-      depthTest: true,
-      side: THREE.FrontSide,
-    });
-
-    let overlayMesh;
-
-    if (child.isSkinnedMesh) {
-      overlayMesh = new THREE.SkinnedMesh(child.geometry, overlayMaterial);
-      overlayMesh.bind(child.skeleton, child.bindMatrix);
-      overlayMesh.bindMode = child.bindMode;
-      overlayMesh.bindMatrix.copy(child.bindMatrix);
-    } else {
-      overlayMesh = new THREE.Mesh(child.geometry, overlayMaterial);
-      overlayMesh.position.copy(child.position);
-      overlayMesh.rotation.copy(child.rotation);
-      overlayMesh.scale.copy(child.scale);
-    }
-
-    overlayMesh.name = child.name + '_overlay';
-    overlayMesh.renderOrder = child.renderOrder + 1;
-
-    // Add to parent instead of child
-    if (child.parent) {
-      child.parent.add(overlayMesh);
-    }
-  });
-}
-
 async function homeInit() {
   const container = document.getElementById("nahomeScreen");
   const scene = new THREE.Scene();
@@ -351,83 +326,44 @@ async function homeInit() {
   homeCamera.rotation.y = 0;
   homeCamera.rotation.z = 0;
 
-  const renderer = new THREE.WebGLRenderer({
-    alpha: true,
-    antialias: true,
+  const renderer = createRenderer(container, homeCamera);
+
+  // Set up post-processing
+  const composer = new EffectComposer(renderer);
+  const renderPass = new RenderPass(scene, homeCamera);
+  composer.addPass(renderPass);
+
+  const outlinePass = new OutlinePass(new THREE.Vector2(container.clientWidth, container.clientHeight), scene, homeCamera);
+  outlinePass.edgeStrength = 3.0;
+  outlinePass.edgeGlow = 0.0;
+  outlinePass.edgeThickness = 2.0;
+  outlinePass.pulsePeriod = 0;
+  outlinePass.visibleEdgeColor.set(0x000000);
+  outlinePass.hiddenEdgeColor.set(0xffffff);
+  composer.addPass(outlinePass);
+
+  // Update composer on resize
+  window.addEventListener("resize", () => {
+    composer.setSize(window.innerWidth, window.innerHeight);
+    outlinePass.setSize(window.innerWidth, window.innerHeight);
   });
-  renderer.setSize(container.clientWidth, container.clientHeight);
-  renderer.physicallyCorrectLights = false;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 3.0;
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.gammaFactor = 2.0;
-  renderer.setClearColor(0xffffff, 0);
-  container.appendChild(renderer.domElement);
 
   addLights(scene);
 
-  const composer = new EffectComposer(renderer);
-  composer.addPass(new RenderPass(scene, homeCamera));
-
-  const outlinePass = new OutlinePass(
-    new THREE.Vector2(window.innerWidth, window.innerHeight),
-    scene,
-    homeCamera
-  );
-
-  outlinePass.edgeStrength = 4.5;
-  outlinePass.edgeThickness = 1.3;
-  outlinePass.edgeGlow = 0.0;
-
-  outlinePass.visibleEdgeColor.set(0x000000);
-  outlinePass.hiddenEdgeColor.set(0x000000);
-
-  composer.addPass(outlinePass);
-
-  const ColorOverlayShader = {
-    uniforms: {
-      tDiffuse: { value: null },
-      overlayColor: { value: new THREE.Color("#001affff") }, // <-- change me
-      strength: { value: 0.25 }, // 0..1
-    },
-    vertexShader: /* glsl */ `
-    varying vec2 vUv;
-    void main() {
-      vUv = uv;
-      gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-    }
-  `,
-    fragmentShader: /* glsl */ `
-    uniform sampler2D tDiffuse;
-    uniform vec3 overlayColor;
-    uniform float strength;
-    varying vec2 vUv;
-
-    void main() {
-      vec4 base = texture2D(tDiffuse, vUv);
-      vec3 tinted = mix(base.rgb, base.rgb * overlayColor, strength);
-      gl_FragColor = vec4(tinted, base.a);
-    }
-  `,
-  };
-
-  const overlayPass = new ShaderPass(ColorOverlayShader);
-  overlayPass.uniforms.overlayColor.value.set("#6cf"); // example
-  overlayPass.uniforms.strength.value = 0.18;
-  composer.addPass(overlayPass);
-
-  window.addEventListener("resize", () => {
-    homeCamera.aspect = window.innerWidth / window.innerHeight;
-    homeCamera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    composer.setSize(window.innerWidth, window.innerHeight);
-  });
-
-  [nahomeModel, blender, figma, illustrator, javascript, photoshop, react] =
-    await Promise.all([
+  try {
+    console.log('homeInit: loading models');
+    const [nahomeRoot, appsRoot] = await Promise.all([
       addModel(scene, "./nahomeRig.glb"),
       addModel(scene, "./apps.glb"),
     ]);
+
+    nahomeModel = nahomeRoot;
+    // `appsRoot` contains the apps scene; individual app meshes are assigned
+    // inside addModel via traversal (blender, figma, illustrator, etc.).
+    console.log('homeInit: models loaded', { nahomeRoot, appsRoot });
+  } catch (err) {
+    console.error('homeInit: failed to load models', err);
+  }
 
   const nahome = nahomeModel;
   nahome.position.set(0, -0.020, 0);
@@ -435,24 +371,20 @@ async function homeInit() {
   nahome.rotation.y = THREE.MathUtils.degToRad(-34.40);
   nahome.rotation.z = 0;
 
-  addModelColorOverlay(nahome, {
-    color: 0xff009d,   // tint
-    opacity: 0.18,     // strength
-  });
-
-  const meshes = [];
+  // Collect nahome meshes for outline
+  const nahomeMeshes = [];
   nahome.traverse((child) => {
     if (child.isMesh) {
-      meshes.push(child);
+      nahomeMeshes.push(child);
     }
   });
-
-  outlinePass.selectedObjects = meshes;
+  outlinePass.selectedObjects = nahomeMeshes;
 
   function animate() {
     requestAnimationFrame(animate);
     const delta = clock.getDelta();
     mixers.forEach((m) => m.update(delta));
+
     composer.render();
   }
 
