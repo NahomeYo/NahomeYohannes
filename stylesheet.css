@@ -4,15 +4,17 @@
 
 :root {
   --background: #bc6654;
-  --primary: #fcab4d;
-  --secondary: #fff191;
+  --primary: #ffbf75;
+  --secondary: #FFEABE;
   --thirdly: #d17d54;
   --fourthly: #7f3f32;
+  --fifthly: #ff5100;
   --g: 0.5rem;
   --b: 0.5rem;
   --title: 4rem;
   --header: 1rem;
   --paragraph: 0.8rem;
+  --motion: cubic-bezier(.66,-0.24,.09,.52);
 }
 
 @font-face {
@@ -28,6 +30,16 @@
 @font-face {
   font-family: LondrinaSolidLight;
   src: url(./fonts/LondrinaSolid-Light.ttf);
+}
+
+@font-face {
+  font-family: Forza;
+  src: url(./fonts/Forza.ttf);
+}
+
+@font-face {
+  font-family: NeoJapan;
+  src: url(./fonts/Neo\ Nippon-Regular.ttf);
 }
 
 h1 {
@@ -56,10 +68,6 @@ p {
   font-family: LondrinaSolidLight;
   font-size: var(--paragraph);
   color: var(--secondary);
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 .footer ol a {
