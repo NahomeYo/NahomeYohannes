@@ -112,7 +112,7 @@ class OutlinePass extends Pass {
 		 * @type {number}
 		 * @default 1
 		 */
-		this.edgeThickness = 1.0;
+		this.edgeThickness = 0.8;
 
 		/**
 		 * The edge strength.

@@ -1,20 +1,75 @@
 * {
-  font-size: 24px;
+  font-size: 12px;
 }
 
 :root {
+  --b: 0.5rem;
+  --header: 1rem;
+  --g: 0.5rem;
   --background: #bc6654;
   --primary: #ffbf75;
-  --secondary: #FFEABE;
+  --secondary: #FFD170;
   --thirdly: #d17d54;
   --fourthly: #7f3f32;
-  --fifthly: #ff5100;
-  --g: 0.5rem;
-  --b: 0.5rem;
-  --title: 4rem;
-  --header: 1rem;
-  --paragraph: 0.8rem;
-  --motion: cubic-bezier(.66,-0.24,.09,.52);
+  --fifthly: #ff3c00;
+  --sixthly: #FFD170;
+  --threshold: 50%;
+  --motion: cubic-bezier(.66, -0.24, .09, .52);
+  --textOutline:
+    -1px 0 var(--fifthly),
+    1px 0 var(--fifthly),
+    0 -1px var(--fifthly),
+    0 1px var(--fifthly);
+}
+
+h1 {
+  font-family: LondrinaSketch;
+  font-size: 4rem;
+  text-transform: uppercase;
+  color: var(--secondary);
+  font-weight: 100;
+}
+
+h2 {
+  font-family: LondrinaSolid;
+  font-size: 1rem;
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-family: LondrinaSolidLight;
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+
+p {
+  font-family: LondrinaSolidLight;
+  font-size: 0.8rem;
+  color: var(--secondary);
+}
+
+.name h1 {
+  font-size: 3rem;
+}
+
+.name h2 {
+  font-size: 0.625rem;
+}
+
+/* Tablet / iPad */
+@media screen and (min-width: 1024px) and (max-width: 1439px) {
+  * {
+    font-size: 10px;
+  }
+}
+
+/* Desktop */
+@media screen and (min-width: 1440px) {
+  * {
+    font-size: 24px;
+  }
 }
 
 @font-face {
@@ -42,33 +97,9 @@
   src: url(./fonts/Neo\ Nippon-Regular.ttf);
 }
 
-h1 {
-  font-family: LondrinaSketch;
-  font-size: var(--title);
-  text-transform: uppercase;
-  color: var(--secondary);
-  font-weight: 100;
-}
-
-h2 {
-  font-family: LondrinaSolid;
-  font-size: (--header);
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-h3 {
-  font-family: LondrinaSolidLight;
-  font-size: var(--paragraph);
-  color: var(--secondary);
-}
-
-p {
-  font-family: LondrinaSolidLight;
-  font-size: var(--paragraph);
-  color: var(--secondary);
-}
+/* =========================
+   FOOTER LINKS
+========================= */
 
 .footer ol a {
   display: inline-flex;
