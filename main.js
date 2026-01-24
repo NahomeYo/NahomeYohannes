@@ -664,14 +664,12 @@ async function homeInit() {
   function animate() {
     requestAnimationFrame(animate);
 
-    // Frame rate limiting (60fps target)
     const now = performance.now();
     if (now - lastFrameTime < frameInterval) {
       return;
     }
     lastFrameTime = now;
 
-    // Matrix calculation cache - avoid redundant calculations
     const matrixCache = new Map();
     const getWorldPositionCached = (object, key) => {
       if (!matrixCache.has(key + '_pos')) {
