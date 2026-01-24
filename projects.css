@@ -39,7 +39,6 @@
   align-items: start;
   width: 90vw;
   margin: 0 5vw;
-  background: green;
 }
 
 .projects-header h2 {
@@ -56,7 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .headerLine h1 {
@@ -74,13 +73,16 @@
   margin: 0;
   padding: 0;
   font-weight: 900;
-  text-align: center;
   position: relative;
   pointer-events: auto;
   width: min-content;
   height: min-content;
   transform: translateY(10%);
   transition: all 0.3s var(--motion);
+  text-align: justify;
+  text-align-last: justify;
+  letter-spacing: 0.05em;
+  width: 100%;
 }
 
 .headerLine:hover {
@@ -92,14 +94,6 @@
     color: hsl(42, 100%, 95%);
     text-shadow: none;
   }
-}
-
-.projects-header h3:nth-of-type(1) {
-background: red;
-}
-
-.projects-header h3:nth-of-type(2) {
-background: blue;
 }
 
 .headerLine.dissapear {
@@ -115,8 +109,9 @@ background: blue;
 
 .projects-header span h3 {
   font-family: NeoJapan;
-  color: var(--primary);
-  font-size: 1rem;
+  font-size: 2rem;
+  -webkit-text-stroke: 1px var(--fifthly);
+  color: var(--sixthly);
   margin: 0;
   padding: 0;
   display: flex;
@@ -125,11 +120,24 @@ background: blue;
   cursor: pointer;
 }
 
+.projects-header span h2 {
+  font-family: NeoJapan;
+  font-size: 2rem;
+  color: var(--fifthly);
+}
+
 .projects-header span {
   display: flex;
   gap: var(--b);
-  justify-content: center;
+  justify-content: start;
   align-items: center;
+  transition: all 0.5s var(--motion);
+  width: auto;
+}
+
+.projects-header span.expanded {
+  width: 100%;
+  justify-content: space-around;
 }
 
 #theOffice {

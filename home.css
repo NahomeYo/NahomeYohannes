@@ -170,19 +170,6 @@
   left: 0;
   top: 0;
   transform-origin: bottom center;
-  transition: all 0.5s var(--motion);
-}
-
-.home img.parallax {
-  top: 100vh;
-}
-
-.home img.leftParallax {
-  left: -100vw;
-}
-
-.home img.rightParallax {
-  left: 100vw;
 }
 
 .Seattle {
@@ -276,9 +263,9 @@
   left: 0;
   top: 0;
   margin: 0;
-  width: 40vw;
-  height: 15vh;
-  transform: translate(19.514vw, 40vh);
+  width: 20vw;
+  height: 10vh;
+  transform: translate(35vw, 45vh);
   z-index: 0;
 }
 
@@ -289,7 +276,7 @@
   margin: 0;
   width: 21.15vw;
   height: 22.428vw;
-  transform: translate(78.889vw, 27vh);
+  transform: translate(78.889vw, 35vh);
   z-index: 0;
   overflow: visible;
 }
@@ -310,6 +297,7 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: calc(var(--header) * 2) var(--header) var(--header) var(--header);
   gap: 60px;
   opacity: 1;
@@ -329,13 +317,13 @@
 
 .name h1 {
   font-family: Forza;
-  font-size: 12rem;
+  font-size: 10rem;
   color: var(--sixthly);
   text-shadow:
-    -2px 0 var(--fifthly),
-    2px 0 var(--fifthly),
-    0 -2px var(--fifthly),
-    0 2px var(--fifthly);
+    -4px 0 var(--fifthly),
+    4px 0 var(--fifthly),
+    0 -4px var(--fifthly),
+    0 4px var(--fifthly);
   z-index: 0;
   line-height: 100%;
 }
@@ -344,11 +332,12 @@
   font-family: NeoJapan;
   color: var(--sixthly);
   text-shadow:
-    -2px 0 var(--fifthly),
-    2px 0 var(--fifthly),
-    0 -2px var(--fifthly),
-    0 2px var(--fifthly);
+    -4px 0 var(--fifthly),
+    4px 0 var(--fifthly),
+    0 -4px var(--fifthly),
+    0 4px var(--fifthly);
   font-size: 2.5rem;
   margin-top: -100px;
-  z-index: 1;
+  margin-left: -150px;
+  z-index: 0;
 }

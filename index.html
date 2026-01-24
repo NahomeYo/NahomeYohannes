@@ -79,8 +79,7 @@
   </div>
 
   <div id="nahomeScreen"></div>
-      <div id="projectsScreen"></div>
-    <div id="bedRoomScene"></div>
+  <div id="projectsScreen"></div>
 
   <div class="home" id="home">
 
@@ -385,6 +384,7 @@
   </div>
 
   <div class="projects" id="projects">
+    <div id="bedRoomScene"></div>
 
     <img class="upsideDownTrees" src="./images/FrontTrees.svg" />
 
@@ -398,7 +398,7 @@
       </div>
       <span>
         <h3>APPLICATIONS</h3>
-        <h2>.</h2>
+        <h2> || </h2>
         <h3>GRAPHICS</h3>
       </span>
     </div>
@@ -756,56 +756,56 @@
       </div>
     </div>
 
-      <div class="gallery" id="gallery">
+    <div class="gallery" id="gallery">
 
-    <div class="cols">
-      <div class="col">
-        <span>
-          <li><img src="./images/SMSA logo 2.svg" /></li>
-          <li><img src="./images/StMary logo 2.svg" /></li>
-          <li><img src="./images/urban-coffee logo 2.svg" /></li>
-          <li><img src="./images/king tut logo 2.svg" /></li>
-        </span>
-        <span>
-          <li><img src="./images/SMSA logo 2.svg" /></li>
-          <li><img src="./images/StMary logo 2.svg" /></li>
-          <li><img src="./images/urban-coffee logo 2.svg" /></li>
-          <li><img src="./images/king tut logo 2.svg" /></li>
-        </span>
+      <div class="cols">
+        <div class="col">
+          <span>
+            <li><img src="./images/SMSA logo 2.svg" /></li>
+            <li><img src="./images/StMary logo 2.svg" /></li>
+            <li><img src="./images/urban-coffee logo 2.svg" /></li>
+            <li><img src="./images/king tut logo 2.svg" /></li>
+          </span>
+          <span>
+            <li><img src="./images/SMSA logo 2.svg" /></li>
+            <li><img src="./images/StMary logo 2.svg" /></li>
+            <li><img src="./images/urban-coffee logo 2.svg" /></li>
+            <li><img src="./images/king tut logo 2.svg" /></li>
+          </span>
+        </div>
+
+        <div class="col">
+          <span>
+            <li><img src="./images/StMary Bazaar (3) 1.svg" /></li>
+            <li><img src="./images/Dental Van 2.svg" /></li>
+            <li><img src="./images/Winter BASKETBALL 2.svg" /></li>
+            <li><img src="./images/Pensoteer-01-1 1.svg" /></li>
+            <li><img src="./images/StMary flyer(red) 1.svg" /></li>
+          </span>
+          <span>
+            <li><img src="./images/StMary Bazaar (3) 1.svg" /></li>
+            <li><img src="./images/Dental Van 2.svg" /></li>
+            <li><img src="./images/Winter BASKETBALL 2.svg" /></li>
+            <li><img src="./images/Pensoteer-01-1 1.svg" /></li>
+            <li><img src="./images/StMary flyer(red) 1.svg" /></li>
+          </span>
+        </div>
+
+        <div class="col">
+          <span>
+            <li><img src="./images/genesis poster 2.svg" /></li>
+            <li><img src="./images/pensoteer poster red 2.svg" /></li>
+            <li><img src="./images/messi.svg" /></li>
+          </span>
+          <span>
+            <li><img src="./images/genesis poster 2.svg" /></li>
+            <li><img src="./images/pensoteer poster red 2.svg" /></li>
+            <li><img src="./images/messi.svg" /></li>
+          </span>
+        </div>
       </div>
 
-      <div class="col">
-        <span>
-          <li><img src="./images/StMary Bazaar (3) 1.svg" /></li>
-          <li><img src="./images/Dental Van 2.svg" /></li>
-          <li><img src="./images/Winter BASKETBALL 2.svg" /></li>
-          <li><img src="./images/Pensoteer-01-1 1.svg" /></li>
-          <li><img src="./images/StMary flyer(red) 1.svg" /></li>
-        </span>
-        <span>
-          <li><img src="./images/StMary Bazaar (3) 1.svg" /></li>
-          <li><img src="./images/Dental Van 2.svg" /></li>
-          <li><img src="./images/Winter BASKETBALL 2.svg" /></li>
-          <li><img src="./images/Pensoteer-01-1 1.svg" /></li>
-          <li><img src="./images/StMary flyer(red) 1.svg" /></li>
-        </span>
-      </div>
-
-      <div class="col">
-        <span>
-          <li><img src="./images/genesis poster 2.svg" /></li>
-          <li><img src="./images/pensoteer poster red 2.svg" /></li>
-          <li><img src="./images/messi.svg" /></li>
-        </span>
-        <span>
-          <li><img src="./images/genesis poster 2.svg" /></li>
-          <li><img src="./images/pensoteer poster red 2.svg" /></li>
-          <li><img src="./images/messi.svg" /></li>
-        </span>
-      </div>
     </div>
-
-  </div>
 
     <script>
       document.addEventListener('DOMContentLoaded', function () {
@@ -975,6 +975,23 @@
       let active;
 
       if (homeImgs.length > 0) {
+        function updateHomeImgsTop() {
+          const maxSpeed = 2;
+          const minSpeed = 0.5;
+          const total = homeImgs.length - 1;
+          homeImgs.forEach((img, index) => {
+            if (!img) return;
+            const depth = 1 - index / total;
+            const speed = minSpeed + depth * (maxSpeed - minSpeed);
+            img.style.top = active
+              ? `${window.scrollY * speed}px`
+              : "";
+          });
+        }
+
+        // Set initial top on DOMContentLoaded
+        updateHomeImgsTop();
+
         window.addEventListener("scroll", () => {
           if (window.scrollY >= ENTER) {
             active = true;
@@ -990,27 +1007,21 @@
             borderSvg.classList.remove("animateBorder");
           }
 
-          homeImgs.forEach((img, index) => {
-            const delay = index * 0.05;
-            img.style.transitionDelay = `${delay}s`;
+          updateHomeImgsTop();
+          const maxSpeed = 2;
+          const minSpeed = 0.5;
 
-            if (active) {
-              if (index === 5 || index === 7) {
-                img.classList.add("leftParallax");
-              } else if (index === 6) {
-                img.classList.add("rightParallax");
-              } else {
-                img.classList.add("parallax");
-              }
-            } else {
-              if (index === 5 || index === 7) {
-                img.classList.remove("leftParallax");
-              } else if (index === 6) {
-                img.classList.remove("rightParallax");
-              } else {
-                img.classList.remove("parallax");
-              }
-            }
+          const total = homeImgs.length - 1;
+
+          homeImgs.forEach((img, index) => {
+            if (!img) return;
+
+            const depth = 1 - index / total;
+            const speed = minSpeed + depth * (maxSpeed - minSpeed);
+
+            img.style.top = active
+              ? `${window.scrollY * speed}px`
+              : "";
           });
 
           if (active) {
@@ -1214,7 +1225,7 @@
         const projectsScreenContainer = document.getElementById('projectsScreen');
         const projectCategory1 = document.querySelector('.projects-header h3:nth-of-type(1)');
         const projectCategory2 = document.querySelector('.projects-header h3:nth-of-type(2)');
-        
+
         if (projectCategory1) {
           projectCategory1.addEventListener('click', () => {
             console.log('Direct click on category 1 - Setting zIndex and pointer events');
@@ -1229,7 +1240,7 @@
             }
           });
         }
-        
+
         if (projectCategory2) {
           projectCategory2.addEventListener('click', () => {
             console.log('Direct click on category 2 - Setting zIndex and pointer events');

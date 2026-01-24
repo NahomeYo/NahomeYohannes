@@ -56,14 +56,59 @@ let targetCameraRotation = null;
 let manualCameraOverride = false;
 let screenState = null;
 
+// Performance optimization variables
+let lastFrameTime = 0;
+const targetFPS = 60;
+const frameInterval = 1000 / targetFPS;
+
+// Event listener cleanup management
+let attachedEventListeners = [];
+
+function addEventListenerWithCleanup(element, event, handler, options = null) {
+  element.addEventListener(event, handler, options);
+  attachedEventListeners.push({ element, event, handler, options });
+}
+
+function cleanupEventListeners() {
+  attachedEventListeners.forEach(({ element, event, handler, options }) => {
+    if (element && element.removeEventListener) {
+      element.removeEventListener(event, handler, options);
+    }
+  });
+  attachedEventListeners = [];
+}
+
+// Add cleanup on page unload
+if (typeof window !== 'undefined') {
+  window.addEventListener('beforeunload', cleanupEventListeners);
+}
+
+// Position caching for CSS3D objects
+let lastVideoScreenPosition = new THREE.Vector3();
+let lastProjectsScreenPosition = new THREE.Vector3();
+let lastGalleryScreenPosition = new THREE.Vector3();
+let lastVideoScreenQuaternion = new THREE.Quaternion();
+let lastProjectsScreenQuaternion = new THREE.Quaternion();
+let lastGalleryScreenQuaternion = new THREE.Quaternion();
+const positionUpdateThreshold = 0.01;
+
+// Render state tracking
+let lastCameraPosition = new THREE.Vector3();
+let lastCameraRotation = new THREE.Euler();
+let sceneNeedsRender = true;
+let cssSceneNeedsRender = true;
+let bedroomSceneNeedsRender = true;
+let animationFramesSinceLastRender = 0;
+const maxFramesBetweenRenders = 3;
+
 function updateScrollProgress() {
   const doc = document.documentElement;
   const max = doc.scrollHeight - window.innerHeight;
   scrollProgress = max > 0 ? window.scrollY / max : 0;
 }
 
-window.addEventListener("scroll", updateScrollProgress, { passive: true });
-window.addEventListener("resize", updateScrollProgress);
+addEventListenerWithCleanup(window, "scroll", updateScrollProgress, { passive: true });
+addEventListenerWithCleanup(window, "resize", updateScrollProgress);
 
 function startAllAnimations() {
   pendingAnimations.forEach(action => {
@@ -74,7 +119,7 @@ function startAllAnimations() {
   pendingAnimations = [];
 }
 
-window.addEventListener('loadingComplete', startAllAnimations);
+addEventListenerWithCleanup(window, 'loadingComplete', startAllAnimations);
 
 function createRenderer(container, camera, composer = null) {
   const renderer = new THREE.WebGLRenderer({
@@ -93,7 +138,7 @@ function createRenderer(container, camera, composer = null) {
   renderer.domElement.style.pointerEvents = 'none';
   container.appendChild(renderer.domElement);
 
-  window.addEventListener("resize", () => {
+  addEventListenerWithCleanup(window, "resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -265,7 +310,6 @@ function addModel(scene, modelPath) {
           root.rotation.x = THREE.MathUtils.degToRad(0);
           root.rotation.y = THREE.MathUtils.degToRad(180.00);
           root.rotation.z = THREE.MathUtils.degToRad(0);
-          root.position.set(-10, 0, 0);
           bedroomModel = root;
           console.log('Bedroom model loaded:', bedroomModel);
 
@@ -427,15 +471,15 @@ function setupCSS3DObjects() {
 
   function attachProjectEventListeners() {
     console.log('Attaching project event listeners...');
-    
+
     const folderItems = document.querySelectorAll('.folder-item');
     console.log('Found folder items:', folderItems.length);
-    
+
     folderItems.forEach((folder, index) => {
       const folderId = folder.getAttribute('data-folder');
       console.log(`Folder ${index}: data-folder="${folderId}"`);
-      
-      folder.addEventListener('click', function () {
+
+      const clickHandler = function () {
         console.log('Folder clicked, folderId:', folderId);
         const popup = document.getElementById('popup-' + folderId);
         console.log('Popup element found:', !!popup);
@@ -443,45 +487,55 @@ function setupCSS3DObjects() {
           popup.classList.add('active');
           console.log('Added active class to popup');
         }
-      });
+      };
+
+      addEventListenerWithCleanup(folder, 'click', clickHandler);
     });
 
     document.querySelectorAll('.appContainer').forEach(thumbnail => {
-      thumbnail.addEventListener('click', function () {
+      const clickHandler = function () {
         const projectId = this.getAttribute('data-project');
         const textViewer = document.getElementById('textViewer-' + projectId);
         if (textViewer) {
           textViewer.classList.add('active');
         }
-      });
+      };
+
+      addEventListenerWithCleanup(thumbnail, 'click', clickHandler);
     });
 
     document.querySelectorAll('.text-viewer-close').forEach(closeBtn => {
-      closeBtn.addEventListener('click', function () {
+      const clickHandler = function () {
         const textViewer = this.closest('.text-viewer');
         if (textViewer) {
           textViewer.classList.remove('active');
         }
-      });
+      };
+
+      addEventListenerWithCleanup(closeBtn, 'click', clickHandler);
     });
 
     document.querySelectorAll('.window-close').forEach(closeBtn => {
-      closeBtn.addEventListener('click', function (e) {
+      const clickHandler = function (e) {
         e.stopPropagation();
         const folderId = this.getAttribute('data-folder');
         const popup = document.getElementById('popup-' + folderId);
         if (popup) {
           popup.classList.remove('active');
         }
-      });
+      };
+
+      addEventListenerWithCleanup(closeBtn, 'click', clickHandler);
     });
 
     document.querySelectorAll('.folder-popup').forEach(popup => {
-      popup.addEventListener('click', function (e) {
+      const clickHandler = function (e) {
         if (e.target === this) {
           this.classList.remove('active');
         }
-      });
+      };
+
+      addEventListenerWithCleanup(popup, 'click', clickHandler);
     });
   }
 }
@@ -517,8 +571,9 @@ async function homeInit() {
     nahomeModel.rotation.z = 0;
   }
 
+  // Set initial position for bedroom model to avoid visual jump
   if (bedroomModel) {
-    bedroomModel.position.set(0, 0, 0);
+    bedroomModel.position.set(-10, 0, 0);
   }
 
   appsContainer = [blender, figma, illustrator, javascript, photoshop, react].filter(Boolean);
@@ -542,7 +597,7 @@ async function homeInit() {
 
   setupCSS3DObjects();
 
-  window.addEventListener('resize', () => {
+  addEventListenerWithCleanup(window, 'resize', () => {
     homeCamera.aspect = window.innerWidth / window.innerHeight;
     homeCamera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
@@ -579,15 +634,20 @@ async function homeInit() {
   const projectCategories = document.querySelectorAll(".projects-header h3");
 
   if (projectsHeader) {
-    projectsHeader.addEventListener('click', () => {
+    addEventListenerWithCleanup(projectsHeader, 'click', () => {
       manualCameraOverride = true;
       projectsHeader.classList.add('dissapear');
+      // Add 'expanded' class to the .projects-header span
+      const projectsHeaderSpan = document.querySelector('.projects-header span');
+      if (projectsHeaderSpan) {
+        projectsHeaderSpan.classList.add('expanded');
+      }
     });
   }
 
   if (projectCategories) {
     projectCategories.forEach((el, index) => {
-      el.addEventListener('click', () => {
+      addEventListenerWithCleanup(el, 'click', () => {
         console.log('Category clicked:', index, 'Setting screenState to:', index === 0 ? 1 : 2);
         if (index === 0) {
           screenState = 1;
@@ -597,12 +657,39 @@ async function homeInit() {
           screenState = 2;
           console.log('ScreenState set to 2: Gallery screen will have zIndex 9999');
         }
-      })
+      });
     });
   }
 
   function animate() {
     requestAnimationFrame(animate);
+
+    // Frame rate limiting (60fps target)
+    const now = performance.now();
+    if (now - lastFrameTime < frameInterval) {
+      return;
+    }
+    lastFrameTime = now;
+
+    // Matrix calculation cache - avoid redundant calculations
+    const matrixCache = new Map();
+    const getWorldPositionCached = (object, key) => {
+      if (!matrixCache.has(key + '_pos')) {
+        const pos = new THREE.Vector3();
+        object.getWorldPosition(pos);
+        matrixCache.set(key + '_pos', pos);
+      }
+      return matrixCache.get(key + '_pos');
+    };
+
+    const getWorldQuaternionCached = (object, key) => {
+      if (!matrixCache.has(key + '_quat')) {
+        const quat = new THREE.Quaternion();
+        object.getWorldQuaternion(quat);
+        matrixCache.set(key + '_quat', quat);
+      }
+      return matrixCache.get(key + '_quat');
+    };
 
     const delta = clock.getDelta();
     mixers.forEach((m) => m.update(delta));
@@ -622,12 +709,17 @@ async function homeInit() {
     const inProjects = window.scrollY >= projectTriggerY;
 
     if (nahomeModel && bedroomModel && appsContainer && appsContainer.length) {
+      // --- APPS VISIBILITY & MOVEMENT ---
+      if (!inHome) {
+        // Move apps up out of view (e.g., y = 100)
+        appsContainer.forEach((child) => {
+          child.position.y = 100;
+        });
+      }
+
       if (inHome && scrollTriggered) {
         scrollTriggered = false;
 
-        appsContainer.forEach((child) => {
-          child.position.x = 0;
-        });
         [blenderAction, figmaAction, illustratorAction, javaAction, photoshopAction, reactAction].forEach(a => {
           if (a && !a.isRunning()) a.reset().play();
         });
@@ -642,18 +734,57 @@ async function homeInit() {
 
         nahomeModel.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
         nahomeModel.rotation.y = THREE.MathUtils.lerp(nahomeModel.rotation.y, 0, 0.08);
+        bedroomModel.position.set(-10, 0, 0);
+      }
+
+      // --- NAHOME MODEL ANIMATION STATE CONTROL ---
+      if (inAbout) {
+        // Only idle/smiling should play, typing must be fully stopped
+        if (typing && typing.isRunning()) {
+          typing.fadeOut(0.2);
+          setTimeout(() => { if (typing) typing.stop(); }, 200);
+        }
+        if (idle && !idle.isRunning()) {
+          idle.reset();
+          idle.fadeIn(0.2);
+          idle.play();
+        }
+      }
+
+      if (inProjects) {
+        // Only typing should play, idle/smiling must be fully stopped
+        if (typing && !typing.isRunning()) {
+          if (idle && idle.isRunning()) idle.fadeOut(0.2);
+          if (smiling && smiling.isRunning()) smiling.fadeOut(0.2);
+          setTimeout(() => {
+            if (idle) idle.stop();
+            if (smiling) smiling.stop();
+            typing.reset();
+            typing.fadeIn(0.2);
+            typing.play();
+          }, 200);
+        }
       }
 
       if (inAbout && !scrollTriggered) {
         scrollTriggered = true;
-        appsContainer.forEach((child) => {
-          child.position.x = THREE.MathUtils.lerp(child.position.x, -10, 0.75);
-        });
 
         if (runToJump) runToJump.stop();
         if (typing) typing.stop();
-        if (idle) idle.play();
-        if (smiling) smiling.play();
+        // Use crossfade for smooth transition to idle/smiling
+        if (idle && !idle.isRunning()) {
+          idle.reset();
+          idle.fadeIn(0.3);
+          idle.play();
+        }
+        if (smiling && !smiling.isRunning()) {
+          smiling.reset();
+          smiling.fadeIn(0.3);
+          smiling.play();
+        }
+        if (typing && typing.isRunning()) {
+          typing.fadeOut(0.3);
+        }
 
         nahomeModel.position.set(0, 0, 0);
 
@@ -663,20 +794,31 @@ async function homeInit() {
 
       if (inAbout) {
         if (typing && typing.isRunning()) {
-          typing.stop();
+          typing.fadeOut(0.3);
         }
-        if (idle && !idle.isRunning()) idle.play();
-        if (smiling && !smiling.isRunning()) smiling.play();
+        if (idle && !idle.isRunning()) {
+          idle.reset();
+          idle.fadeIn(0.3);
+          idle.play();
+        }
+        if (smiling && !smiling.isRunning()) {
+          smiling.reset();
+          smiling.fadeIn(0.3);
+          smiling.play();
+        }
 
         targetCameraPosition = new THREE.Vector3(0, 1.560, 1.460);
         targetCameraRotation = new THREE.Vector3(0, 0, 0);
       }
 
       if (inProjects) {
-        if (!typing || !typing.isRunning()) {
-          if (idle) idle.stop();
-          if (smiling) smiling.stop();
-          if (typing) typing.play();
+        // Crossfade from idle/smiling to typing
+        if (typing && !typing.isRunning()) {
+          if (idle && idle.isRunning()) idle.fadeOut(0.3);
+          if (smiling && smiling.isRunning()) smiling.fadeOut(0.3);
+          typing.reset();
+          typing.fadeIn(0.3);
+          typing.play();
         }
 
         if (screenState === 1) {
@@ -687,8 +829,8 @@ async function homeInit() {
             cssRenderer.domElement.style.zIndex = '9999 !important';
             cssRenderer.domElement.style.pointerEvents = 'auto';
 
-            const screenMiddlePos = new THREE.Vector3();
-            screenMiddle.getWorldPosition(screenMiddlePos);
+            // Use cached position calculation
+            const screenMiddlePos = getWorldPositionCached(screenMiddle, 'screenMiddle');
 
             const offsetZ = 0.75;
 
@@ -708,8 +850,8 @@ async function homeInit() {
             cssRenderer.domElement.style.zIndex = '9999';
             cssRenderer.domElement.style.pointerEvents = 'auto';
 
-            const screenRightPos = new THREE.Vector3();
-            screenRight.getWorldPosition(screenRightPos);
+            // Use cached position calculation
+            const screenRightPos = getWorldPositionCached(screenRight, 'screenRight');
 
             const offsetZ = 0.75;
 
@@ -726,8 +868,8 @@ async function homeInit() {
           targetCameraRotation = new THREE.Vector3(0, THREE.MathUtils.degToRad(52.60), 0);
         } else {
           if (nahomeNeckBone) {
-            const neckWorldPos = new THREE.Vector3();
-            nahomeNeckBone.getWorldPosition(neckWorldPos);
+            // Use cached position calculation
+            const neckWorldPos = getWorldPositionCached(nahomeNeckBone, 'neckBone');
 
             const offsetX = 0;
             const offsetY = 1;
@@ -744,16 +886,12 @@ async function homeInit() {
           }
         }
 
-        if (bedroomModel) {
-          bedroomModel.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
-        }
+        bedroomModel.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
         nahomeModel.position.lerp(new THREE.Vector3(0, 0, -0.980), 0.08);
         nahomeModel.rotation.y = THREE.MathUtils.lerp(nahomeModel.rotation.y, THREE.MathUtils.degToRad(-180.00), 0.08);
       } else {
         manualCameraOverride = false;
-        if (bedroomModel) {
-          bedroomModel.position.lerp(new THREE.Vector3(-8, 0, 0), 0.08);
-        }
+        bedroomModel.position.lerp(new THREE.Vector3(-10, 0, 0), 0.08);
         nahomeModel.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
         nahomeModel.rotation.y = THREE.MathUtils.lerp(nahomeModel.rotation.y, 0, 0.08);
       }
@@ -770,49 +908,118 @@ async function homeInit() {
 
     bedRoomScene.updateMatrixWorld(true);
 
+    // Optimized CSS3D updates - only update when positions change significantly
     if (videoCSS3DObject && screenLeft) {
-      const screenPos = new THREE.Vector3();
-      const screenQuat = new THREE.Quaternion();
-      screenLeft.getWorldPosition(screenPos);
-      screenLeft.getWorldQuaternion(screenQuat);
+      // Use cached calculations
+      const screenPos = getWorldPositionCached(screenLeft, 'screenLeft');
+      const screenQuat = getWorldQuaternionCached(screenLeft, 'screenLeft');
 
-      const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
-      screenQuat.multiply(rotationOffset);
+      // Only update if position changed significantly
+      if (screenPos.distanceTo(lastVideoScreenPosition) > positionUpdateThreshold ||
+        screenQuat.angleTo(lastVideoScreenQuaternion) > 0.01) {
+        const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+        screenQuat.multiply(rotationOffset);
 
-      videoCSS3DObject.position.copy(screenPos);
-      videoCSS3DObject.quaternion.copy(screenQuat);
+        videoCSS3DObject.position.copy(screenPos);
+        videoCSS3DObject.quaternion.copy(screenQuat);
+
+        lastVideoScreenPosition.copy(screenPos);
+        lastVideoScreenQuaternion.copy(screenQuat);
+        cssSceneNeedsRender = true;
+      }
     }
 
     if (projectsCSS3DObject && screenMiddle) {
-      const screenPos = new THREE.Vector3();
-      const screenQuat = new THREE.Quaternion();
-      screenMiddle.getWorldPosition(screenPos);
-      screenMiddle.getWorldQuaternion(screenQuat);
+      // Use cached calculations
+      const screenPos = getWorldPositionCached(screenMiddle, 'screenMiddle');
+      const screenQuat = getWorldQuaternionCached(screenMiddle, 'screenMiddle');
 
-      const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(5));
-      screenQuat.multiply(rotationOffset);
+      // Only update if position changed significantly
+      if (screenPos.distanceTo(lastProjectsScreenPosition) > positionUpdateThreshold ||
+        screenQuat.angleTo(lastProjectsScreenQuaternion) > 0.01) {
+        const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(5));
+        screenQuat.multiply(rotationOffset);
 
-      projectsCSS3DObject.position.copy(screenPos);
-      projectsCSS3DObject.quaternion.copy(screenQuat);
+        projectsCSS3DObject.position.copy(screenPos);
+        projectsCSS3DObject.quaternion.copy(screenQuat);
+
+        lastProjectsScreenPosition.copy(screenPos);
+        lastProjectsScreenQuaternion.copy(screenQuat);
+        cssSceneNeedsRender = true;
+      }
     }
 
     if (galleryCSS3DObject && screenRight) {
-      const screenPos = new THREE.Vector3();
-      const screenQuat = new THREE.Quaternion();
-      screenRight.getWorldPosition(screenPos);
-      screenRight.getWorldQuaternion(screenQuat);
+      // Use cached calculations
+      const screenPos = getWorldPositionCached(screenRight, 'screenRight');
+      const screenQuat = getWorldQuaternionCached(screenRight, 'screenRight');
 
-      const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(-23));
-      screenQuat.multiply(rotationOffset);
+      // Only update if position changed significantly
+      if (screenPos.distanceTo(lastGalleryScreenPosition) > positionUpdateThreshold ||
+        screenQuat.angleTo(lastGalleryScreenQuaternion) > 0.01) {
+        const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), THREE.MathUtils.degToRad(-23));
+        screenQuat.multiply(rotationOffset);
 
-      galleryCSS3DObject.position.copy(screenPos);
-      galleryCSS3DObject.quaternion.copy(screenQuat);
-      galleryCSS3DObject.scale.set(-0.0005, galleryCSS3DObject.scale.y, galleryCSS3DObject.scale.z);
+        galleryCSS3DObject.position.copy(screenPos);
+        galleryCSS3DObject.quaternion.copy(screenQuat);
+        galleryCSS3DObject.scale.set(-0.0005, galleryCSS3DObject.scale.y, galleryCSS3DObject.scale.z);
+
+        lastGalleryScreenPosition.copy(screenPos);
+        lastGalleryScreenQuaternion.copy(screenQuat);
+        cssSceneNeedsRender = true;
+      }
     }
 
-    renderer.render(scene, homeCamera);
-    cssRenderer.render(cssScene, homeCamera);
-    bedRoomRenderer.render(bedRoomScene, homeCamera);
+    // Check if camera has moved significantly
+    const cameraPosition = homeCamera.position;
+    const cameraRotation = homeCamera.rotation;
+    const cameraPositionChanged = cameraPosition.distanceTo(lastCameraPosition) > 0.001;
+    const cameraRotationChanged = Math.abs(cameraRotation.x - lastCameraRotation.x) > 0.001 ||
+      Math.abs(cameraRotation.y - lastCameraRotation.y) > 0.001 ||
+      Math.abs(cameraRotation.z - lastCameraRotation.z) > 0.001;
+
+    // Mark scenes for rendering based on changes
+    if (cameraPositionChanged || cameraRotationChanged) {
+      sceneNeedsRender = true;
+      cssSceneNeedsRender = true;
+      bedroomSceneNeedsRender = true;
+    }
+
+    // Force render periodically to prevent visual glitches
+    animationFramesSinceLastRender++;
+    if (animationFramesSinceLastRender >= maxFramesBetweenRenders) {
+      sceneNeedsRender = true;
+      cssSceneNeedsRender = true;
+      bedroomSceneNeedsRender = true;
+      animationFramesSinceLastRender = 0;
+    }
+
+    // Conditional rendering
+    let renderedAnyScene = false;
+
+    if (sceneNeedsRender) {
+      renderer.render(scene, homeCamera);
+      sceneNeedsRender = false;
+      renderedAnyScene = true;
+    }
+
+    if (cssSceneNeedsRender) {
+      cssRenderer.render(cssScene, homeCamera);
+      cssSceneNeedsRender = false;
+      renderedAnyScene = true;
+    }
+
+    if (bedroomSceneNeedsRender) {
+      bedRoomRenderer.render(bedRoomScene, homeCamera);
+      bedroomSceneNeedsRender = false;
+      renderedAnyScene = true;
+    }
+
+    // Update camera tracking if we rendered
+    if (renderedAnyScene || cameraPositionChanged || cameraRotationChanged) {
+      lastCameraPosition.copy(cameraPosition);
+      lastCameraRotation.copy(cameraRotation);
+    }
   }
 
   animate();

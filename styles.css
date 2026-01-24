@@ -845,7 +845,6 @@ html {
   width: 30vw;
   height: 15vh;
   margin: 0;
-  filter: drop-shadow(5px 2px 0px #ff0000);
 }
 
 @keyframes scrollXReverse {
