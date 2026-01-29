@@ -68,7 +68,7 @@ p {
 /* =========================
    IPAD / TABLET SECOND
 ========================= */
-@media screen and (min-width: 901px) and (max-width: 1439px) {
+@media screen and (min-width: 768px) and (max-width: 1023px) {
   :root {
     font-size: 18px;
   }
