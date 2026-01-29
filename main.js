@@ -660,7 +660,7 @@ async function homeInit() {
       });
     });
   }
-
+  
   function animate() {
     requestAnimationFrame(animate);
 

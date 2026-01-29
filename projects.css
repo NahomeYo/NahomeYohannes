@@ -30,7 +30,6 @@
   position: absolute;
   left: 0;
   top: 50%;
-  transform: translate(0%, -50%);
   z-index: 9999 !important;
   display: flex;
   gap: 50px;
@@ -38,7 +37,20 @@
   justify-content: center;
   align-items: start;
   width: 90vw;
-  margin: 0 5vw;
+  transition: all 0.5s var(--motion);
+  margin: 0vw 5vw;
+}
+
+.projects-header span.clicked {
+  border-top: solid calc(var(--b) / 2) var(--secondary);
+  border-bottom: solid calc(var(--b) /2) var(--secondary);
+  width: 100%;
+  padding: var(--b) 0;
+  justify-content: space-around;
+}
+
+.projects-header.clicked {
+  top: 25%;
 }
 
 .projects-header h2 {
@@ -51,17 +63,20 @@
 .headerLine {
   border-top: solid calc(var(--b)) var(--sixthly);
   border-bottom: solid calc(var(--b)) var(--sixthly);
-  transition: all 0.3s var(--motion);
+  transition: all 0.25s var(--motion);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible;
+  overflow: hidden;
+  width: 50%;
+  height: 5rem;
+  position: relative;
 }
 
 .headerLine h1 {
   font-family: NeoJapan;
-  font-size: 5rem;
   color: transparent;
+  font-size: 4.5rem;
   text-shadow:
     -1px -1px 0 var(--sixthly),
     /* top-left */
@@ -71,24 +86,23 @@
     /* bottom-left */
     1px 1px 0 var(--thirdly);
   margin: 0;
-  padding: 0;
-  font-weight: 900;
-  position: relative;
   pointer-events: auto;
-  width: min-content;
-  height: min-content;
-  transform: translateY(10%);
-  transition: all 0.3s var(--motion);
+  transition: all 0.5s var(--motion);
   text-align: justify;
-  text-align-last: justify;
-  letter-spacing: 0.05em;
-  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow: hidden;
+  height: 5rem;
 }
 
 .headerLine:hover {
   padding: 50px 0;
-  border-top: solid calc(var(--b) /2.5) #fff7e4;
-  border-bottom: solid calc(var(--b) /2.5) #fff7e4;
+  border-top: solid calc(var(--b)) #fff7e4;
+  border-bottom: solid calc(var(--b)) #fff7e4;
 
   h1 {
     color: hsl(42, 100%, 95%);
@@ -97,13 +111,12 @@
 }
 
 .headerLine.dissapear {
-  height: 0;
-  border: none;
-  margin: 0;
-  padding: 0;
+  height: 0rem;
+  border-top: none;
+  border-bottom: none;
 
   h1 {
-    opacity: 0;
+    height: 0rem;
   }
 }
 
@@ -118,6 +131,7 @@
   justify-content: center;
   pointer-events: auto !important;
   cursor: pointer;
+  line-height: 100%;
 }
 
 .projects-header span h2 {
@@ -127,17 +141,36 @@
 }
 
 .projects-header span {
-  display: flex;
   gap: var(--b);
   justify-content: start;
   align-items: center;
+  border: none;
+  width: 50%;
+  position: relative;
+  display: flex;
   transition: all 0.5s var(--motion);
-  width: auto;
 }
 
-.projects-header span.expanded {
-  width: 100%;
-  justify-content: space-around;
+.projects-header span .primaryButton img {
+  width: var(--iconSize);
+  height: var(--iconSize);
+}
+
+.projects-header span .primaryButton {
+  transform: translateY(-10px);
+  cursor: pointer;
+}
+
+.projects-header span div:nth-of-type(1) {
+  flex-basis: 33%;
+}
+
+.projects-header span div:nth-of-type(3) {
+  flex-basis: 33%;
+}
+
+.projects-header span div:nth-of-type(3) {
+  flex-basis: 33%;
 }
 
 #theOffice {
@@ -581,7 +614,6 @@
   .popup-window {
     width: 95%;
     max-height: 90vh;
-    background: red;
   }
 
   .window-content {

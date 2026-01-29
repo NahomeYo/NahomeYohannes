@@ -1,11 +1,8 @@
-* {
-  font-size: 12px;
-}
-
 :root {
   --b: 0.5rem;
   --header: 1rem;
   --g: 0.5rem;
+  --iconSize: 1rem;
   --background: #bc6654;
   --primary: #ffbf75;
   --secondary: #FFD170;
@@ -14,12 +11,13 @@
   --fifthly: #ff3c00;
   --sixthly: #FFD170;
   --threshold: 50%;
-  --motion: cubic-bezier(.66, -0.24, .09, .52);
+  --motion: ease-in-out;
   --textOutline:
     -1px 0 var(--fifthly),
     1px 0 var(--fifthly),
     0 -1px var(--fifthly),
     0 1px var(--fifthly);
+  font-size: 12px;
 }
 
 h1 {
@@ -58,20 +56,123 @@ p {
   font-size: 0.625rem;
 }
 
-/* Tablet / iPad */
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
-  * {
-    font-size: 10px;
-  }
-}
-
-/* Desktop */
+/* =========================
+   DESKTOP FIRST
+========================= */
 @media screen and (min-width: 1440px) {
-  * {
+  :root {
     font-size: 24px;
   }
 }
 
+/* =========================
+   IPAD / TABLET SECOND
+========================= */
+@media screen and (min-width: 901px) and (max-width: 1439px) {
+  :root {
+    font-size: 18px;
+  }
+
+  .about.expanded {
+    height: 120vh;
+  }
+
+
+  .rsmCol:nth-of-type(1) {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    gap: 50px;
+    z-index: 30;
+    width: 100%;
+    order: 2;
+  }
+
+  .rsmCol:nth-of-type(2) {
+    order: 1;
+  }
+
+  .table {
+    left: 0;
+    top: 0;
+    width: 90vw;
+    height: 100vh;
+    margin: 10vh 5vw;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    position: absolute;
+  }
+
+  .table .background {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--b);
+    list-style: none;
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+    z-index: 30;
+    order: 3;
+  }
+
+  .progressContainer {
+    display: flex;
+    flex-direction: row;
+    padding: 0.25rem;
+    position: relative;
+    height: 100%;
+    justify-content: space-between;
+    overflow: visible;
+    gap: 0;
+  }
+
+  .progressContainer li {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    height: 100%;
+    flex-basis: 8%;
+    width: 8%;
+  }
+
+  .progressContainer li .barContainer {
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+    order: 1;
+    position: relative;
+  }
+
+  .progressContainer li .barContainer .bar {
+    background: var(--primary);
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transition: all 2s ease-in-out;
+  }
+
+  .progressContainer li .text {
+    width: 100%;
+    height: 80px;
+    order: 2;
+    overflow: hidden;
+  }
+
+  .progressContainer li .text h2 {
+    font-family: LondrinaSolid;
+    white-space: wrap;
+  }
+}
+
+/* =========================
+   FONT FACES
+========================= */
 @font-face {
   font-family: LondrinaSketch;
   src: url(./fonts/LondrinaSketch-Regular.ttf);
@@ -100,7 +201,6 @@ p {
 /* =========================
    FOOTER LINKS
 ========================= */
-
 .footer ol a {
   display: inline-flex;
   transition: transform 0.2s ease, filter 0.2s ease;

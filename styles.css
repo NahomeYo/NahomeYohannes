@@ -276,58 +276,6 @@ html {
   margin: 0;
 }
 
-.infoHeader {
-  mask-image: url("./images/upsideDownSeattle.svg");
-  mask-size: 100% 100%;
-  mask-position: 0% 0%;
-  position: relative;
-  margin: 0;
-  padding: 0;
-  z-index: 32;
-}
-
-.infoHeader ul ol li img {
-  width: 40px;
-  height: 40px;
-}
-
-.infoHeader .section {
-  z-index: 999;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  overflow: visible;
-  margin: 0;
-  left: 0;
-  top: 0;
-  padding: 0;
-  width: 200vw;
-  gap: 5vw;
-  transform: translateX(-200vw);
-  animation: scollX 25s linear infinite;
-}
-
-.infoHeader .section:nth-of-type(2) {
-  z-index: 999;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  overflow: visible;
-  margin: 0;
-  left: 0;
-  top: 0;
-  padding: 0;
-  width: 200vw;
-  gap: 5vw;
-  transform: translateX(-200vw);
-  animation: scollX 25s linear infinite;
-  animation-delay: 12.5s;
-}
-
 @keyframes scollX {
   from {
     transform: translateX(-200vw);
@@ -336,39 +284,6 @@ html {
   to {
     transform: translateX(200vw);
   }
-}
-
-.infoHeader .section span {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-}
-
-.infoHeader .section span h1 {
-  position: absolute;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: Forza;
-  color: var(--fifthly);
-  margin: 0;
-  padding: 0;
-  z-index: 1;
-}
-
-.infoHeader .section span h2 {
-  position: relative;
-  white-space: nowrap;
-  font-family: NeoJapan;
-  color: var(--sixthly);
-  text-shadow: var(--textOutline);
-  font-size: 6rem;
-  z-index: 0;
-  margin: 0;
-  padding: 0;
-  line-height: 1;
 }
 
 .about {
@@ -385,11 +300,12 @@ html {
 }
 
 .about.expanded {
-  height: 120vh;
+  height: 100vh;
 }
 
 .about .maskBottom {
-  position: relative;
+  position: absolute;
+  bottom: 0;
   margin: 0;
   padding: 0;
   width: 100%;
@@ -540,22 +456,34 @@ html {
   top: 0;
   width: 90vw;
   height: 50vh;
-  margin: 35vh 5vw;
+  margin: 25vh 5vw;
   display: flex;
   overflow: visible;
   position: absolute;
+}
+
+.table::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
 }
 
 .table .background {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   list-style: none;
   height: 100%;
   overflow: visible;
-  flex-basis: 30%;
+  flex-grow: 0;
+  width: 20%;
+  flex-basis: 20%;
   z-index: 30;
+  gap: var(--b);
 }
 
 .table .background li {
@@ -567,6 +495,29 @@ html {
   overflow: visible;
   position: relative;
   padding: 0 var(--b);
+  gap: calc(var(--b) / 2);
+}
+
+.table .background li:nth-of-type(even):after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url("./images/brushOverlay.png");
+  background-size: 100% 100%;
+}
+
+.table .background li:nth-of-type(odd):after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: url("./images/brushOverlayDarker.png");
+  background-size: 100% 100%;
 }
 
 .table .background li .itemBorder {
@@ -581,59 +532,62 @@ html {
   display: flex;
   align-items: start;
   justify-content: center;
-  height: 100%;
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: -20%;
   overflow: visible;
-  width: 15%;
+  margin-left: 15px;
 }
 
 .table .background li span img {
-  width: 70px;
-  height: 70px;
-  position: relative;
-  filter: brightness(1.2);
-  display: flex;
+  width: calc(var(--iconSize) * 1.5);
+  height: calc(var(--iconSize) * 1.5);
+  filter: brightness(1.2) drop-shadow(0px 5px 0px var(--background));
 }
 
-.table .background li h2 {
+.table .background li h3 {
   overflow: hidden;
   position: relative;
   font-family: LondrinaSolidLight;
   text-transform: uppercase;
   color: var(--secondary);
   display: flex;
-  text-align: start;
+  justify-content: start;
+  overflow: visible;
   align-items: center;
   white-space: nowrap !important;
-  width: 85%;
   height: 100%;
+  padding-left: calc(var(--iconSize) * 1.5);
+}
+
+.table .background li h1 {
+  font-size: 0.8rem;
+  -webkit-text-stroke: 2px var(--sixthly);
+  letter-spacing: 0.025rem;
 }
 
 .rsmCol:nth-of-type(1) {
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: var(--b);
   justify-content: center;
   overflow: visible;
   flex-basis: 30%;
   height: 100%;
-  gap: 50px;
   z-index: 30;
+  width: 50%;
 }
 
-#aboutCanvas {
-  width: 100%;
-  position: relative;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: block;
+.progressContainer::after {
+  content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  clip-path: circle(30% at center);
-  z-index: 2;
-  overflow: clip !important;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-image: url("./images/itemBorder.png");
+  background-size: 100% 100%;
 }
 
 .rsmCol:nth-of-type(1) button {
@@ -646,7 +600,7 @@ html {
   border: none;
   overflow: visible;
   object-fit: contain;
-  padding: var(--b);
+  padding: calc(var(--b) / 2);
 }
 
 .rsmCol:nth-of-type(1) button h2 {
@@ -662,18 +616,17 @@ html {
   width: 100%;
   height: 100%;
   object-fit: fill;
-  filter: drop-shadow(8px 8px 0px #ffd27050);
+  filter: drop-shadow(0px 5px 0px var(--background));
 }
 
 .progressContainer {
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: var(--b);
   position: relative;
   height: 100%;
   justify-content: space-between;
   overflow: visible;
-  gap: var(--b);
 }
 
 .progressContainer li {
@@ -689,14 +642,21 @@ html {
   align-items: start;
   justify-content: start;
   width: 25%;
+  overflow: visible;
 }
 
 .progressContainer .text h2 {
   margin: 0;
   line-height: 1;
   color: var(--secondary);
-  font-size: 0.7rem;
   font-family: LondrinaSketch;
+  font-size: 0.75rem;
+  white-space: normal !important;
+}
+
+.progressContainer h2:nth-of-type(odd) {
+  color: var(--sixthly);
+  font-family: LondrinaSolidLight;
 }
 
 .progressContainer .barContainer {
@@ -725,6 +685,7 @@ html {
   overflow: visible;
   flex-basis: 40%;
   height: 100%;
+  background: blue;
 }
 
 .rsmCol:nth-of-type(2)::before {
@@ -752,12 +713,8 @@ html {
   z-index: 40;
   left: 50%;
   top: 50%;
+  background: green;
   transform: translate(-50%, -50%);
-}
-
-.iconCircle li svg {
-  width: 70px;
-  height: 70px;
 }
 
 .iconCircle li {
@@ -781,8 +738,8 @@ html {
 }
 
 .iconCircle li img {
-  width: 3rem;
-  height: 3rem;
+  width: calc(var(--iconSize) * 3);
+  height: calc(var(--iconSize) * 3);
   margin: 0;
 }
 
@@ -796,65 +753,24 @@ html {
   }
 }
 
-.contactContainer {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: min-content;
-  overflow: hidden;
-  z-index: 32;
-  mask-image: url("./images/upsideUpSeattle.svg");
-  mask-size: 100% 100%;
-  mask-position: 0% 0%;
-}
-
 .contactRow {
   position: absolute;
   left: 0;
   bottom: 0;
-  display: flex;
-  gap: 0;
-  align-items: center;
-  justify-content: space-between;
-  width: 200vw;
-  gap: 5vw;
+  width: 100vw;
+  height: 80vw;
   z-index: 32;
-  transform: translateX(200vw);
-  animation: scrollXReverse 30s linear infinite;
 }
 
-.contactRowDuplicate {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  display: flex;
-  gap: 0;
-  align-items: center;
-  justify-content: space-between;
-  width: 200vw;
-  gap: 5vw;
-  z-index: 32;
-  transform: translateX(200vw);
-  animation: scrollXReverse 30s linear infinite;
-  animation-delay: 15s;
+.contactRow:nth-of-type(2) {
+  transform: translateX(-100%);
 }
 
-.contactRow a img,
-.contactRowDuplicate a img {
-  width: 30vw;
-  height: 15vh;
-  margin: 0;
-}
-
-@keyframes scrollXReverse {
-  from {
-    transform: translateX(100vw);
-  }
-
-  to {
-    transform: translateX(-390vw);
-  }
+.contactRow img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  background-size: 100% 80%;
 }
 
 .branch {
@@ -867,4 +783,82 @@ html {
   z-index: 8;
   pointer-events: none;
   filter: contrast(0.5) saturate(2) drop-shadow(5px 0px 1px #ff9777);
+}
+
+.primaryButton {
+  background: var(--thirdly);
+  border-radius: var(--header);
+  border: var(--secondary) 5px solid;
+  padding: calc(var(--b) / 2) var(--g);
+  filter: drop-shadow(0px 10px 0px var(--fourthly));
+}
+
+.primaryButton h2 {
+  color: var(--primary);
+  -webkit-text-stroke: none;
+  font-family: 'NeoJapan';
+  margin: 0;
+  text-align: center;
+}
+
+/* Add this CSS to create an infinite carousel effect */
+.contactContainer {
+  
+  display: flex;
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 9999;
+  mask-image: url("/images/upsideUpSeattle.svg");
+  mask-size: 100%;
+  mask-position: 0% 100%;
+  mask-repeat: no-repeat;
+}
+
+.contactRow {
+  width: 100vw;
+  animation: scrollX 20s linear infinite;
+  /* Infinite scrolling animation */
+}
+
+.contactRow:nth-of-type(2) {
+  animation-delay: 10s;
+}
+
+/* Keyframes for the infinite scrolling effect */
+@keyframes scrollX {
+  0% {
+    transform: translateX(100%);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+.infoHeader {
+  display: flex;
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100%;
+  z-index: 9999;
+  mask-image: url("/images/upsideDownSeattle.svg");
+  mask-size: 100%;
+  mask-position: 0% 0%;
+  mask-repeat: no-repeat;
+}
+
+.professionRow img {
+  object-fit: contain;
+}
+
+.professionRow {
+  width: 200vw;
+  animation: scrollX 20s linear infinite;
+}
+
+.professionRow:nth-of-type(2) {
+  animation-delay: 10s;
 }
