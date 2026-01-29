@@ -59,7 +59,7 @@ p {
 /* =========================
    DESKTOP FIRST
 ========================= */
-@media screen and (min-width: 1440px) {
+@media screen and (min-width: 1024px) and (max-width: 1440px) {
   :root {
     font-size: 24px;
   }
