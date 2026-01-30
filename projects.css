@@ -43,10 +43,11 @@
 
 .projects-header span.clicked {
   border-top: solid calc(var(--b) / 2) var(--secondary);
-  border-bottom: solid calc(var(--b) /2) var(--secondary);
+  border-bottom: solid calc(var(--b) / 2) var(--secondary);
   width: 100%;
   padding: var(--b) 0;
   justify-content: space-around;
+  font-size: 0.75rem;
 }
 
 .projects-header.clicked {
@@ -58,6 +59,7 @@
   padding: 0;
   color: var(--primary);
   font-family: LondrinaSolid;
+  font-size: 1rem;
 }
 
 .headerLine {
@@ -321,7 +323,7 @@
   background: #ffbd2e;
 }
 
-.window-button.maximize {
+.window-button.Maximize {
   background: #27c93f;
 }
 
@@ -533,11 +535,11 @@
   background: #ff5f56;
 }
 
-.viewer-button.minimize {
+.viewer-button.Minimize {
   background: #ffbd2e;
 }
 
-.viewer-button.maximize {
+.viewer-button.Maximize {
   background: #27c93f;
 }
 

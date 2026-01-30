@@ -1,3 +1,10 @@
+html {
+  font-size: 16px;
+}
+
+/* =========================
+   CSS VARIABLES
+========================= */
 :root {
   --b: 0.5rem;
   --header: 1rem;
@@ -17,12 +24,14 @@
     1px 0 var(--fifthly),
     0 -1px var(--fifthly),
     0 1px var(--fifthly);
-  font-size: 12px;
 }
 
+/* =========================
+   TYPOGRAPHY (FLUID)
+========================= */
 h1 {
   font-family: LondrinaSketch;
-  font-size: 4rem;
+  font-size: 10rem;
   text-transform: uppercase;
   color: var(--secondary);
   font-weight: 100;
@@ -38,45 +47,36 @@ h2 {
 
 h3 {
   font-family: LondrinaSolidLight;
-  font-size: 0.8rem;
+  font-size: 1rem;
   color: var(--secondary);
 }
 
 p {
   font-family: LondrinaSolidLight;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: var(--secondary);
 }
 
-.name h1 {
-  font-size: 3rem;
-}
-
-.name h2 {
-  font-size: 0.625rem;
-}
-
 /* =========================
-   DESKTOP FIRST
+   DESKTOP
 ========================= */
-@media screen and (min-width: 1024px) and (max-width: 1440px) {
-  :root {
+@media screen and (min-width: 1440px) {
+  html {
     font-size: 24px;
   }
 }
 
 /* =========================
-   IPAD / TABLET SECOND
+   IPAD / TABLET
 ========================= */
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  :root {
+@media screen and (min-width: 768px) and (max-width: 1439px) {
+  html {
     font-size: 18px;
   }
 
   .about.expanded {
-    height: 120vh;
+    height: 100vh;
   }
-
 
   .rsmCol:nth-of-type(1) {
     position: relative;
@@ -134,6 +134,7 @@ p {
     display: flex;
     flex-direction: column;
     position: relative;
+    overflow: hidden;
     height: 100%;
     flex-basis: 8%;
     width: 8%;
@@ -141,20 +142,20 @@ p {
 
   .progressContainer li .barContainer {
     height: 100%;
-    width: 100%;
-    overflow: visible;
+    overflow: hidden;
     order: 1;
     position: relative;
   }
 
   .progressContainer li .barContainer .bar {
-    background: var(--primary);
-    width: 100%;
-    height: 80%;
     position: absolute;
-    left: 0;
-    bottom: 0;
     transition: all 2s ease-in-out;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    bottom: 0;
+    border: 10px solid var(--secondary);
+    scale: 1.5;
+    height: 20%;
   }
 
   .progressContainer li .text {
@@ -166,7 +167,18 @@ p {
 
   .progressContainer li .text h2 {
     font-family: LondrinaSolid;
-    white-space: wrap;
+    white-space: normal;
+  }
+}
+
+/* =========================
+   IPHONE
+========================= */
+@media screen and (max-width: 767px) {
+  html {
+    font-size: 14px;
+    background: lightblue;
+    /* Debug style */
   }
 }
 
