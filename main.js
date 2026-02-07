@@ -313,35 +313,18 @@ function addModel(scene, modelPath) {
         }
 
         if (modelPath.includes("bedRoom.glb")) {
-          console.log('Loading bedroom model...');
           root.rotation.x = THREE.MathUtils.degToRad(0);
           root.rotation.y = THREE.MathUtils.degToRad(180.00);
           root.rotation.z = THREE.MathUtils.degToRad(0);
           bedroomModel = root;
           console.log('Bedroom model loaded:', bedroomModel);
 
-          // Find all screen meshes first
-          const screenMeshes = [];
           root.traverse((child) => {
-            if (child.isMesh && child.name.toLowerCase().includes('screen')) {
-              screenMeshes.push(child);
-            }
+            const name = child.name.toLowerCase();
+            if (name.includes('screen001')) screenLeft = child;
+            if (name.includes('screen002')) screenMiddle = child;
+            if (name.includes('screen003')) screenRight = child;
           });
-
-          // Sort screens by name to ensure consistent ordering
-          screenMeshes.sort((a, b) => a.name.localeCompare(b.name));
-          console.log('Found screen meshes (sorted):', screenMeshes.map(s => s.name));
-
-          // Assign screens: first=left, second=middle, third=right
-          if (screenMeshes.length >= 3) {
-            screenLeft = screenMeshes[0];    // First screen (video)
-            screenMiddle = screenMeshes[1];  // Second screen (projects)  
-            screenRight = screenMeshes[2];   // Third screen (gallery)
-            console.log('Screen assignments:');
-            console.log('  screenLeft (video):', screenLeft.name);
-            console.log('  screenMiddle (projects):', screenMiddle.name);
-            console.log('  screenRight (gallery):', screenRight.name);
-          }
         }
 
         resolve(root);

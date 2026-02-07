@@ -487,13 +487,12 @@ html {
 .table .background li {
   width: 100%;
   display: flex;
-  flex-direction: row;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
   justify-content: start;
   overflow: visible;
   position: relative;
-  padding: 0 var(--b);
-  gap: calc(var(--b) / 2);
+  padding: var(--header);
 }
 
 .table .background li:nth-of-type(even):after {
@@ -554,14 +553,14 @@ html {
   overflow: visible;
   align-items: center;
   white-space: nowrap !important;
-  height: 100%;
-  padding-left: calc(var(--iconSize) * 1.5);
+  margin: 0;
 }
 
 .table .background li h1 {
-  font-size: 0.8rem;
-  -webkit-text-stroke: 2px var(--sixthly);
+  font-size: 1rem;
+  -webkit-text-stroke: 2px var(--primary);
   letter-spacing: 0.025rem;
+    margin: 0;
 }
 
 .rsmCol:nth-of-type(1) {
@@ -728,11 +727,12 @@ html {
 }
 
 .iconCircle li.circlePos {
-  offset-distance: auto;
+  offset-distance: var(--pos360);
 }
 
 .iconCircle li.circleAnimation {
   animation: circleMotion 6s linear infinite;
+  transition: none;
 }
 
 .iconCircle li img {
@@ -743,7 +743,7 @@ html {
 
 @keyframes circleMotion {
   0% {
-    offset-distance: auto;
+    offset-distance: var(--pos360);
   }
 
   100% {

@@ -84,7 +84,7 @@
 
   <div class="home" id="home">
 
-    <div class = "branch"></div>
+    <div class = "branch">
 
     <div class="leafsContainer">
       <img src="./images/leaf002.svg" />
@@ -95,6 +95,7 @@
     <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
     <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
     <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
+    
     <div class="name">
       <h1>NAHOME</h1>
       <h2>YOHANNES</h2>
@@ -115,6 +116,7 @@
     <img class="cloud001" src="./images/Cloud001.png" alt="cloud001.png" />
     <img class="cloud002" src="./images/Cloud002.png" alt="cloud002.png" />
     <img class="cloud003" src="./images/Cloud003.png" alt="cloud003.png" />
+    </div>
   </div>
 
   <div class="homeFill">
@@ -1082,18 +1084,23 @@
 
             if (i === 0) distance = 100;
 
-            icon.style.offsetDistance = `${distance}%`;
             icon.style.setProperty("--pos360", `${distance}%`);
+            icon.style.offsetDistance = "";
 
             if (active) {
               icon.classList.add("circlePos");
+              icon.classList.remove("circleAnimation");
             } else {
               icon.classList.remove("circlePos");
+              icon.classList.remove("circleAnimation");
             }
           });
 
-          icons.forEach((icon, i) => {
-            icon.addEventListener("transitionend", () => {
+          icons.forEach((icon) => {
+            if (icon.dataset.circleBound) return;
+            icon.dataset.circleBound = "1";
+            icon.addEventListener("transitionend", (event) => {
+              if (event.propertyName && event.propertyName !== "offset-distance") return;
               if (icon.classList.contains("circlePos")) {
                 icon.classList.add("circleAnimation");
               }
