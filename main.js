@@ -433,6 +433,7 @@ function setupCSS3DObjects() {
     const screenPos = new THREE.Vector3();
     const screenQuat = new THREE.Quaternion();
     screenRight.getWorldPosition(screenPos);
+    
     screenRight.getWorldQuaternion(screenQuat);
 
     galleryCSS3DObject.position.copy(screenPos);

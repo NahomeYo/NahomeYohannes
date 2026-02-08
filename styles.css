@@ -317,11 +317,8 @@ html {
   position: relative;
   display: grid;
   justify-content: stretch;
-  width: 70.834vw;
-  padding: 0 14.583vw;
+  padding: 0 10vw;
   gap: var(--g);
-  grid-template-rows: repeat(5, auto);
-  grid-template-columns: repeat(2, auto);
   z-index: 9999;
 }
 
@@ -383,21 +380,24 @@ html {
   text-align: left;
 }
 
-.footer .contactBanner {
-  grid-column: span 1;
-  grid-row: span 2;
+.footer span {
+  width: 80vw;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 0 var(--title);
 }
 
-.footer .boxes {
-  grid-column-start: 2;
-  grid-column-end: 4;
-  grid-row-start: 2;
-  grid-row-end: 2;
+.footer span .contactBanner {
+  position: relative;
+  flex-basis: 50%;
+  flex-grow: 2;
+  font-size: 5rem;
+}
+
+.footer span .boxes {
+  position: relative;
+  flex-basis: 50%;
+  flex-grow: 1;
 }
 
 .boxes fieldset input {
@@ -560,7 +560,7 @@ html {
   font-size: 1rem;
   -webkit-text-stroke: 2px var(--primary);
   letter-spacing: 0.025rem;
-    margin: 0;
+  margin: 0;
 }
 
 .rsmCol:nth-of-type(1) {
@@ -789,7 +789,7 @@ html {
 
 /* Add this CSS to create an infinite carousel effect */
 .contactContainer {
-  
+
   display: flex;
   position: absolute;
   inset: 0;
