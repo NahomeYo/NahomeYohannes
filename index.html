@@ -84,38 +84,38 @@
 
   <div class="home" id="home">
 
-    <div class = "branch">
+    <div class="branch">
 
-    <div class="leafsContainer">
-      <img src="./images/leaf002.svg" />
-      <img src="./images/leaf004.svg" />
-      <img src="./images/leaf006.svg" />
-    </div>
+      <div class="leafsContainer">
+        <img src="./images/leaf002.svg" />
+        <img src="./images/leaf004.svg" />
+        <img src="./images/leaf006.svg" />
+      </div>
 
-    <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
-    <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
-    <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
-    
-    <div class="name">
-      <h1>NAHOME</h1>
-      <h2>YOHANNES</h2>
-    </div>
+      <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
+      <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
+      <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
 
-    <div class="leafsContainer">
-      <img src="./images/leaf001.svg" />
-      <img src="./images/leaf003.svg" />
-      <img src="./images/leaf005.svg" />
-      <img src="./images/leaf007.svg" />
-    </div>
+      <div class="name">
+        <h1>NAHOME</h1>
+        <h2>YOHANNES</h2>
+      </div>
 
-    <div class="banner">
-      <img class="eritrean" src="./images/eritrean.svg" alt="eritrean.svg" />
-      <div class="sun"></div>
-    </div>
-    <img class="Seattle" src="./images/SeattleSkyline.svg" alt="Seattle.svg" />
-    <img class="cloud001" src="./images/Cloud001.png" alt="cloud001.png" />
-    <img class="cloud002" src="./images/Cloud002.png" alt="cloud002.png" />
-    <img class="cloud003" src="./images/Cloud003.png" alt="cloud003.png" />
+      <div class="leafsContainer">
+        <img src="./images/leaf001.svg" />
+        <img src="./images/leaf003.svg" />
+        <img src="./images/leaf005.svg" />
+        <img src="./images/leaf007.svg" />
+      </div>
+
+      <div class="banner">
+        <img class="eritrean" src="./images/eritrean.svg" alt="eritrean.svg" />
+        <div class="sun"></div>
+      </div>
+      <img class="Seattle" src="./images/SeattleSkyline.svg" alt="Seattle.svg" />
+      <img class="cloud001" src="./images/Cloud001.png" alt="cloud001.png" />
+      <img class="cloud002" src="./images/Cloud002.png" alt="cloud002.png" />
+      <img class="cloud003" src="./images/Cloud003.png" alt="cloud003.png" />
     </div>
   </div>
 
@@ -810,6 +810,61 @@
             if (e.target === this) {
               this.classList.remove('active');
             }
+          });
+        });
+
+        const galleryImages = document.querySelectorAll('.gallery li img');
+        const projectsContainer = document.getElementById('projects');
+
+        galleryImages.forEach(img => {
+          // Stop column animation on hover
+          img.addEventListener('mouseenter', function () {
+            const column = this.closest('.col');
+            if (column) {
+              column.style.animationPlayState = 'paused';
+            }
+          });
+
+          // Resume column animation on mouse leave
+          img.addEventListener('mouseleave', function () {
+            const column = this.closest('.col');
+            if (column) {
+              column.style.animationPlayState = 'running';
+            }
+          });
+
+          img.addEventListener('click', function () {
+            const fixedContainer = document.createElement('div');
+            fixedContainer.style.position = 'fixed';
+            fixedContainer.style.top = '0';
+            fixedContainer.style.left = '0';
+            fixedContainer.style.width = '100%';
+            fixedContainer.style.height = '100%';
+            fixedContainer.style.background = '#7f3f32c7';
+            fixedContainer.style.display = 'flex';
+            fixedContainer.style.justifyContent = 'center';
+            fixedContainer.style.alignItems = 'center';
+            fixedContainer.style.zIndex = '9999';
+
+            // Create the image element
+            const fixedImage = document.createElement('img');
+            fixedImage.src = this.src;
+            fixedImage.style.objectFit = "contain";
+            fixedImage.style.width = '50%';
+            fixedImage.style.height = '70%';
+            fixedImage.style.overflow = 'visible';
+            fixedImage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+
+            // Append the image to the fixed container
+            fixedContainer.appendChild(fixedImage);
+
+            // Append the fixed container to the projects container
+            projectsContainer.appendChild(fixedContainer);
+
+            // Close the fixed container on click
+            fixedContainer.addEventListener('click', function () {
+              projectsContainer.removeChild(fixedContainer);
+            });
           });
         });
       });

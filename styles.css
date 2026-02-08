@@ -258,7 +258,7 @@ html {
 .upsideDownTrees {
   width: 100%;
   transform: scaleY(-1);
-  z-index: 30;
+  z-index: 9999;
   position: relative;
 }
 
@@ -322,7 +322,7 @@ html {
   gap: var(--g);
   grid-template-rows: repeat(5, auto);
   grid-template-columns: repeat(2, auto);
-  z-index: 900;
+  z-index: 9999;
 }
 
 /*

@@ -2,6 +2,7 @@ import * as THREE from "./libs/three/build/three.module.js";
 import { GLTFLoader } from "./libs/three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "./libs/three/examples/jsm/loaders/DRACOLoader.js";
 import { CSS3DRenderer, CSS3DObject } from "./libs/three/examples/jsm/renderers/CSS3DRenderer.js";
+import { MathUtils } from "three";
 
 let mixers = [];
 const clock = new THREE.Clock();
@@ -60,15 +61,9 @@ let screenState = null;
 let lastFrameTime = 0;
 const targetFPS = 60;
 const frameInterval = 1000 / targetFPS;
-let loadingComplete = false;
 
 // Event listener cleanup management
 let attachedEventListeners = [];
-const manager = new THREE.LoadingManager();
-
-manager.onLoad = () => {
-  finishLoading();
-}
 
 function addEventListenerWithCleanup(element, event, handler, options = null) {
   element.addEventListener(event, handler, options);
@@ -125,6 +120,8 @@ function startAllAnimations() {
   pendingAnimations = [];
 }
 
+addEventListenerWithCleanup(window, 'loadingComplete', startAllAnimations);
+
 function createRenderer(container, camera, composer = null) {
   const renderer = new THREE.WebGLRenderer({
     alpha: true,
@@ -169,7 +166,7 @@ function addLights(scene) {
 
 function addModel(scene, modelPath) {
   return new Promise((resolve, reject) => {
-    const loader = new GLTFLoader(manager);
+    const loader = new GLTFLoader();
     try {
       const draco = new DRACOLoader();
       draco.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
@@ -232,7 +229,6 @@ function addModel(scene, modelPath) {
           );
 
           runToJump.play();
-          runToJump.paused = true;
           runToJump.loop = THREE.LoopOnce;
           runToJump.clampWhenFinished = true;
           pendingAnimations.push(runToJump);
@@ -251,8 +247,6 @@ function addModel(scene, modelPath) {
               blenderAction = appMixer.clipAction(
                 THREE.AnimationClip.findByName(clips, "blenderAction")
               );
-              blenderAction.reset();
-              blenderAction.paused = true;
               blenderAction.loop = THREE.LoopOnce;
               blenderAction.clampWhenFinished = true;
               pendingAnimations.push(blenderAction);
@@ -317,13 +311,17 @@ function addModel(scene, modelPath) {
           root.rotation.y = THREE.MathUtils.degToRad(180.00);
           root.rotation.z = THREE.MathUtils.degToRad(0);
           bedroomModel = root;
-          console.log('Bedroom model loaded:', bedroomModel);
 
           root.traverse((child) => {
-            const name = child.name.toLowerCase();
-            if (name.includes('screen001')) screenLeft = child;
-            if (name.includes('screen002')) screenMiddle = child;
-            if (name.includes('screen003')) screenRight = child;
+            if (child.isMesh) {
+              if (child.name === "leftScreen") {
+                screenLeft = child;
+              } else if (child.name === "middleScreen") {
+                screenMiddle = child;
+              } else if (child.name === "rightScreen") {
+                screenRight = child;
+              }
+            }
           });
         }
 
@@ -345,66 +343,47 @@ function setupCSS3DObjects() {
   if (videoEl && screenLeft) {
     videoEl.loop = true;
     videoEl.muted = true;
-    videoEl.play().catch(err => console.log('Video autoplay prevented:', err));
 
     videoEl.style.width = '1440px';
     videoEl.style.height = '1024px';
     videoEl.style.opacity = '1';
     videoEl.style.background = '#000000';
-    videoEl.style.transform = 'translateZ(0)';
 
     videoCSS3DObject = new CSS3DObject(videoEl);
     videoCSS3DObject.element.style.pointerEvents = 'auto';
-    videoCSS3DObject.element.style.transformStyle = 'preserve-3d';
 
     const leftBox = new THREE.Box3().setFromObject(screenLeft);
     const leftSize = new THREE.Vector3();
     leftBox.getSize(leftSize);
 
-    // Calculate scale based on screen dimensions
     const scaleX = leftSize.x / 1440;
     const scaleY = leftSize.y / 1024;
     videoCSS3DObject.scale.set(scaleX, scaleY, 1);
 
-    // Get screen world position and rotation
     const screenPos = new THREE.Vector3();
     const screenQuat = new THREE.Quaternion();
-    const screenScale = new THREE.Vector3();
     screenLeft.getWorldPosition(screenPos);
     screenLeft.getWorldQuaternion(screenQuat);
-    screenLeft.getWorldScale(screenScale);
 
-    // Apply position
+    const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+    screenQuat.multiply(rotationOffset);
+
     videoCSS3DObject.position.copy(screenPos);
-
-    // Apply rotation - add slight adjustment for proper facing
-    const rotationAdjustment = new THREE.Quaternion().setFromAxisAngle(
-      new THREE.Vector3(0, 1, 0),
-      Math.PI
-    );
-    const finalQuat = screenQuat.clone().multiply(rotationAdjustment);
-    videoCSS3DObject.quaternion.copy(finalQuat);
-
-    // Apply scale compensation
-    videoCSS3DObject.scale.multiply(screenScale);
+    videoCSS3DObject.quaternion.copy(screenQuat);
 
     cssScene.add(videoCSS3DObject);
 
     screenLeft.material.opacity = 0.3;
     screenLeft.material.transparent = true;
-    screenLeft.material.side = THREE.DoubleSide;
   }
 
   if (projectsEl && screenMiddle) {
     projectsEl.style.width = '1440px';
     projectsEl.style.height = '1024px';
     projectsEl.style.opacity = '1';
-    projectsEl.style.transform = 'translateZ(0)';
-    projectsEl.style.transformStyle = 'preserve-3d';
 
     projectsCSS3DObject = new CSS3DObject(projectsEl);
     projectsCSS3DObject.element.style.pointerEvents = 'auto';
-    projectsCSS3DObject.element.style.transformStyle = 'preserve-3d';
 
     const middleBox = new THREE.Box3().setFromObject(screenMiddle);
     const middleSize = new THREE.Vector3();
@@ -414,36 +393,23 @@ function setupCSS3DObjects() {
     const scaleY = middleSize.y / 1024;
     projectsCSS3DObject.scale.set(scaleX, scaleY, 1);
 
-    // Get screen world position and rotation
     const screenPos = new THREE.Vector3();
     const screenQuat = new THREE.Quaternion();
-    const screenScale = new THREE.Vector3();
     screenMiddle.getWorldPosition(screenPos);
     screenMiddle.getWorldQuaternion(screenQuat);
-    screenMiddle.getWorldScale(screenScale);
 
-    // Apply position
+    const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(90));
+    screenQuat.multiply(rotationOffset);
+
     projectsCSS3DObject.position.copy(screenPos);
+    projectsCSS3DObject.quaternion.copy(screenQuat);
 
-    // Apply rotation - for middle screen, we need to adjust differently
-    const rotationAdjustment = new THREE.Quaternion().setFromAxisAngle(
-      new THREE.Vector3(1, 0, 0),
-      THREE.MathUtils.degToRad(0) // Reduced from 90 to 0
-    );
-    const finalQuat = screenQuat.clone().multiply(rotationAdjustment);
-    projectsCSS3DObject.quaternion.copy(finalQuat);
-
-    // Apply scale compensation
-    projectsCSS3DObject.scale.multiply(screenScale);
-
-    // Flip horizontally for mirror effect
     projectsCSS3DObject.scale.x *= -1;
 
     cssScene.add(projectsCSS3DObject);
 
     screenMiddle.material.opacity = 0.3;
     screenMiddle.material.transparent = true;
-    screenMiddle.material.side = THREE.DoubleSide;
 
     setTimeout(attachProjectEventListeners, 0);
   }
@@ -452,12 +418,9 @@ function setupCSS3DObjects() {
     galleryEl.style.width = '1440px';
     galleryEl.style.height = '1024px';
     galleryEl.style.opacity = '1';
-    galleryEl.style.transform = 'translateZ(0)';
-    galleryEl.style.transformStyle = 'preserve-3d';
 
     galleryCSS3DObject = new CSS3DObject(galleryEl);
     galleryCSS3DObject.element.style.pointerEvents = 'auto';
-    galleryCSS3DObject.element.style.transformStyle = 'preserve-3d';
 
     const rightBox = new THREE.Box3().setFromObject(screenRight);
     const rightSize = new THREE.Vector3();
@@ -467,37 +430,34 @@ function setupCSS3DObjects() {
     const scaleY = rightSize.y / 1024;
     galleryCSS3DObject.scale.set(scaleX, scaleY, 1);
 
-    // Get screen world position and rotation
     const screenPos = new THREE.Vector3();
     const screenQuat = new THREE.Quaternion();
-    const screenScale = new THREE.Vector3();
     screenRight.getWorldPosition(screenPos);
     screenRight.getWorldQuaternion(screenQuat);
-    screenRight.getWorldScale(screenScale);
 
-    // Apply position
     galleryCSS3DObject.position.copy(screenPos);
+    galleryCSS3DObject.quaternion.copy(screenQuat);
 
-    // Apply rotation - for right screen
-    const rotationAdjustment = new THREE.Quaternion().setFromAxisAngle(
-      new THREE.Vector3(0, 1, 0),
-      Math.PI // 180 degrees
-    );
-    const finalQuat = screenQuat.clone().multiply(rotationAdjustment);
-    galleryCSS3DObject.quaternion.copy(finalQuat);
-
-    // Apply scale compensation
-    galleryCSS3DObject.scale.multiply(screenScale);
+    galleryCSS3DObject.scale.x *= -1.1;
 
     cssScene.add(galleryCSS3DObject);
-
-    screenRight.material.opacity = 0.3;
-    screenRight.material.transparent = true;
-    screenRight.material.side = THREE.DoubleSide;
   }
 
   function attachProjectEventListeners() {
-    console.log('Attaching project event listeners...');
+    const folderItems = document.querySelectorAll('.folder-item');
+
+    folderItems.forEach((folder, index) => {
+      const folderId = folder.getAttribute('data-folder');
+
+      const clickHandler = function () {
+        const popup = document.getElementById('popup-' + folderId);
+        if (popup) {
+          popup.classList.add('active');
+        }
+      };
+
+      addEventListenerWithCleanup(folder, 'click', clickHandler);
+    });
 
     document.querySelectorAll('.appContainer').forEach(thumbnail => {
       const clickHandler = function () {
@@ -545,35 +505,6 @@ function setupCSS3DObjects() {
       addEventListenerWithCleanup(popup, 'click', clickHandler);
     });
   }
-}
-
-function finishLoading() {
-  // Reset clock so animations start at t=0
-  clock.stop();
-  clock.start();
-
-  // Unpause + start all prepared animations
-  pendingAnimations.forEach(action => {
-    if (!action) return;
-    action.paused = false;
-    action.reset();
-    action.play();
-  });
-  pendingAnimations.length = 0;
-
-  loadingComplete = true;
-
-  // Notify rest of app (you already listen for this)
-  window.dispatchEvent(new Event('loadingComplete'));
-
-  // Fade out loading screen (DOM)
-  const loader = document.getElementById('loader');
-  if (loader) {
-    loader.classList.add('fade-out');
-    setTimeout(() => loader.remove(), 500);
-  }
-
-  document.body.classList.remove('loading');
 }
 
 async function homeInit() {
@@ -722,10 +653,8 @@ async function homeInit() {
       return matrixCache.get(key + '_quat');
     };
 
-    if (loadingComplete) {
-      const delta = clock.getDelta();
-      mixers.forEach((m) => m.update(delta));
-    }
+    const delta = clock.getDelta();
+    mixers.forEach((m) => m.update(delta));
 
     if (runToJump && runToJump.isRunning()) {
       const progress = runToJump.time / runToJump.getClip().duration;
@@ -857,9 +786,9 @@ async function homeInit() {
         if (screenState === 1) {
           if (screenMiddle && projectsScreenContainer && cssRenderer && container) {
 
-            projectsScreenContainer.style.zIndex = '9999 !important';
+            projectsScreenContainer.style.zIndex = '9998 !important';
             projectsScreenContainer.style.pointerEvents = 'auto';
-            cssRenderer.domElement.style.zIndex = '9999 !important';
+            cssRenderer.domElement.style.zIndex = '9998 !important';
             cssRenderer.domElement.style.pointerEvents = 'auto';
 
             // Use cached position calculation
@@ -883,7 +812,6 @@ async function homeInit() {
             cssRenderer.domElement.style.zIndex = '9999';
             cssRenderer.domElement.style.pointerEvents = 'auto';
 
-            // Use cached position calculation
             const screenRightPos = getWorldPositionCached(screenRight, 'screenRight');
 
             const offsetZ = 0.75;
@@ -946,26 +874,15 @@ async function homeInit() {
       // Use cached calculations
       const screenPos = getWorldPositionCached(screenLeft, 'screenLeft');
       const screenQuat = getWorldQuaternionCached(screenLeft, 'screenLeft');
-      const screenScale = new THREE.Vector3();
-      screenLeft.getWorldScale(screenScale);
 
       // Only update if position changed significantly
       if (screenPos.distanceTo(lastVideoScreenPosition) > positionUpdateThreshold ||
         screenQuat.angleTo(lastVideoScreenQuaternion) > 0.01) {
-
-        const rotationAdjustment = new THREE.Quaternion().setFromAxisAngle(
-          new THREE.Vector3(0, 1, 0),
-          Math.PI
-        );
-        const finalQuat = screenQuat.clone().multiply(rotationAdjustment);
+        const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
+        screenQuat.multiply(rotationOffset);
 
         videoCSS3DObject.position.copy(screenPos);
-        videoCSS3DObject.quaternion.copy(finalQuat);
-
-        // Apply scale compensation
-        const scaleX = 1440 / screenScale.x;
-        const scaleY = 1024 / screenScale.y;
-        videoCSS3DObject.scale.set(scaleX, scaleY, 1);
+        videoCSS3DObject.quaternion.copy(screenQuat);
 
         lastVideoScreenPosition.copy(screenPos);
         lastVideoScreenQuaternion.copy(screenQuat);
@@ -974,29 +891,16 @@ async function homeInit() {
     }
 
     if (projectsCSS3DObject && screenMiddle) {
-      // Use cached calculations
       const screenPos = getWorldPositionCached(screenMiddle, 'screenMiddle');
       const screenQuat = getWorldQuaternionCached(screenMiddle, 'screenMiddle');
-      const screenScale = new THREE.Vector3();
-      screenMiddle.getWorldScale(screenScale);
 
-      // Only update if position changed significantly
       if (screenPos.distanceTo(lastProjectsScreenPosition) > positionUpdateThreshold ||
         screenQuat.angleTo(lastProjectsScreenQuaternion) > 0.01) {
-
-        const rotationAdjustment = new THREE.Quaternion().setFromAxisAngle(
-          new THREE.Vector3(1, 0, 0),
-          THREE.MathUtils.degToRad(0) // Reduced from 90 to 0
-        );
-        const finalQuat = screenQuat.clone().multiply(rotationAdjustment);
+        const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(5));
+        screenQuat.multiply(rotationOffset);
 
         projectsCSS3DObject.position.copy(screenPos);
-        projectsCSS3DObject.quaternion.copy(finalQuat);
-
-        // Apply scale compensation
-        const scaleX = 1440 / screenScale.x;
-        const scaleY = 1024 / screenScale.y;
-        projectsCSS3DObject.scale.set(scaleX * -1, scaleY, 1); // Apply flip here
+        projectsCSS3DObject.quaternion.copy(screenQuat);
 
         lastProjectsScreenPosition.copy(screenPos);
         lastProjectsScreenQuaternion.copy(screenQuat);
@@ -1005,29 +909,14 @@ async function homeInit() {
     }
 
     if (galleryCSS3DObject && screenRight) {
-      // Use cached calculations
       const screenPos = getWorldPositionCached(screenRight, 'screenRight');
       const screenQuat = getWorldQuaternionCached(screenRight, 'screenRight');
-      const screenScale = new THREE.Vector3();
-      screenRight.getWorldScale(screenScale);
 
-      // Only update if position changed significantly
       if (screenPos.distanceTo(lastGalleryScreenPosition) > positionUpdateThreshold ||
         screenQuat.angleTo(lastGalleryScreenQuaternion) > 0.01) {
 
-        const rotationAdjustment = new THREE.Quaternion().setFromAxisAngle(
-          new THREE.Vector3(0, 1, 0),
-          Math.PI
-        );
-        const finalQuat = screenQuat.clone().multiply(rotationAdjustment);
-
         galleryCSS3DObject.position.copy(screenPos);
-        galleryCSS3DObject.quaternion.copy(finalQuat);
-
-        // Apply scale compensation
-        const scaleX = 1440 / screenScale.x;
-        const scaleY = 1024 / screenScale.y;
-        galleryCSS3DObject.scale.set(scaleX, scaleY, 1);
+        galleryCSS3DObject.quaternion.copy(screenQuat);
 
         lastGalleryScreenPosition.copy(screenPos);
         lastGalleryScreenQuaternion.copy(screenQuat);
@@ -1035,7 +924,6 @@ async function homeInit() {
       }
     }
 
-    // Check if camera has moved significantly
     const cameraPosition = homeCamera.position;
     const cameraRotation = homeCamera.rotation;
     const cameraPositionChanged = cameraPosition.distanceTo(lastCameraPosition) > 0.001;
@@ -1068,6 +956,12 @@ async function homeInit() {
       renderedAnyScene = true;
     }
 
+    if (cssSceneNeedsRender) {
+      cssRenderer.render(cssScene, homeCamera);
+      cssSceneNeedsRender = false;
+      renderedAnyScene = true;
+    }
+
     if (bedroomSceneNeedsRender) {
       bedRoomRenderer.render(bedRoomScene, homeCamera);
       bedroomSceneNeedsRender = false;
@@ -1079,8 +973,6 @@ async function homeInit() {
       lastCameraPosition.copy(cameraPosition);
       lastCameraRotation.copy(cameraRotation);
     }
-
-    cssRenderer.render(cssScene, homeCamera);
   }
 
   animate();
