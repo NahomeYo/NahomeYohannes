@@ -2,7 +2,6 @@ import * as THREE from "./libs/three/build/three.module.js";
 import { GLTFLoader } from "./libs/three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "./libs/three/examples/jsm/loaders/DRACOLoader.js";
 import { CSS3DRenderer, CSS3DObject } from "./libs/three/examples/jsm/renderers/CSS3DRenderer.js";
-import { MathUtils } from "three";
 
 let mixers = [];
 const clock = new THREE.Clock();

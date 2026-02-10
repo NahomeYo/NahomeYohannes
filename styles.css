@@ -796,7 +796,7 @@ html {
   width: 100vw;
   height: 100%;
   z-index: 9999;
-  mask-image: url("/images/upsideUpSeattle.svg");
+  mask-image: url("./images/upsideUpSeattle.svg");
   mask-size: 100%;
   mask-position: 0% 100%;
   mask-repeat: no-repeat;
@@ -830,7 +830,7 @@ html {
   width: 100vw;
   height: 100%;
   z-index: 9999;
-  mask-image: url("/images/upsideDownSeattle.svg");
+  mask-image: url("./images/upsideDownSeattle.svg");
   mask-size: 100%;
   mask-position: 0% 0%;
   mask-repeat: no-repeat;
