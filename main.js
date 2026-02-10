@@ -173,8 +173,9 @@ function addModel(scene, modelPath) {
     } catch (dracoError) {
     }
 
+    const resolvedPath = new URL(modelPath, import.meta.url).href;
     loader.load(
-      modelPath,
+      resolvedPath,
       (gltf) => {
         const root = gltf.scene;
         scene.add(root);
@@ -328,6 +329,7 @@ function addModel(scene, modelPath) {
       },
       undefined,
       (err) => {
+        console.error(`Failed to load model: ${resolvedPath}`, err);
         reject(err);
       }
     );
@@ -527,9 +529,21 @@ async function homeInit() {
   addLights(bedRoomScene);
 
   // Load models
-  await addModel(scene, "./nahomeRig.glb");
-  await addModel(scene, "./apps.glb");
-  await addModel(bedRoomScene, "./bedRoom.glb");
+  try {
+    await addModel(scene, "./nahomeRig.glb");
+  } catch (err) {
+    console.error("nahomeRig.glb failed to load:", err);
+  }
+  try {
+    await addModel(scene, "./apps.glb");
+  } catch (err) {
+    console.error("apps.glb failed to load:", err);
+  }
+  try {
+    await addModel(bedRoomScene, "./bedRoom.glb");
+  } catch (err) {
+    console.error("bedRoom.glb failed to load:", err);
+  }
 
   if (nahomeModel) {
     nahomeModel.position.set(0, -2, -8);
