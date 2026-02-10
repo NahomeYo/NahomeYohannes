@@ -10,7 +10,7 @@
   margin: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 29;
+  z-index: 29 !important;
   pointer-events: auto !important;
   filter:
     contrast(0.9) saturate(0.75) hue-rotate(-10deg);
@@ -30,7 +30,7 @@
   position: absolute;
   left: 0;
   top: 50%;
-  z-index: 9999 !important;
+  z-index: 10000 !important;
   display: flex;
   gap: 50px;
   flex-direction: column;
@@ -193,7 +193,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  z-index: 9999 !important;
 }
 
 .projects-window {
@@ -244,8 +243,12 @@
   white-space: nowrap;
 }
 
-/* Popup Window Styles */
 .folder-popup {
+  display: none;
+}
+
+.folder-popup.active {
+  display: block;
   position: absolute;
   background: #ffffff;
   border-radius: 10px;
@@ -256,14 +259,9 @@
   height: auto;
   transform: translate(-50%, -50%);
   overflow: visible;
-  display: none;
   flex-direction: column;
   pointer-events: auto;
-  z-index: 10000;
-}
-
-.folder-popup.active {
-  display: flex;
+  z-index: 10000 !important;
 }
 
 .window-titlebar {

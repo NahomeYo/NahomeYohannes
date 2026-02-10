@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 0;
     left: 0;
     top: 0;
     position: fixed;
@@ -10,7 +9,7 @@
     height: 100vh;
     background: var(--fourthly);
     pointer-events: none;
-    z-index: 9999;
+    z-index: 10001 !important;
   }
   
   #loadingScreen svg {

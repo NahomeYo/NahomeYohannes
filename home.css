@@ -4,12 +4,15 @@
   position: fixed;
   justify-content: space-between;
   margin: 5vh 5vw 0 5vw;
+  z-index: 9999;
 }
 
 .navBar span {
   list-style: none;
   display: flex;
   justify-content: space-between;
+  justify-content: center;
+  align-items: center;
 }
 
 .navBar span:nth-of-type(1) {
@@ -27,8 +30,11 @@
   padding: 2vw;
   width: 5vw;
   transform: translate(-6vw, -5vh);
-  z-index: 9999;
   pointer-events: auto;
+}
+
+.homeBorder {
+  pointer-events: none;
 }
 
 .homeBorder .circle {
@@ -39,7 +45,6 @@
   background: var(--fourthly);
   left: 0;
   top: 0;
-  z-index: -1;
   border-radius: 0;
   transform-origin: left top;
   border-radius: 0 0 100% 0;
@@ -47,8 +52,8 @@
 }
 
 .homeBorder .circle.expandCircle {
-  width: 300px;
-  height: 300px;
+  width: 6rem;
+  height: 6rem;
 }
 
 .navBar span:nth-of-type(2) {
@@ -106,7 +111,6 @@
   left: 0;
   top: 0;
   opacity: 0;
-  z-index: 1;
 }
 
 .navBar span:nth-of-type(1) .iconButton img {
@@ -139,6 +143,16 @@
 .navBar span:nth-of-type(1) li:nth-of-type(1) {
   position: relative;
   z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.navBar span li {
+  position: absolute;
+  transition: all 1s var(--motion);
+  pointer-events: auto;
+  opacity: 1;
 }
 
 .navBar span li a {
@@ -153,12 +167,11 @@
 }
 
 .nyLogo {
-  width: 4vw;
-  height: 8vh;
+  width: 2rem;
+  height: 2rem;
   overflow: visible;
   transform: rotate(0deg);
   transition: all 1s var(--motion);
-  z-index: 999;
 }
 
 .nyLogo.rotateLogo {
