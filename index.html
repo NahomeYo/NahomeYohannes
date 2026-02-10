@@ -928,6 +928,24 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <div id="debugBanner" style="position:fixed;bottom:12px;right:12px;z-index:99999;background:#111;color:#fff;padding:8px 10px;font:12px/1.4 monospace;border:1px solid #ff3c00;max-width:60vw;opacity:.85;">
+    debug: booting...
+  </div>
+  <script>
+    (function () {
+      const banner = document.getElementById('debugBanner');
+      if (!banner) return;
+      const set = (msg) => banner.textContent = msg;
+      set('debug: inline script ok');
+      window.addEventListener('error', (e) => {
+        set('debug: window error: ' + (e.message || e.type));
+      });
+      window.addEventListener('unhandledrejection', (e) => {
+        set('debug: unhandled promise: ' + (e.reason && e.reason.message ? e.reason.message : 'see console'));
+      });
+      window.__debugSet = set;
+    })();
+  </script>
   <script type="importmap">
       {
         "imports": {
@@ -940,12 +958,15 @@
     let initHome, initRoom;
 
     document.addEventListener("DOMContentLoaded", async () => {
+      if (window.__debugSet) window.__debugSet('debug: DOMContentLoaded');
       try {
         const mod = await import('./main.js');
         initHome = mod.initHome;
         initRoom = mod.initRoom;
+        if (window.__debugSet) window.__debugSet('debug: main.js loaded');
       } catch (err) {
         console.error('Failed to load main.js module:', err);
+        if (window.__debugSet) window.__debugSet('debug: main.js failed to load');
       }
 
       if (typeof initHome === 'function') initHome();
