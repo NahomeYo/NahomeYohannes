@@ -51,6 +51,13 @@ let scrollTriggered = false;
 let aboutTriggerY = 700;
 let projectTriggerY = 3200;
 
+function updateSectionTriggers() {
+  const aboutEl = document.querySelector('.about');
+  const projectsEl = document.querySelector('.projects');
+  if (aboutEl) aboutTriggerY = Math.max(0, aboutEl.offsetTop - 100);
+  if (projectsEl) projectTriggerY = Math.max(0, projectsEl.offsetTop - 100);
+}
+
 let targetCameraPosition = null;
 let targetCameraRotation = null;
 let manualCameraOverride = false;
@@ -527,6 +534,11 @@ async function homeInit() {
   const bedRoomScene = new THREE.Scene();
   const bedRoomRenderer = createRenderer(bedRoomSceneContainer, homeCamera);
   addLights(bedRoomScene);
+
+  updateSectionTriggers();
+  addEventListenerWithCleanup(window, 'resize', updateSectionTriggers);
+  addEventListenerWithCleanup(window, 'load', updateSectionTriggers);
+  setTimeout(updateSectionTriggers, 0);
 
   // Load models
   try {
