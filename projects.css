@@ -153,6 +153,13 @@
   transition: all 0.5s var(--motion);
 }
 
+.projects-header span.is-locked h3,
+.projects-header span.is-locked .primaryButton {
+  pointer-events: none !important;
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .projects-header span .primaryButton img {
   width: var(--iconSize);
   height: var(--iconSize);

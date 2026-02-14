@@ -58,22 +58,9 @@ p {
 }
 
 /* =========================
-   DESKTOP
-========================= */
-@media screen and (min-width: 1440px) {
-  html {
-    font-size: 24px;
-  }
-}
-
-/* =========================
    IPAD / TABLET
 ========================= */
 @media screen and (min-width: 768px) and (max-width: 1439px) {
-  html {
-    font-size: 18px;
-  }
-
   .about.expanded {
     height: 100vh;
   }
@@ -168,17 +155,6 @@ p {
   .progressContainer li .text h2 {
     font-family: LondrinaSolid;
     white-space: normal;
-  }
-}
-
-/* =========================
-   IPHONE
-========================= */
-@media screen and (max-width: 767px) {
-  html {
-    font-size: 14px;
-    background: lightblue;
-    /* Debug style */
   }
 }
 

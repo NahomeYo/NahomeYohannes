@@ -126,12 +126,14 @@
   <div class="about">
 
     <div class="infoHeader">
-      <div class="professionRow">
-        <img src="./icons/professionsBanner.png" />
-      </div>
+      <div class="infoTrack">
+        <div class="professionRow">
+          <img src="./icons/professionsBanner.png" alt="Professions banner" />
+        </div>
 
-      <div class="professionRow">
-        <img src="./icons/professionsBanner.png" />
+        <div class="professionRow" aria-hidden="true">
+          <img src="./icons/professionsBanner.png" alt="" />
+        </div>
       </div>
     </div>
 
@@ -928,24 +930,6 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <div id="debugBanner" style="position:fixed;bottom:12px;right:12px;z-index:99999;background:#111;color:#fff;padding:8px 10px;font:12px/1.4 monospace;border:1px solid #ff3c00;max-width:60vw;opacity:.85;">
-    debug: booting...
-  </div>
-  <script>
-    (function () {
-      const banner = document.getElementById('debugBanner');
-      if (!banner) return;
-      const set = (msg) => banner.textContent = msg;
-      set('debug: inline script ok');
-      window.addEventListener('error', (e) => {
-        set('debug: window error: ' + (e.message || e.type));
-      });
-      window.addEventListener('unhandledrejection', (e) => {
-        set('debug: unhandled promise: ' + (e.reason && e.reason.message ? e.reason.message : 'see console'));
-      });
-      window.__debugSet = set;
-    })();
-  </script>
   <script type="importmap">
       {
         "imports": {
@@ -1288,59 +1272,12 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script type="module" src="./main.js"></script>
   <script>
-    // Separate click events for project category buttons
-    document.addEventListener('DOMContentLoaded', () => {
-      // Wait for elements to be available
-      setTimeout(() => {
-        const projectsScreenContainer = document.getElementById('projectsScreen');
-
-        const projectCategory1 = document.querySelector('.projects-header h3:nth-of-type(1)');
-        const projectCategory2 = document.querySelector('.projects-header h3:nth-of-type(2)');
-
-        if (projectCategory1) {
-          projectCategory1.addEventListener('click', () => {
-            console.log('Direct click on category 1 - Setting zIndex and pointer events');
-            if (projectsScreenContainer) {
-              projectsScreenContainer.style.zIndex = '9998';
-              projectsScreenContainer.style.pointerEvents = 'auto';
-            }
-            // Also set on CSS renderer if available
-            if (window.cssRenderer && window.cssRenderer.domElement) {
-              window.cssRenderer.domElement.style.zIndex = '9998';
-              window.cssRenderer.domElement.style.pointerEvents = 'auto';
-            }
-          });
-        }
-
-        if (projectCategory2) {
-          projectCategory2.addEventListener('click', () => {
-            console.log('Direct click on category 2 - Setting zIndex and pointer events');
-            if (projectsScreenContainer) {
-              projectsScreenContainer.style.zIndex = '9999';
-              projectsScreenContainer.style.pointerEvents = 'auto';
-            }
-            // Also set on CSS renderer if available
-            if (window.cssRenderer && window.cssRenderer.domElement) {
-              window.cssRenderer.domElement.style.zIndex = '9999';
-              window.cssRenderer.domElement.style.pointerEvents = 'auto';
-            }
-          });
-        }
-      }, 200);
-    });
-  </script>
-  <script>
     window.addEventListener('resize', () => {
       const contactRows = document.querySelectorAll('.contactRow');
 
       contactRows.forEach((row) => {
-        // Remove the animation class to reset it
         row.style.animation = 'none';
-
-        // Trigger reflow to restart the animation
-        row.offsetHeight; // This forces a reflow
-
-        // Reapply the animation
+        row.offsetHeight; 
         row.style.animation = '';
       });
     });

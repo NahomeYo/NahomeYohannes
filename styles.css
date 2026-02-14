@@ -830,21 +830,42 @@ html {
   width: 100vw;
   height: 100%;
   z-index: 9999;
+  overflow: hidden;
   mask-image: url("./images/upsideDownSeattle.svg");
   mask-size: 100%;
   mask-position: 0% 0%;
   mask-repeat: no-repeat;
 }
 
-.professionRow img {
-  object-fit: contain;
+.infoTrack {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: infoMarquee 20s linear infinite;
+  will-change: transform;
 }
 
 .professionRow {
-  width: 200vw;
-  animation: scrollX 20s linear infinite;
+  flex: 0 0 100vw;
+  width: 100vw;
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.professionRow:nth-of-type(2) {
-  animation-delay: 10s;
+.professionRow img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+@keyframes infoMarquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }

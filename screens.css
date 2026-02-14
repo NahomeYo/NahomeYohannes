@@ -1,16 +1,21 @@
-/* desktop screen */
-@media screen and (min-width: 1440px) {}
-
-/* ipad screen */
-@media screen and (min-width: 1024px) and (max-width: 1439px) {
-    * {
-        font-size: 20px;
-    }
+html {
+  font-size: 16px;
 }
 
-/* iphone screen */
-@media screen and (min-width: 393px) and (max-width: 1023px) {
-    * {
-        font-size: 16px;
-    }
+@media screen and (min-width: 1440px) {
+  html {
+    font-size: 18px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  html {
+    font-size: 14px;
+  }
 }

@@ -48,27 +48,22 @@ let videoCSS3DObject, projectsCSS3DObject, galleryCSS3DObject;
 
 let appsContainer = [];
 let scrollTriggered = false;
-let aboutTriggerY = 700;
-let projectTriggerY = 3200;
-
-function updateSectionTriggers() {
-  const aboutEl = document.querySelector('.about');
-  const projectsEl = document.querySelector('.projects');
-  if (aboutEl) aboutTriggerY = Math.max(0, aboutEl.offsetTop - 100);
-  if (projectsEl) projectTriggerY = Math.max(0, projectsEl.offsetTop - 100);
-}
+let aboutSectionEl = null;
+let projectsSectionEl = null;
 
 let targetCameraPosition = null;
 let targetCameraRotation = null;
 let manualCameraOverride = false;
 let screenState = null;
+let projectEntryCameraPosition = null;
+let projectEntryCameraRotation = null;
+let wasInProjects = false;
+let projectsUnlocked = false;
 
-// Performance optimization variables
 let lastFrameTime = 0;
 const targetFPS = 60;
 const frameInterval = 1000 / targetFPS;
 
-// Event listener cleanup management
 let attachedEventListeners = [];
 
 function addEventListenerWithCleanup(element, event, handler, options = null) {
@@ -85,12 +80,10 @@ function cleanupEventListeners() {
   attachedEventListeners = [];
 }
 
-// Add cleanup on page unload
 if (typeof window !== 'undefined') {
   window.addEventListener('beforeunload', cleanupEventListeners);
 }
 
-// Position caching for CSS3D objects
 let lastVideoScreenPosition = new THREE.Vector3();
 let lastProjectsScreenPosition = new THREE.Vector3();
 let lastGalleryScreenPosition = new THREE.Vector3();
@@ -99,7 +92,6 @@ let lastProjectsScreenQuaternion = new THREE.Quaternion();
 let lastGalleryScreenQuaternion = new THREE.Quaternion();
 const positionUpdateThreshold = 0.01;
 
-// Render state tracking
 let lastCameraPosition = new THREE.Vector3();
 let lastCameraRotation = new THREE.Euler();
 let sceneNeedsRender = true;
@@ -112,6 +104,27 @@ function updateScrollProgress() {
   const doc = document.documentElement;
   const max = doc.scrollHeight - window.innerHeight;
   scrollProgress = max > 0 ? window.scrollY / max : 0;
+}
+
+function getSectionState() {
+  if (!aboutSectionEl || !projectsSectionEl) {
+    aboutSectionEl = document.querySelector('.about');
+    projectsSectionEl = document.querySelector('.projects');
+  }
+
+  if (!aboutSectionEl || !projectsSectionEl) {
+    return { inHome: true, inAbout: false, inProjects: false };
+  }
+
+  const aboutTop = aboutSectionEl.getBoundingClientRect().top + window.scrollY;
+  const projectsTop = projectsSectionEl.getBoundingClientRect().top + window.scrollY;
+  const currentY = window.scrollY + 1;
+
+  return {
+    inHome: currentY < aboutTop,
+    inAbout: currentY >= aboutTop && currentY < projectsTop,
+    inProjects: currentY >= projectsTop,
+  };
 }
 
 addEventListenerWithCleanup(window, "scroll", updateScrollProgress, { passive: true });
@@ -441,7 +454,7 @@ function setupCSS3DObjects() {
     const screenPos = new THREE.Vector3();
     const screenQuat = new THREE.Quaternion();
     screenRight.getWorldPosition(screenPos);
-    
+
     screenRight.getWorldQuaternion(screenQuat);
 
     galleryCSS3DObject.position.copy(screenPos);
@@ -535,11 +548,6 @@ async function homeInit() {
   const bedRoomRenderer = createRenderer(bedRoomSceneContainer, homeCamera);
   addLights(bedRoomScene);
 
-  updateSectionTriggers();
-  addEventListenerWithCleanup(window, 'resize', updateSectionTriggers);
-  addEventListenerWithCleanup(window, 'load', updateSectionTriggers);
-  setTimeout(updateSectionTriggers, 0);
-
   // Load models
   try {
     await addModel(scene, "./nahomeRig.glb");
@@ -624,14 +632,28 @@ async function homeInit() {
   applyOrangeTint(bedroomModel);
 
   const projectsHeader = document.querySelector('.headerLine');
+  const projectsHeaderSpan = document.querySelector('.projects-header span');
   const projectCategories = document.querySelectorAll(".projects-header h3");
+  const projectsBackButton = document.querySelector('.projects-header span .primaryButton');
+
+  const setProjectControlsEnabled = (enabled) => {
+    projectsUnlocked = enabled;
+    if (!projectsHeaderSpan) return;
+
+    projectsHeaderSpan.classList.toggle('is-locked', !enabled);
+    projectCategories.forEach((el) => {
+      el.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+    });
+  };
+
+  setProjectControlsEnabled(false);
 
   if (projectsHeader) {
     addEventListenerWithCleanup(projectsHeader, 'click', () => {
       manualCameraOverride = true;
       projectsHeader.classList.add('dissapear');
-      // Add 'expanded' class to the .projects-header span
-      const projectsHeaderSpan = document.querySelector('.projects-header span');
+      setProjectControlsEnabled(true);
+
       if (projectsHeaderSpan) {
         projectsHeaderSpan.classList.add('expanded');
       }
@@ -641,6 +663,8 @@ async function homeInit() {
   if (projectCategories) {
     projectCategories.forEach((el, index) => {
       addEventListenerWithCleanup(el, 'click', () => {
+        if (!projectsUnlocked) return;
+
         if (index === 0) {
           screenState = 1;
         }
@@ -648,6 +672,20 @@ async function homeInit() {
           screenState = 2;
         }
       });
+    });
+  }
+
+  if (projectsBackButton) {
+    addEventListenerWithCleanup(projectsBackButton, 'click', () => {
+      if (!projectsUnlocked) return;
+
+      screenState = null;
+      manualCameraOverride = false;
+
+      if (projectEntryCameraPosition && projectEntryCameraRotation) {
+        targetCameraPosition = projectEntryCameraPosition.clone();
+        targetCameraRotation = projectEntryCameraRotation.clone();
+      }
     });
   }
 
@@ -692,14 +730,18 @@ async function homeInit() {
       homeCamera.rotation.z = THREE.MathUtils.lerp(homeCamera.rotation.z, 0, progress);
     }
 
-    const inHome = window.scrollY < aboutTriggerY;
-    const inAbout = window.scrollY >= aboutTriggerY && window.scrollY < projectTriggerY;
-    const inProjects = window.scrollY >= projectTriggerY;
+    const { inHome, inAbout, inProjects } = getSectionState();
+
+    if (inProjects && !wasInProjects) {
+      projectEntryCameraPosition = new THREE.Vector3(2.980, 1.080, 1.460);
+      projectEntryCameraRotation = new THREE.Vector3(0, THREE.MathUtils.degToRad(52.60), 0);
+    }
+    wasInProjects = inProjects;
 
     if (nahomeModel && bedroomModel && appsContainer && appsContainer.length) {
-      // --- APPS VISIBILITY & MOVEMENT ---
+
       if (!inHome) {
-        // Move apps up out of view (e.g., y = 100)
+
         appsContainer.forEach((child) => {
           child.position.y = 100;
         });
@@ -725,9 +767,7 @@ async function homeInit() {
         bedroomModel.position.set(-10, 0, 0);
       }
 
-      // --- NAHOME MODEL ANIMATION STATE CONTROL ---
       if (inAbout) {
-        // Only idle/smiling should play, typing must be fully stopped
         if (typing && typing.isRunning()) {
           typing.fadeOut(0.2);
           setTimeout(() => { if (typing) typing.stop(); }, 200);
@@ -740,7 +780,6 @@ async function homeInit() {
       }
 
       if (inProjects) {
-        // Only typing should play, idle/smiling must be fully stopped
         if (typing && !typing.isRunning()) {
           if (idle && idle.isRunning()) idle.fadeOut(0.2);
           if (smiling && smiling.isRunning()) smiling.fadeOut(0.2);
@@ -759,7 +798,7 @@ async function homeInit() {
 
         if (runToJump) runToJump.stop();
         if (typing) typing.stop();
-        // Use crossfade for smooth transition to idle/smiling
+
         if (idle && !idle.isRunning()) {
           idle.reset();
           idle.fadeIn(0.3);
@@ -800,7 +839,6 @@ async function homeInit() {
       }
 
       if (inProjects) {
-        // Crossfade from idle/smiling to typing
         if (typing && !typing.isRunning()) {
           if (idle && idle.isRunning()) idle.fadeOut(0.3);
           if (smiling && smiling.isRunning()) smiling.fadeOut(0.3);
@@ -817,7 +855,6 @@ async function homeInit() {
             cssRenderer.domElement.style.zIndex = '9998 !important';
             cssRenderer.domElement.style.pointerEvents = 'auto';
 
-            // Use cached position calculation
             const screenMiddlePos = getWorldPositionCached(screenMiddle, 'screenMiddle');
 
             const offsetZ = 0.75;
@@ -855,7 +892,6 @@ async function homeInit() {
           targetCameraRotation = new THREE.Vector3(0, THREE.MathUtils.degToRad(52.60), 0);
         } else {
           if (nahomeNeckBone) {
-            // Use cached position calculation
             const neckWorldPos = getWorldPositionCached(nahomeNeckBone, 'neckBone');
 
             const offsetX = 0;
@@ -895,13 +931,10 @@ async function homeInit() {
 
     bedRoomScene.updateMatrixWorld(true);
 
-    // Optimized CSS3D updates - only update when positions change significantly
     if (videoCSS3DObject && screenLeft) {
-      // Use cached calculations
       const screenPos = getWorldPositionCached(screenLeft, 'screenLeft');
       const screenQuat = getWorldQuaternionCached(screenLeft, 'screenLeft');
 
-      // Only update if position changed significantly
       if (screenPos.distanceTo(lastVideoScreenPosition) > positionUpdateThreshold ||
         screenQuat.angleTo(lastVideoScreenQuaternion) > 0.01) {
         const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
@@ -957,14 +990,12 @@ async function homeInit() {
       Math.abs(cameraRotation.y - lastCameraRotation.y) > 0.001 ||
       Math.abs(cameraRotation.z - lastCameraRotation.z) > 0.001;
 
-    // Mark scenes for rendering based on changes
     if (cameraPositionChanged || cameraRotationChanged) {
       sceneNeedsRender = true;
       cssSceneNeedsRender = true;
       bedroomSceneNeedsRender = true;
     }
 
-    // Force render periodically to prevent visual glitches
     animationFramesSinceLastRender++;
     if (animationFramesSinceLastRender >= maxFramesBetweenRenders) {
       sceneNeedsRender = true;
@@ -973,7 +1004,6 @@ async function homeInit() {
       animationFramesSinceLastRender = 0;
     }
 
-    // Conditional rendering
     let renderedAnyScene = false;
 
     if (sceneNeedsRender) {
@@ -994,7 +1024,6 @@ async function homeInit() {
       renderedAnyScene = true;
     }
 
-    // Update camera tracking if we rendered
     if (renderedAnyScene || cameraPositionChanged || cameraRotationChanged) {
       lastCameraPosition.copy(cameraPosition);
       lastCameraRotation.copy(cameraRotation);
@@ -1012,3 +1041,10 @@ export function initAbout(container) {
   if (!container) return;
   aboutInit(container);
 }
+
+function setupSectionBoundaries() {
+  aboutSectionEl = document.querySelector('.about');
+  projectsSectionEl = document.querySelector('.projects');
+}
+
+setupSectionBoundaries();
