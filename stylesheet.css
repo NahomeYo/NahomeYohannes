@@ -2,9 +2,7 @@ html {
   font-size: 16px;
 }
 
-/* =========================
-   CSS VARIABLES
-========================= */
+
 :root {
   --b: 0.5rem;
   --header: 1rem;
@@ -26,9 +24,7 @@ html {
     0 1px var(--fifthly);
 }
 
-/* =========================
-   TYPOGRAPHY (FLUID)
-========================= */
+
 h1 {
   font-family: LondrinaSketch;
   font-size: 10rem;
@@ -57,9 +53,7 @@ p {
   color: var(--secondary);
 }
 
-/* =========================
-   IPAD / TABLET
-========================= */
+
 @media screen and (min-width: 768px) and (max-width: 1439px) {
   .about.expanded {
     height: 100vh;
@@ -158,9 +152,7 @@ p {
   }
 }
 
-/* =========================
-   FONT FACES
-========================= */
+
 @font-face {
   font-family: LondrinaSketch;
   src: url(./fonts/LondrinaSketch-Regular.ttf);
@@ -186,9 +178,7 @@ p {
   src: url(./fonts/Neo\ Nippon-Regular.ttf);
 }
 
-/* =========================
-   FOOTER LINKS
-========================= */
+
 .footer ol a {
   display: inline-flex;
   transition: transform 0.2s ease, filter 0.2s ease;

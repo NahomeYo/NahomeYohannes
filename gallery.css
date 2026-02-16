@@ -57,17 +57,17 @@
   object-fit: contain;
 }
 
-/* First col - vertical carousel moving down */
+
 .col:nth-child(1) span {
   animation: scrollVerticalDown 20s linear infinite;
 }
 
-/* Second col - vertical carousel moving up */
+
 .col:nth-child(2) span {
   animation: scrollVerticalUp 20s linear infinite;
 }
 
-/* Third col - vertical carousel moving down */
+
 .col:nth-child(3) span {
   animation: scrollVerticalDown 20s linear infinite;
 }

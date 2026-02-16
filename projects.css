@@ -81,11 +81,11 @@
   font-size: 4.5rem;
   text-shadow:
     -1px -1px 0 var(--sixthly),
-    /* top-left */
+    
     1px -1px 0 var(--thirdly),
-    /* top-right */
+    
     -1px 1px 0 var(--thirdly),
-    /* bottom-left */
+    
     1px 1px 0 var(--thirdly);
   margin: 0;
   pointer-events: auto;
@@ -211,7 +211,7 @@
   pointer-events: auto;
 }
 
-/* Desktop Folders Grid */
+
 .desktop-folders {
   display: flex;
   flex-direction: column;
@@ -483,7 +483,7 @@
   pointer-events: none;
 }
 
-/* Text Viewer Overlay */
+
 .text-viewer {
   position: absolute;
   top: 75%;
@@ -601,7 +601,7 @@
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.713));
 }
 
-/* Responsive Design */
+
 @media (max-width: 768px) {
   .desktop-folders {
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));

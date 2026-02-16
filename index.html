@@ -126,14 +126,8 @@
   <div class="about">
 
     <div class="infoHeader">
-      <div class="infoTrack">
-        <div class="professionRow">
-          <img src="./icons/professionsBanner.png" alt="Professions banner" />
-        </div>
-
-        <div class="professionRow" aria-hidden="true">
-          <img src="./icons/professionsBanner.png" alt="" />
-        </div>
+      <div class="professionRow">
+        <img src="./icons/professionsBanner.png" />
       </div>
     </div>
 
@@ -424,7 +418,7 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a class="appContainer">
+              <a href="https://www.figma.com/design/bUNhnfyYMOgjk9ThRHBdEl/LittleLemon?node-id=640-649&t=pYJuPROKr8BV55v2-1" target="_blank" rel="noopener">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
@@ -489,7 +483,7 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a class="appContainer">
+              <a href="https://www.figma.com/design/vUX3sreT2aVIvqDTeLoNin/Psaltos_mockup?node-id=0-1&t=1TiEzcAnxiOOy6DR-1" class="appContainer">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
@@ -554,7 +548,7 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a class="appContainer">
+              <a href="https://www.figma.com/design/sEc6ZNr0ZSsIGZKoc5mDEX/SMPK_mockup?node-id=0-1&t=snAiSq3qM2KrhsQ6-1" target="_blank" rel="noopener" class="appContainer">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
@@ -618,10 +612,6 @@
               </div>
 
               <a class="appContainer">
-                <img src="./images/figmaAppIcon.png" alt="Figma" />
-                <p class="app-icon-label">Figma</p>
-              </a>
-              <a class="appContainer">
                 <img src="./images/githubAppIcon.png" alt="GitHub" />
                 <p class="app-icon-label">GitHub</p>
               </a>
@@ -675,11 +665,11 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a class="appContainer">
+              <a href="https://www.figma.com/design/lnoPtdkQ8s9LB9D583XQhU/Untitled?node-id=0-1&t=y4IyeHv28UrbvwFm-1" target="_blank" rel="noopener" class="appContainer">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
-              <a class="appContainer">
+              <a href="https://github.com/SPU-Epee/PretsAllez" target="_blank" rel="noopener" class="appContainer">
                 <img src="./images/githubAppIcon.png" alt="GitHub" />
                 <p class="app-icon-label">GitHub</p>
               </a>
@@ -1271,6 +1261,47 @@
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script type="module" src="./main.js"></script>
+  <script>
+    // Separate click events for project category buttons
+    document.addEventListener('DOMContentLoaded', () => {
+      // Wait for elements to be available
+      setTimeout(() => {
+        const projectsScreenContainer = document.getElementById('projectsScreen');
+
+        const projectCategory1 = document.querySelector('.projects-header h3:nth-of-type(1)');
+        const projectCategory2 = document.querySelector('.projects-header h3:nth-of-type(2)');
+
+        if (projectCategory1) {
+          projectCategory1.addEventListener('click', () => {
+            console.log('Direct click on category 1 - Setting zIndex and pointer events');
+            if (projectsScreenContainer) {
+              projectsScreenContainer.style.zIndex = '9998';
+              projectsScreenContainer.style.pointerEvents = 'auto';
+            }
+            // Also set on CSS renderer if available
+            if (window.cssRenderer && window.cssRenderer.domElement) {
+              window.cssRenderer.domElement.style.zIndex = '9998';
+              window.cssRenderer.domElement.style.pointerEvents = 'auto';
+            }
+          });
+        }
+
+        if (projectCategory2) {
+          projectCategory2.addEventListener('click', () => {
+            console.log('Direct click on category 2 - Setting zIndex and pointer events');
+            if (projectsScreenContainer) {
+              projectsScreenContainer.style.zIndex = '9999';
+              projectsScreenContainer.style.pointerEvents = 'auto';
+            }
+            if (window.cssRenderer && window.cssRenderer.domElement) {
+              window.cssRenderer.domElement.style.zIndex = '9999';
+              window.cssRenderer.domElement.style.pointerEvents = 'auto';
+            }
+          });
+        }
+      }, 200);
+    });
+  </script>
   <script>
     window.addEventListener('resize', () => {
       const contactRows = document.querySelectorAll('.contactRow');

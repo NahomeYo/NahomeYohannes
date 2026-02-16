@@ -322,11 +322,7 @@ html {
   z-index: 9999;
 }
 
-/*
-   a valid value for flex-grow.
-   a valid value for flex-shrink.
-   a valid value for flex-basis.
-   */
+
 
 .footer li:nth-of-type(1) h1 {
   line-height: 75%;
@@ -787,7 +783,7 @@ html {
   text-align: center;
 }
 
-/* Add this CSS to create an infinite carousel effect */
+
 .contactContainer {
 
   display: flex;
@@ -805,14 +801,14 @@ html {
 .contactRow {
   width: 100vw;
   animation: scrollX 20s linear infinite;
-  /* Infinite scrolling animation */
+  
 }
 
 .contactRow:nth-of-type(2) {
   animation-delay: 10s;
 }
 
-/* Keyframes for the infinite scrolling effect */
+
 @keyframes scrollX {
   0% {
     transform: translateX(100%);
