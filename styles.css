@@ -801,7 +801,7 @@ html {
 .contactRow {
   width: 100vw;
   animation: scrollX 20s linear infinite;
-  
+
 }
 
 .contactRow:nth-of-type(2) {
@@ -819,12 +819,24 @@ html {
   }
 }
 
+.contactHeader {
+  display: flex;
+  position: absolute;
+  width: 100vw;
+  z-index: 9999;
+  overflow: hidden;
+  bottom: 0;
+  mask-image: url("./images/upsideUpSeattle.svg");
+  mask-size: 100%;
+  mask-position: 0% 100%;
+  mask-repeat: no-repeat;
+}
+
 .infoHeader {
   display: flex;
   position: absolute;
-  inset: 0;
   width: 100vw;
-  height: 100%;
+  inset: 0;
   z-index: 9999;
   overflow: hidden;
   mask-image: url("./images/upsideDownSeattle.svg");
@@ -844,7 +856,7 @@ html {
 .professionRow {
   flex: 0 0 100vw;
   width: 100vw;
-  height: 100%;
+  margin: 0 5vw;
   display: flex;
   align-items: center;
 }
@@ -852,8 +864,9 @@ html {
 .professionRow img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
   display: block;
+  object-fit: contain;
+  object-position: 0% 0%;
 }
 
 @keyframes infoMarquee {

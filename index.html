@@ -126,8 +126,13 @@
   <div class="about">
 
     <div class="infoHeader">
-      <div class="professionRow">
-        <img src="./icons/professionsBanner.png" />
+      <div class="infoTrack">
+        <div class="professionRow">
+          <img src="./icons/professionsBanner.png" alt="Professions banner" />
+        </div>
+        <div class="professionRow" aria-hidden="true">
+          <img src="./icons/professionsBanner.png" alt="" />
+        </div>
       </div>
     </div>
 
@@ -305,13 +310,14 @@
       </div>
     </div>
 
-    <div class="contactContainer">
-      <div class="contactRow">
-        <img src="./icons/contactBanner.png" />
-      </div>
-
-      <div class="contactRow">
-        <img src="./icons/contactBanner.png" />
+    <div class="contactHeader">
+      <div class="infoTrack">
+        <div class="professionRow">
+          <img src="./icons/contactBanner.png" alt="Professions banner" />
+        </div>
+        <div class="professionRow" aria-hidden="true">
+          <img src="./icons/contactBanner.png" alt="" />
+        </div>
       </div>
     </div>
 
@@ -418,7 +424,8 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a href="https://www.figma.com/design/bUNhnfyYMOgjk9ThRHBdEl/LittleLemon?node-id=640-649&t=pYJuPROKr8BV55v2-1" target="_blank" rel="noopener">
+              <a href="https://www.figma.com/design/bUNhnfyYMOgjk9ThRHBdEl/LittleLemon?node-id=640-649&t=pYJuPROKr8BV55v2-1"
+                target="_blank" rel="noopener">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
@@ -483,7 +490,8 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a href="https://www.figma.com/design/vUX3sreT2aVIvqDTeLoNin/Psaltos_mockup?node-id=0-1&t=1TiEzcAnxiOOy6DR-1" class="appContainer">
+              <a href="https://www.figma.com/design/vUX3sreT2aVIvqDTeLoNin/Psaltos_mockup?node-id=0-1&t=1TiEzcAnxiOOy6DR-1"
+                class="appContainer">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
@@ -548,7 +556,8 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a href="https://www.figma.com/design/sEc6ZNr0ZSsIGZKoc5mDEX/SMPK_mockup?node-id=0-1&t=snAiSq3qM2KrhsQ6-1" target="_blank" rel="noopener" class="appContainer">
+              <a href="https://www.figma.com/design/sEc6ZNr0ZSsIGZKoc5mDEX/SMPK_mockup?node-id=0-1&t=snAiSq3qM2KrhsQ6-1"
+                target="_blank" rel="noopener" class="appContainer">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
@@ -665,7 +674,8 @@
                 <p class="app-icon-label">description.txt</p>
               </div>
 
-              <a href="https://www.figma.com/design/lnoPtdkQ8s9LB9D583XQhU/Untitled?node-id=0-1&t=y4IyeHv28UrbvwFm-1" target="_blank" rel="noopener" class="appContainer">
+              <a href="https://www.figma.com/design/lnoPtdkQ8s9LB9D583XQhU/Untitled?node-id=0-1&t=y4IyeHv28UrbvwFm-1"
+                target="_blank" rel="noopener" class="appContainer">
                 <img src="./images/figmaAppIcon.png" alt="Figma" />
                 <p class="app-icon-label">Figma</p>
               </a>
@@ -1308,7 +1318,7 @@
 
       contactRows.forEach((row) => {
         row.style.animation = 'none';
-        row.offsetHeight; 
+        row.offsetHeight;
         row.style.animation = '';
       });
     });
