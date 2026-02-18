@@ -812,6 +812,10 @@ html {
   pointer-events: none;
 }
 
+.contactHeader .infoTrack {
+  animation: infoMarqueeReverse 20s linear infinite;
+}
+
 .infoHeader {
   display: flex;
   position: absolute;
@@ -857,5 +861,15 @@ html {
 
   100% {
     transform: translateX(-50%);
+  }
+}
+
+@keyframes infoMarqueeReverse {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(50%);
   }
 }
