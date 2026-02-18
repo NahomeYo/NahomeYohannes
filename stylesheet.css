@@ -11,9 +11,9 @@ html {
   --background: #bc6654;
   --primary: #ffbf75;
   --secondary: #FFD170;
-  --thirdly: #d17d54;
+  --thirdly: #af6243;
   --fourthly: #7f3f32;
-  --fifthly: #ff3c00;
+  --fifthly: #ff0d00;
   --sixthly: #FFD170;
   --threshold: 50%;
   --motion: ease-in-out;
@@ -39,6 +39,7 @@ h2 {
   color: var(--primary);
   text-transform: uppercase;
   letter-spacing: 1px;
+  text-decoration: none;
 }
 
 h3 {
@@ -88,4 +89,38 @@ p {
 .footer ol a:hover {
   transform: translateY(-3px) rotate(-2deg);
   filter: brightness(1.1);
+}
+
+.primaryButton {
+  border-radius: var(--header);
+  border: var(--secondary) calc(var(--b) / 4) solid;
+  box-shadow: 0px 5px 0px var(--fourthly);
+  background: none;
+  transition: all 0.25s ease-in-out;
+  flex-grow: 0;
+  pointer-events: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--b);
+}
+
+.primaryButton h2 {
+  color: var(--primary);
+  -webkit-text-stroke: none;
+  font-family: 'NeoJapan';
+  margin: 0;
+  text-align: center;
+}
+
+.primaryButton:link,
+.primaryButton:visited,
+.primaryButton:hover,
+.primaryButton:active {
+  text-decoration: none;
+}
+
+.primaryButton:hover {
+  background: var(--fourthly);
+  flex-grow: 0.25;
 }
