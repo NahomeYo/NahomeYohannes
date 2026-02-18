@@ -16,7 +16,7 @@ html {
   --fifthly: #ff0d00;
   --sixthly: #FFD170;
   --threshold: 50%;
-  --motion: ease-in-out;
+  --motion: cubic-bezier(.17,.67,.83,.67);
   --textOutline:
     -1px 0 var(--fifthly),
     1px 0 var(--fifthly),
