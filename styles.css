@@ -17,6 +17,45 @@ html {
   scroll-behavior: smooth;
 }
 
+body.rotationLocked {
+  overflow: hidden !important;
+}
+
+#rotateGate {
+  position: fixed;
+  inset: 0;
+  z-index: 200000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.85);
+  color: var(--secondary);
+  text-align: center;
+}
+
+#rotateGate[hidden] {
+  display: none;
+}
+
+.rotateGateCard {
+  max-width: 24rem;
+  background: rgba(127, 63, 50, 0.9);
+  border: 3px solid var(--secondary);
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+}
+
+.rotateGateCard h2 {
+  margin: 0 0 0.5rem 0;
+  color: var(--secondary);
+}
+
+.rotateGateCard p {
+  margin: 0.25rem 0;
+  color: var(--primary);
+}
+
 .leafsContainer {
   position: absolute;
   inset: 0;

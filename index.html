@@ -22,6 +22,14 @@
     </svg>
   </div>
 
+  <div id="rotateGate" hidden>
+    <div class="rotateGateCard">
+      <h2>Rotate Your Device</h2>
+      <p>This experience is optimized for landscape on mobile.</p>
+      <p>Please rotate your phone to continue.</p>
+    </div>
+  </div>
+
   <div class="homeBorder">
     <div class="circle"></div>
 
@@ -920,21 +928,46 @@
     </script>
   <script type="module">
     let initHome, initRoom;
+    let sceneBooted = false;
 
     document.addEventListener("DOMContentLoaded", async () => {
       if (window.__debugSet) window.__debugSet('debug: DOMContentLoaded');
-      try {
-        const mod = await import('./main.js');
-        initHome = mod.initHome;
-        initRoom = mod.initRoom;
-        if (window.__debugSet) window.__debugSet('debug: main.js loaded');
-      } catch (err) {
-        console.error('Failed to load main.js module:', err);
-        if (window.__debugSet) window.__debugSet('debug: main.js failed to load');
-      }
+      const rotateGate = document.getElementById("rotateGate");
+      const mobilePortraitQuery = window.matchMedia("(max-width: 900px) and (orientation: portrait)");
 
-      if (typeof initHome === 'function') initHome();
-      if (typeof initRoom === 'function') initRoom();
+      const isBlockedByOrientation = () => mobilePortraitQuery.matches;
+      const setRotateGateState = (blocked) => {
+        if (rotateGate) rotateGate.hidden = !blocked;
+        document.body.classList.toggle("rotationLocked", blocked);
+      };
+
+      const maybeBootScene = async () => {
+        if (sceneBooted || isBlockedByOrientation()) return;
+        try {
+          const mod = await import('./main.js');
+          initHome = mod.initHome;
+          initRoom = mod.initRoom;
+          if (window.__debugSet) window.__debugSet('debug: main.js loaded');
+        } catch (err) {
+          console.error('Failed to load main.js module:', err);
+          if (window.__debugSet) window.__debugSet('debug: main.js failed to load');
+          return;
+        }
+
+        if (typeof initHome === 'function') initHome();
+        if (typeof initRoom === 'function') initRoom();
+        sceneBooted = true;
+      };
+
+      const updateRotationGate = async () => {
+        const blocked = isBlockedByOrientation();
+        setRotateGateState(blocked);
+        if (!blocked) await maybeBootScene();
+      };
+
+      await updateRotationGate();
+      window.addEventListener("resize", updateRotationGate);
+      window.addEventListener("orientationchange", updateRotationGate);
 
       const aboutContainer = document.querySelector(".about");
       let aboutCanvasInitialized = false;
@@ -991,7 +1024,6 @@
           });
         }
 
-        // Set initial top on DOMContentLoaded
         updateHomeImgsTop();
 
         window.addEventListener("scroll", () => {
@@ -1031,11 +1063,11 @@
             if (cherryBranch) cherryBranch.style.setProperty("--branchShift", `${-offscreenShift}px`);
             branchLeafs.forEach((leafGroup, idx) => {
               const factor = idx === 0 ? 0.95 : 0.8;
-              leafGroup.style.left = `${-(offscreenShift * factor)}px`;
+              leafGroup.style.setProperty("--leafShift", `${-(offscreenShift * factor)}px`);
             });
             homeClouds.forEach((cloud, idx) => {
               const factor = 0.7 + idx * 0.2;
-              cloud.style.left = `${offscreenShift * factor}px`;
+              cloud.style.setProperty("--cloudShift", `${offscreenShift * factor}px`);
             });
             homeImgsNoClouds.forEach((img) => {
               img.classList.add("homeScrollActive");
@@ -1043,10 +1075,10 @@
           } else {
             if (cherryBranch) cherryBranch.style.removeProperty("--branchShift");
             branchLeafs.forEach((leafGroup) => {
-              leafGroup.style.left = "";
+              leafGroup.style.removeProperty("--leafShift");
             });
             homeClouds.forEach((cloud) => {
-              cloud.style.left = "";
+              cloud.style.removeProperty("--cloudShift");
             });
             homeImgsNoClouds.forEach((img) => {
               img.classList.remove("homeScrollActive");
@@ -1323,7 +1355,6 @@
               projectsScreenContainer.style.zIndex = '9998';
               projectsScreenContainer.style.pointerEvents = 'auto';
             }
-            // Also set on CSS renderer if available
             if (window.cssRenderer && window.cssRenderer.domElement) {
               window.cssRenderer.domElement.style.zIndex = '9998';
               window.cssRenderer.domElement.style.pointerEvents = 'auto';

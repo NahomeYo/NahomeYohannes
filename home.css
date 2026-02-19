@@ -295,6 +295,7 @@
 
 .branch .leafsContainer {
   z-index: 21;
+  transform: translateX(var(--leafShift, 0px));
 }
 
 .branch .leafsContainer img {
@@ -308,7 +309,7 @@
   margin: 0;
   width: 20vw;
   height: 10vh;
-  transform: translate(35vw, 45vh);
+  transform: translate(35vw, 45vh) translateX(var(--cloudShift, 0px));
   z-index: 0;
 }
 
@@ -319,7 +320,7 @@
   margin: 0;
   width: 21.15vw;
   height: 22.428vw;
-  transform: translate(78.889vw, 35vh);
+  transform: translate(78.889vw, 35vh) translateX(var(--cloudShift, 0px));
   z-index: 0;
   overflow: visible;
 }
@@ -331,7 +332,7 @@
   margin: 0;
   height: 15.764vw;
   width: 14.178vw;
-  transform: translate(70vw, 10vh);
+  transform: translate(70vw, 10vh) translateX(var(--cloudShift, 0px));
   overflow: visible;
   z-index: 1;
 }
