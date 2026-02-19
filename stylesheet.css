@@ -16,7 +16,7 @@ html {
   --fifthly: #ff0d00;
   --sixthly: #FFD170;
   --threshold: 50%;
-  --motion: cubic-bezier(.17,.67,.83,.67);
+  --motion: cubic-bezier(.34, 1.56, .64, 1);
   --textOutline:
     -1px 0 var(--fifthly),
     1px 0 var(--fifthly),
@@ -123,4 +123,25 @@ p {
 .primaryButton:hover {
   background: var(--fourthly);
   flex-grow: 0.25;
+}
+
+/* iphone */
+@media only screen and (min-width: 393px) and (max-width: 1133px) {
+  .navBar span:nth-of-type(1) .iconButton img {
+    width: 35px;
+    height: 35px;
+    background: green;
+  }
+
+  .navBar span:nth-of-type(2) li:nth-of-type(1) {
+    left: 30%;
+  }
+
+  .navBar span:nth-of-type(2) li:nth-of-type(2) {
+    left: 60%;
+  }
+
+  .navBar span:nth-of-type(2) li:nth-of-type(3) {
+    left: 90%;
+  }
 }

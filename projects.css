@@ -2,6 +2,7 @@
   width: 100%;
   height: 100vh;
   position: relative;
+  padding: 0;
 }
 
 #projectsScreen {
@@ -811,5 +812,77 @@
   .projects-window {
     order: 1;
     width: 100%;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .projects {
+    height: auto;
+    min-height: 100vh;
+    padding: 0 0 1.5rem;
+  }
+
+  .projects-header {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 94vw;
+    margin: 1.25rem 3vw 0;
+    gap: 0.75rem;
+  }
+
+  .projects-header.clicked {
+    top: auto;
+  }
+
+  .headerLine {
+    width: 100%;
+    height: 3rem;
+  }
+
+  .headerLine h1 {
+    font-size: 2.2rem;
+    height: 3rem;
+    top: 56%;
+  }
+
+  .projects-header span {
+    width: 100%;
+    justify-content: space-between;
+    gap: 0.35rem;
+  }
+
+  .projects-header span h3 {
+    font-size: 1rem;
+    -webkit-text-stroke: 0.5px var(--fifthly);
+  }
+
+  .projects-header span .primaryButton {
+    transform: none;
+    padding: 0.3rem 0.5rem;
+  }
+
+  .projects-inner {
+    position: relative;
+    width: 100%;
+    max-width: 100vw;
+    height: 65vh;
+    min-height: 25rem;
+    margin-top: 0.75rem;
+  }
+
+  .desktop-folders {
+    align-content: flex-start;
+    padding: 0.5rem;
+  }
+
+  .folder-item img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .folder-item p {
+    font-size: 0.65rem;
+    white-space: normal;
   }
 }

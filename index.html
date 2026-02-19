@@ -112,6 +112,7 @@
         <img class="eritrean" src="./images/eritrean.svg" alt="eritrean.svg" />
         <div class="sun"></div>
       </div>
+
       <img class="Seattle" src="./images/SeattleSkyline.svg" alt="Seattle.svg" />
       <img class="cloud001" src="./images/Cloud001.png" alt="cloud001.png" />
       <img class="cloud002" src="./images/Cloud002.png" alt="cloud002.png" />
@@ -136,7 +137,7 @@
       </div>
     </div>
 
-    <img class="upsideDown" src="./images/upsideDownSeattle.svg" />
+    <img class="upsideDown" src="./images/upsideDownSeattle.png" />
 
     <div class="table">
       <div class="rsmCol">
@@ -300,13 +301,13 @@
       </div>
     </div>
 
-    <img class="maskBottom" src="./images/upsideUpSeattle.svg" />
+    <img class="maskBottom" src="./images/upsideUpSeattle.png" />
 
     <div class="aboutFill"></div>
   </div>
 
   <div class="projects" id="projects">
-    <img class="upsideDownTrees" src="./images/FrontTrees.svg" />
+    <img class="upsideDownTrees" src="./images/FrontTrees 1.png" />
 
     <div id="bedRoomScene"></div>
 
@@ -966,9 +967,14 @@
       const menuText = document.querySelectorAll(".navBar span:nth-of-type(2) li");
       const iconButtons = document.querySelectorAll(".navBar span:nth-of-type(1) .iconButton");
       const menuCircle = document.querySelector(".homeBorder .circle");
+      const cherryBranch = document.querySelector(".home .branch");
+      const branchLeafs = document.querySelectorAll(".home .branch .leafsContainer");
+      const homeClouds = document.querySelectorAll(".home .cloud001, .home .cloud002, .home .cloud003");
+      const homeImgsNoClouds = document.querySelectorAll(".home img:not(.cloud001):not(.cloud002):not(.cloud003)");
 
       const ENTER = 150;
       let active;
+      let wasActive = false;
 
       if (homeImgs.length > 0) {
         function updateHomeImgsTop() {
@@ -1019,6 +1025,33 @@
               ? `${window.scrollY * speed}px`
               : "";
           });
+
+          const offscreenShift = Math.min(window.scrollY * 0.6, window.innerWidth * 1.1);
+          if (active) {
+            if (cherryBranch) cherryBranch.style.setProperty("--branchShift", `${-offscreenShift}px`);
+            branchLeafs.forEach((leafGroup, idx) => {
+              const factor = idx === 0 ? 0.95 : 0.8;
+              leafGroup.style.left = `${-(offscreenShift * factor)}px`;
+            });
+            homeClouds.forEach((cloud, idx) => {
+              const factor = 0.7 + idx * 0.2;
+              cloud.style.left = `${offscreenShift * factor}px`;
+            });
+            homeImgsNoClouds.forEach((img) => {
+              img.classList.add("homeScrollActive");
+            });
+          } else {
+            if (cherryBranch) cherryBranch.style.removeProperty("--branchShift");
+            branchLeafs.forEach((leafGroup) => {
+              leafGroup.style.left = "";
+            });
+            homeClouds.forEach((cloud) => {
+              cloud.style.left = "";
+            });
+            homeImgsNoClouds.forEach((img) => {
+              img.classList.remove("homeScrollActive");
+            });
+          }
 
           if (active) {
             banner.style.width = "0vw";
@@ -1092,6 +1125,9 @@
             }
           }
 
+          const enteringActive = active && !wasActive;
+          const leavingActive = !active && wasActive;
+
           const scales = [
             "100%", // 1
             "100%", // 2
@@ -1107,48 +1143,70 @@
             "100%"  // 12
           ];
 
-          bars.forEach((bar, i) => {
-            const delay = i * 0.1;
-
-            bar.style.width = scales[i];
-            bar.style.transitionDelay = `${delay}s`;
-
-            if (active) {
-              bar.classList.add("expandBar");
-            } else {
+          if (enteringActive || leavingActive) {
+            bars.forEach((bar) => {
               bar.classList.remove("expandBar");
-            }
-          });
+              bar.style.transition = "none";
+              bar.style.transitionDelay = "0s";
+              bar.style.width = "0%";
+            });
+          }
+
+          if (enteringActive) {
+            requestAnimationFrame(() => {
+              bars.forEach((bar, i) => {
+                const delay = i * 0.1;
+                bar.style.transition = "width 2s ease-in-out";
+                bar.style.transitionDelay = `${delay}s`;
+                bar.style.width = scales[i] || "100%";
+              });
+            });
+          }
 
           const count = icons.length;
+          if (enteringActive || leavingActive) {
+            icons.forEach((icon, i) => {
+              let distance = (i / count) * 100;
+              if (i === 0) distance = 100;
 
-          icons.forEach((icon, i) => {
-            let distance = (i / count) * 100;
-
-            if (i === 0) distance = 100;
-
-            icon.style.setProperty("--pos360", `${distance}%`);
-            icon.style.offsetDistance = "";
-
-            if (active) {
-              icon.classList.add("circlePos");
+              icon.style.setProperty("--pos360", `${distance}%`);
               icon.classList.remove("circleAnimation");
-            } else {
               icon.classList.remove("circlePos");
-              icon.classList.remove("circleAnimation");
-            }
-          });
+              icon.style.offsetDistance = "0%";
+            });
+          }
+
+          if (enteringActive) {
+            requestAnimationFrame(() => {
+              icons.forEach((icon) => {
+                icon.style.offsetDistance = "";
+                void icon.offsetWidth;
+                icon.classList.add("circlePos");
+                setTimeout(() => {
+                  if (icon.classList.contains("circlePos") && !icon.classList.contains("circleAnimation")) {
+                    icon.classList.add("circleAnimation");
+                  }
+                }, 2600);
+              });
+            });
+          }
 
           icons.forEach((icon) => {
             if (icon.dataset.circleBound) return;
             icon.dataset.circleBound = "1";
             icon.addEventListener("transitionend", (event) => {
-              if (event.propertyName && event.propertyName !== "offset-distance") return;
+              if (
+                event.propertyName &&
+                event.propertyName !== "offset-distance" &&
+                event.propertyName !== "offsetDistance"
+              ) return;
               if (icon.classList.contains("circlePos")) {
                 icon.classList.add("circleAnimation");
               }
             });
           });
+
+          wasActive = active;
         });
       }
 
@@ -1251,9 +1309,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script type="module" src="./main.js"></script>
   <script>
-    // Separate click events for project category buttons
     document.addEventListener('DOMContentLoaded', () => {
-      // Wait for elements to be available
       setTimeout(() => {
         const projectsScreenContainer = document.getElementById('projectsScreen');
 

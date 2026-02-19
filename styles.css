@@ -74,7 +74,7 @@ html {
 }
 
 .leafsContainer img {
-  filter: contrast(0.5) saturate(2) drop-shadow(2px 2px 1px #ff6d41);
+  filter: none;
 }
 
 @keyframes descendAnim {
@@ -139,21 +139,6 @@ html {
     opacity: 0;
     transform: translate(100vw, 100vh) rotate(-90deg) skew(0deg, 0deg);
   }
-}
-
-.home .banner {
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  margin: 0;
-  width: 51.319vw;
-  height: 76.27vh;
-  transform: translate(-50%, 0) translateX(11.389vw);
-  display: flex;
-  justify-content: center;
-  align-items: start;
-  transition: all 1s var(--motion);
-  overflow: hidden;
 }
 
 #appsFore {
@@ -259,11 +244,16 @@ html {
   width: 100%;
   transform: scaleY(-1);
   z-index: 100;
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: fill;
 }
 
 .upsideDown {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   z-index: 32;
   pointer-events: none;
@@ -343,28 +333,86 @@ html {
   grid-template-rows: auto;
 }
 
-.footer li:nth-of-type(2) fieldset {
-  border-radius: var(--b);
-  border: var(--secondary) 5px solid;
-  flex-grow: 1;
-}
-
-.footer li:nth-of-type(2) fieldset legend h2 {
-  margin: 0;
-}
-
-.footer li:nth-of-type(2) fieldset input {
-  background: transparent;
+.footer .boxes fieldset {
+  position: relative;
+  display: flex;
+  align-items: center;
   width: 100%;
-  border: none;
+  margin: 0;
+  padding: calc(var(--b) * 0.85) var(--b) calc(var(--b) * 0.85) calc(var(--b) * 5);
+  border-top: 6px solid var(--secondary);
+  border-right: 6px solid var(--secondary);
+  border-bottom: 6px solid var(--secondary);
+  border-left: none;
+  border-radius: 0 calc(var(--iconSize) * 2) calc(var(--iconSize) * 2) 0;
+  background: rgba(127, 63, 50, 0.08);
+  transition: background 0.25s ease, transform 0.25s ease;
 }
 
-.footer li:nth-of-type(2) fieldset input:focus {
+.footer .boxes fieldset::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--b) * 0.5);
+  top: 50%;
+  transform: translateY(-50%);
+  width: calc(var(--b) * 3.2);
+  height: calc(var(--b) * 3.2);
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.footer .boxes fieldset:nth-of-type(1)::before {
+  background-image: url("./icons/handshake.svg");
+}
+
+.footer .boxes fieldset:nth-of-type(2)::before {
+  background-image: url("./icons/mail.svg");
+}
+
+.footer .boxes fieldset:nth-of-type(3)::before {
+  background-image: url("./icons/projects.svg");
+}
+
+.footer .boxes fieldset:nth-of-type(4)::before {
+  background-image: url("./icons/mail.svg");
+}
+
+.footer .boxes fieldset legend {
+  padding: 0 calc(var(--b) * 0.5);
+}
+
+.footer .boxes fieldset legend h2 {
+  margin: 0;
+  color: var(--secondary);
+  letter-spacing: 0.08em;
+}
+
+.footer .boxes fieldset input {
+  flex: 1 1 auto;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: var(--secondary);
+  font-family: LondrinaSolidLight;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.footer .boxes fieldset input::placeholder {
+  color: rgba(255, 209, 112, 0.65);
+}
+
+.footer .boxes fieldset input:focus {
   outline: none;
 }
 
-.footer li:nth-of-type(2) fieldset:nth-of-type(4) {
-  height: 10vh;
+.footer .boxes fieldset:focus-within {
+  background: rgba(127, 63, 50, 0.2);
+  transform: translateX(calc(var(--b) * 0.25));
+}
+
+.footer .boxes fieldset:nth-of-type(4) {
+  min-height: calc(var(--b) * 8);
 }
 
 .footer li:nth-of-type(1) h2 {
@@ -381,7 +429,8 @@ html {
   width: 80vw;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  gap: calc(var(--b) * 2);
 }
 
 .footer span .contactBanner {
@@ -395,15 +444,15 @@ html {
   position: relative;
   flex-basis: 50%;
   flex-grow: 1;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--b) * 1.2);
 }
 
 .boxes fieldset input {
-  color: var(--secondary);
-}
-
-.boxes input:nth-of-type(1) {
-  background: none;
-  outline: none;
   color: var(--secondary);
 }
 
@@ -861,5 +910,133 @@ html {
 
   100% {
     transform: translateX(0%);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .infoHeader,
+  .contactHeader,
+  .about .maskBottom {
+    display: none;
+  }
+
+  .about.expanded {
+    height: auto;
+    min-height: 100vh;
+    padding-bottom: 2rem;
+  }
+
+  .table {
+    position: relative;
+    width: 94vw;
+    height: auto;
+    margin: 2rem 3vw 0;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .rsmCol:nth-of-type(1) {
+    width: 100%;
+    flex-basis: auto;
+    height: auto;
+  }
+
+  .progressContainer {
+    min-height: 18rem;
+  }
+
+  .rsmCol:nth-of-type(2) {
+    display: none;
+  }
+
+  .table .background {
+    width: 100%;
+    flex: 1 1 auto;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0;
+    margin: 0;
+  }
+
+  .table .background li {
+    justify-content: flex-start;
+  }
+
+  .table .background li img {
+    width: 2.1rem;
+    height: 2.1rem;
+    padding: 0.35rem;
+    border-width: calc(var(--b) / 3);
+  }
+
+  .table .background li h3 {
+    transform: none;
+    height: 2.1rem;
+    padding: 0 0.8rem 0 2.6rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .footer span {
+    width: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .footer span .contactBanner {
+    flex-basis: auto;
+    flex-grow: 0;
+    font-size: clamp(2.2rem, 12vw, 3.8rem);
+    line-height: 0.9;
+  }
+
+  .footer span .boxes {
+    width: 100%;
+    flex-basis: auto;
+  }
+
+  .footer .boxes fieldset {
+    padding-left: calc(var(--b) * 4.25);
+  }
+
+  .footer .boxes fieldset input {
+    font-size: 1rem;
+  }
+
+  .footer button {
+    align-self: flex-end;
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .footer ol {
+    grid-column: auto;
+    grid-row: auto;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin: 0;
+  }
+
+  .footer ol li,
+  .footer ol li img {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  .footer .Copyright {
+    grid-column: auto;
+    margin: 0.25rem 0 0;
+    font-size: 0.85rem;
   }
 }

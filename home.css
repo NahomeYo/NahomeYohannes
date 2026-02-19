@@ -187,23 +187,21 @@
 
 .Seattle {
   width: 100%;
-  z-index: 1;
+  z-index: 0;
   overflow: visible;
   position: absolute;
   left: 0;
   top: 0;
   transform: translate(0vw, 53vh);
-  filter: brightness(0.9);
 }
 
 .home .banner {
   position: absolute;
-  left: 50%;
+  right: 0;
   bottom: 0;
-  margin: 0;
-  width: 40vw;
-  height: 40vw;
-  transform: translate(-50%, 0%) translateX(11.389vw);
+  margin-right: 5vw;
+  width: 50vw;
+  height: 50vw;
   display: flex;
   justify-content: center;
   align-items: start;
@@ -267,25 +265,40 @@
 
 .branch {
   content: "";
-  background-image: url("./images/CherryBlossomTree.png");
   position: absolute;
-  background-position: 0% 0%;
-  background-size: contain;
-  background-repeat: no-repeat;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
   overflow: visible;
-  z-index: 8;
+  z-index: 20;
   pointer-events: none;
-  filter: contrast(0.5) saturate(2) drop-shadow(5px 0px 1px #ff9777);
 }
 
-.cloud001,
-.cloud002,
-.cloud003 {
-  filter: brightness(95%);
+.branch::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("./images/CherryBlossomTree.png");
+  background-position: 0% 0%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: contrast(0.5) saturate(2) drop-shadow(5px 0px 1px #ff9777);
+  z-index: 20;
+  pointer-events: none;
+}
+
+.branch>* {
+  position: relative;
+  z-index: 10;
+}
+
+.branch .leafsContainer {
+  z-index: 21;
+}
+
+.branch .leafsContainer img {
+  filter: contrast(0.5) saturate(2) drop-shadow(2px 2px 1px #ff6d41);
 }
 
 .cloud001 {
@@ -327,14 +340,14 @@
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding: calc(var(--header) * 2) var(--header) var(--header) var(--header);
-  gap: 60px;
+  align-items: start;
+  justify-content: start;
   opacity: 1;
   overflow: visible;
   width: 50vw;
   transition: all 0.5s ease;
-  margin: 5vh 0 0 10vw;
+  padding: calc(var(--b) * 3);
+  margin: 5vw 0 0 5vw;
 }
 
 .name h1,
@@ -352,13 +365,86 @@
   -webkit-text-stroke: 2px var(--fifthly);
   z-index: 0;
   line-height: 100%;
+  font-size: 12rem;
 }
 
 .name h2 {
   font-family: NeoJapan;
-  color: transparent;
+  color: var(--sixthly);
   -webkit-text-stroke: 1px var(--fifthly);
-  margin-top: -100px;
-  margin-left: -150px;
   z-index: 0;
+  font-size: 3rem;
+}
+
+@media screen and (max-width: 767px) {
+  .navBar {
+    width: 94vw;
+    margin: 2.5vh 3vw 0;
+  }
+
+  .navBar span:nth-of-type(1) {
+    width: auto;
+  }
+
+  .navBar span:nth-of-type(1).menuShrink {
+    width: auto;
+    padding: 0.5rem;
+    transform: translate(-1vw, -2.5vh);
+  }
+
+  .navBar span:nth-of-type(1) .iconButton img {
+    width: 34px;
+    height: 34px;
+  }
+
+  .navBar span:nth-of-type(1) .iconButton:nth-of-type(2).menuExpand {
+    left: 15%;
+    top: 110%;
+  }
+
+  .navBar span:nth-of-type(1) .iconButton:nth-of-type(3).menuExpand {
+    left: 70%;
+    top: 78%;
+  }
+
+  .navBar span:nth-of-type(1) .iconButton:nth-of-type(4).menuExpand {
+    left: 110%;
+    top: 25%;
+  }
+
+  .navBar span:nth-of-type(2) {
+    display: none;
+  }
+
+  .home {
+    width: 94vw;
+    height: 94vh;
+    padding: 3vh 3vw;
+  }
+
+  .name {
+    width: 88vw;
+    margin: 9vh 0 0 0;
+    padding: 0.75rem;
+  }
+
+  .name h1 {
+    font-size: clamp(3.5rem, 20vw, 6rem);
+    -webkit-text-stroke: 1px var(--fifthly);
+  }
+
+  .name h2 {
+    font-size: clamp(1.2rem, 7vw, 2rem);
+    -webkit-text-stroke: 0.75px var(--fifthly);
+  }
+
+  .branch {
+    background-size: 145% auto;
+  }
+
+  .cloud001,
+  .cloud002,
+  .cloud003 {
+    display: none;
+  }
 }
