@@ -60,6 +60,7 @@
   width: 30%;
   position: relative;
   transition: all 1s ease;
+  padding: 100px 100px 100px 0;
 }
 
 .navBar span:nth-of-type(2) li img {
@@ -346,6 +347,7 @@
   opacity: 1;
   overflow: visible;
   width: 50vw;
+  height: 100vh;
   transition: all 0.5s ease;
   padding: calc(var(--b) * 3);
   margin: 5vw 0 0 5vw;
