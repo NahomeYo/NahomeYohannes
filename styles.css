@@ -326,7 +326,7 @@ body.rotationLocked {
   position: relative;
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .about.expanded {
@@ -352,8 +352,6 @@ body.rotationLocked {
   z-index: 9999;
 }
 
-
-
 .footer li:nth-of-type(1) h1 {
   line-height: 75%;
   margin: 0;
@@ -376,9 +374,11 @@ body.rotationLocked {
   position: relative;
   display: flex;
   align-items: center;
-  width: 100%;
-  margin: 0;
-  padding: calc(var(--b) * 0.85) var(--b) calc(var(--b) * 0.85) calc(var(--b) * 5);
+  padding-left: calc(var(--header) * 2);
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-right: 0;
+  height: min-content;
   border-top: 6px solid var(--secondary);
   border-right: 6px solid var(--secondary);
   border-bottom: 6px solid var(--secondary);
@@ -386,6 +386,7 @@ body.rotationLocked {
   border-radius: 0 calc(var(--iconSize) * 2) calc(var(--iconSize) * 2) 0;
   background: rgba(127, 63, 50, 0.08);
   transition: background 0.25s ease, transform 0.25s ease;
+  margin-bottom: var(--header) 0;
 }
 
 .footer .boxes fieldset::before {
@@ -393,9 +394,9 @@ body.rotationLocked {
   position: absolute;
   left: calc(var(--iconSize) * 4 * -0.5);
   top: 50%;
-  transform: translateY(-50%);
   width: calc(var(--iconSize) * 4);
   height: calc(var(--iconSize) * 4);
+  transform: translateY(-50%);
   padding: calc(var(--b));
   border-radius: 50%;
   border: 0.25rem solid var(--secondary);
@@ -425,6 +426,7 @@ body.rotationLocked {
 
 .footer .boxes fieldset legend {
   padding: 0 calc(var(--b) * 0.5);
+  margin-left: calc(var(--iconSize) * 2);
 }
 
 .footer .boxes fieldset legend h2 {
@@ -440,8 +442,9 @@ body.rotationLocked {
   border: none;
   color: var(--secondary);
   font-family: LondrinaSolidLight;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   line-height: 1;
+  margin-left: calc(var(--iconSize) * 2);
 }
 
 .footer .boxes fieldset input::placeholder {
@@ -497,6 +500,21 @@ body.rotationLocked {
 
 .boxes fieldset input {
   color: var(--secondary);
+}
+
+.footer .boxes #submit-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.footer .boxes #submit-btn h2 {
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  line-height: 1;
 }
 
 .footer button {
@@ -891,7 +909,7 @@ body.rotationLocked {
   z-index: 9999;
   overflow: hidden;
   bottom: 0;
-  mask-image: url("./images/upsideUpSeattle.svg");
+  mask-image: url("./images/upsideUpSeattle.png");
   mask-size: 100%;
   mask-position: 0% 100%;
   mask-repeat: no-repeat;
@@ -958,6 +976,11 @@ body.rotationLocked {
   100% {
     transform: translateX(0%);
   }
+}
+
+.boxes .primaryButton {
+  background: red;
+  width: 100%;
 }
 
 @media screen and (max-width: 767px) {

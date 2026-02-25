@@ -3,6 +3,7 @@
   height: 100vh;
   position: relative;
   padding: 0;
+  margin-top: -20px;
 }
 
 #projectsScreen {

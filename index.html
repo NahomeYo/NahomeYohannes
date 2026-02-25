@@ -60,11 +60,11 @@
         </li>
       </span>
 
-                    <div class="name">
+      <div class="name">
         <h1>NAHOME</h1>
         <h2>YOHANNES</h2>
       </div>
-      
+
       <span>
         <li>
           <a href="#about">
@@ -95,19 +95,19 @@
   <div id="nahomeScreen"></div>
   <div id="projectsScreen"></div>
 
-    <div class="home" id="home">
+  <div class="home" id="home">
 
-      <div class="branch">
+    <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
+    <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
+    <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
+
+    <div class="branch">
 
       <div class="leafsContainer">
         <img src="./images/leaf002.svg" />
         <img src="./images/leaf004.svg" />
         <img src="./images/leaf006.svg" />
       </div>
-
-      <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
-      <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
-      <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
 
       <div class="leafsContainer">
         <img src="./images/leaf001.svg" />
@@ -129,7 +129,7 @@
   </div>
 
   <div class="homeFill">
-    <img class="frontTrees" src="./images/FrontTrees.svg" />
+    <img class="frontTrees" src="./images/FrontTrees 1.png" />
   </div>
 
   <div class="about">
@@ -891,12 +891,11 @@
           </legend>
           <input type="text" name="message" id="message" required />
         </fieldset>
+            <div class = 'primaryButton' type="submit" id="submit-btn">
+      <h2>submit</h2>
+            </div>
       </li>
     </span>
-
-    <button type="submit" id="submit-btn">
-      <p>submit</p>
-    </button>
 
     <ol>
       <a href="https://www.linkedin.com/in/nahome-y-198b8b294/" target="_blank" rel="noopener">
@@ -999,31 +998,12 @@
       const iconButtons = document.querySelectorAll(".navBar span:nth-of-type(1) .iconButton");
       const menuCircle = document.querySelector(".homeBorder .circle");
       const cherryBranch = document.querySelector(".home .branch");
-      const branchLeafs = document.querySelectorAll(".home .branch .leafsContainer");
-      const homeClouds = document.querySelectorAll(".home .cloud001, .home .cloud002, .home .cloud003");
-      const homeImgsNoClouds = document.querySelectorAll(".home img:not(.cloud001):not(.cloud002):not(.cloud003)");
 
       const ENTER = 150;
       let active;
       let wasActive = false;
 
       if (homeImgs.length > 0) {
-        function updateHomeImgsTop() {
-          const maxSpeed = 2;
-          const minSpeed = 0.5;
-          const total = homeImgs.length - 1;
-          homeImgs.forEach((img, index) => {
-            if (!img) return;
-            const depth = 1 - index / total;
-            const speed = minSpeed + depth * (maxSpeed - minSpeed);
-            img.style.top = active
-              ? `${window.scrollY * speed}px`
-              : "";
-          });
-        }
-
-        updateHomeImgsTop();
-
         window.addEventListener("scroll", () => {
           if (window.scrollY >= ENTER) {
             active = true;
@@ -1039,48 +1019,11 @@
             borderSvg.classList.remove("animateBorder");
           }
 
-          updateHomeImgsTop();
-          const maxSpeed = 2;
-          const minSpeed = 0.5;
-
-          const total = homeImgs.length - 1;
-
-          homeImgs.forEach((img, index) => {
-            if (!img) return;
-
-            const depth = 1 - index / total;
-            const speed = minSpeed + depth * (maxSpeed - minSpeed);
-
-            img.style.top = active
-              ? `${window.scrollY * speed}px`
-              : "";
-          });
-
           const offscreenShift = Math.min(window.scrollY * 0.6, window.innerWidth * 1.1);
           if (active) {
             if (cherryBranch) cherryBranch.style.setProperty("--branchShift", `${-offscreenShift}px`);
-            branchLeafs.forEach((leafGroup, idx) => {
-              const factor = idx === 0 ? 0.95 : 0.8;
-              leafGroup.style.setProperty("--leafShift", `${-(offscreenShift * factor)}px`);
-            });
-            homeClouds.forEach((cloud, idx) => {
-              const factor = 0.7 + idx * 0.2;
-              cloud.style.setProperty("--cloudShift", `${offscreenShift * factor}px`);
-            });
-            homeImgsNoClouds.forEach((img) => {
-              img.classList.add("homeScrollActive");
-            });
           } else {
             if (cherryBranch) cherryBranch.style.removeProperty("--branchShift");
-            branchLeafs.forEach((leafGroup) => {
-              leafGroup.style.removeProperty("--leafShift");
-            });
-            homeClouds.forEach((cloud) => {
-              cloud.style.removeProperty("--cloudShift");
-            });
-            homeImgsNoClouds.forEach((img) => {
-              img.classList.remove("homeScrollActive");
-            });
           }
 
           if (active) {
