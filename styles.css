@@ -373,20 +373,17 @@ body.rotationLocked {
 .footer .boxes fieldset {
   position: relative;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   padding-left: calc(var(--header) * 2);
   padding-top: 0;
   padding-bottom: 0;
   padding-right: 0;
   height: min-content;
-  border-top: 6px solid var(--secondary);
-  border-right: 6px solid var(--secondary);
-  border-bottom: 6px solid var(--secondary);
-  border-left: none;
-  border-radius: 0 calc(var(--iconSize) * 2) calc(var(--iconSize) * 2) 0;
+  border: 6px solid var(--secondary);
+  border-radius: calc(var(--iconSize) * 2);
   background: rgba(127, 63, 50, 0.08);
   transition: background 0.25s ease, transform 0.25s ease;
-  margin-bottom: var(--header) 0;
+  margin-bottom: calc(var(--header) * 2);
 }
 
 .footer .boxes fieldset::before {
@@ -422,6 +419,7 @@ body.rotationLocked {
 
 .footer .boxes fieldset:nth-of-type(4)::before {
   background-image: url("./icons/mail.svg");
+  top: 0;
 }
 
 .footer .boxes fieldset legend {
@@ -435,24 +433,34 @@ body.rotationLocked {
   letter-spacing: 0.08em;
 }
 
-.footer .boxes fieldset input {
+.footer .boxes fieldset input,
+.footer .boxes fieldset textarea {
   flex: 1 1 auto;
+  display: block;
   width: 100%;
   background: transparent;
   border: none;
   color: var(--secondary);
   font-family: LondrinaSolidLight;
   font-size: 1.5rem;
-  line-height: 1;
   margin-left: calc(var(--iconSize) * 2);
+  text-align: left;
 }
 
-.footer .boxes fieldset input::placeholder {
+.footer .boxes fieldset input::placeholder,
+.footer .boxes fieldset textarea::placeholder {
   color: rgba(255, 209, 112, 0.65);
 }
 
-.footer .boxes fieldset input:focus {
+.footer .boxes fieldset input:focus,
+.footer .boxes fieldset textarea:focus {
   outline: none;
+}
+
+.footer .boxes fieldset:nth-of-type(4) textarea {
+  height: calc(var(--header) * 6);
+  vertical-align: top;
+  resize: vertical;
 }
 
 .footer .boxes fieldset:focus-within {
@@ -539,7 +547,7 @@ body.rotationLocked {
 }
 
 .footer .Copyright {
-  color: var(--thirdly);
+  color: var(--secondary);
   text-align: center;
   grid-column: span 3;
 }
@@ -550,10 +558,9 @@ body.rotationLocked {
   margin: 0;
 }
 
-.footer ol li,
-.footer ol li img {
-  width: 4rem;
-  height: 4rem;
+.footer ol a img {
+  width: calc(var(--header) * 4);
+  height: calc(var(--header) * 4);
 }
 
 .table {
@@ -976,11 +983,6 @@ body.rotationLocked {
   100% {
     transform: translateX(0%);
   }
-}
-
-.boxes .primaryButton {
-  background: red;
-  width: 100%;
 }
 
 @media screen and (max-width: 767px) {
