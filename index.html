@@ -60,6 +60,11 @@
         </li>
       </span>
 
+                    <div class="name">
+        <h1>NAHOME</h1>
+        <h2>YOHANNES</h2>
+      </div>
+      
       <span>
         <li>
           <a href="#about">
@@ -90,9 +95,9 @@
   <div id="nahomeScreen"></div>
   <div id="projectsScreen"></div>
 
-  <div class="home" id="home">
+    <div class="home" id="home">
 
-    <div class="branch">
+      <div class="branch">
 
       <div class="leafsContainer">
         <img src="./images/leaf002.svg" />
@@ -103,11 +108,6 @@
       <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
       <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
       <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
-
-      <div class="name">
-        <h1>NAHOME</h1>
-        <h2>YOHANNES</h2>
-      </div>
 
       <div class="leafsContainer">
         <img src="./images/leaf001.svg" />
@@ -278,7 +278,7 @@
           </li>
         </div>
       </div>
-      
+
       <div class="background">
         <li>
           <img src="./icons/crib.svg" />
@@ -290,11 +290,14 @@
         </li>
         <li>
           <img src="./icons/graduation.svg" />
-          <h3>Seattle Pacific University</h3>
+          <h3>Seattle</b>
+            Pacific
+          </h3>
         </li>
         <li>
           <img src="./icons/mail.svg" />
-          <h3>NahomeYo2002@gmail.com</h3>
+          <h3>yohannesn1</b>
+            @spu.edu</h3>
         </li>
       </div>
     </div>
@@ -329,20 +332,14 @@
         <h1>projects</h1>
       </div>
 
-      <span>
-        <div>
-          <h3>APPLICATIONS</h3>
+      <span class="projectRow">
+        <h3>APPLICATIONS</h3>
+
+        <div class="primaryButton projectRowBackButton">
+          <img src="./icons/back.png" />
         </div>
 
-        <div>
-          <div class="primaryButton">
-            <img src="./icons/back.png" />
-          </div>
-        </div>
-
-        <div>
-          <h3>GRAPHICS</h3>
-        </div>
+        <h3>GRAPHICS</h3>
       </span>
 
     </div>
@@ -866,7 +863,7 @@
 
     <span>
       <h1 class="contactBanner">
-        Let's work together
+        Let's work together!
       </h1>
 
       <li class="boxes">
@@ -1316,17 +1313,6 @@
       });
     }
 
-    const projHead = document.querySelector('.projects-header');
-    const projectHeader = document.querySelector('.projects-header span');
-    const headerLine = document.querySelector('.projects-header .headerLine');
-
-    if (projectHeader && headerLine && projHead) {
-      headerLine.addEventListener('click', () => {
-        projectHeader.classList.toggle('clicked');
-        headerLine.classList.toggle('dissapear');
-        projHead.classList.add('clicked');
-      });
-    }
   </script>
   <script>
     window.addEventListener('beforeunload', function () {

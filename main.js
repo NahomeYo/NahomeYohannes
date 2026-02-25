@@ -634,7 +634,21 @@ async function homeInit() {
   const projectsHeader = document.querySelector('.headerLine');
   const projectsHeaderSpan = document.querySelector('.projects-header span');
   const projectCategories = document.querySelectorAll(".projects-header h3");
-  const projectsBackButton = document.querySelector('.projects-header span .primaryButton');
+  const projectsBackButton = document.querySelector('.projects-header span .projectRowBackButton');
+  const projectsHeaderContainer = document.querySelector('.projects-header');
+
+  const setProjectRowExpanded = (expanded) => {
+    if (projectsHeader) {
+      projectsHeader.classList.toggle('dissapear', expanded);
+    }
+    if (projectsHeaderSpan) {
+      projectsHeaderSpan.classList.toggle('expanded', expanded);
+      projectsHeaderSpan.setAttribute('aria-hidden', expanded ? 'false' : 'true');
+    }
+    if (projectsHeaderContainer) {
+      projectsHeaderContainer.classList.toggle('clicked', expanded);
+    }
+  };
 
   const setProjectControlsEnabled = (enabled) => {
     projectsUnlocked = enabled;
@@ -647,16 +661,13 @@ async function homeInit() {
   };
 
   setProjectControlsEnabled(false);
+  setProjectRowExpanded(false);
 
   if (projectsHeader) {
     addEventListenerWithCleanup(projectsHeader, 'click', () => {
       manualCameraOverride = true;
-      projectsHeader.classList.add('dissapear');
       setProjectControlsEnabled(true);
-
-      if (projectsHeaderSpan) {
-        projectsHeaderSpan.classList.add('expanded');
-      }
+      setProjectRowExpanded(true);
     });
   }
 
@@ -681,6 +692,8 @@ async function homeInit() {
 
       screenState = null;
       manualCameraOverride = false;
+      setProjectControlsEnabled(false);
+      setProjectRowExpanded(false);
 
       if (projectEntryCameraPosition && projectEntryCameraRotation) {
         targetCameraPosition = projectEntryCameraPosition.clone();
@@ -733,8 +746,16 @@ async function homeInit() {
     const { inHome, inAbout, inProjects } = getSectionState();
 
     if (inProjects && !wasInProjects) {
-      projectEntryCameraPosition = new THREE.Vector3(2.980, 1.080, 1.460);
-      projectEntryCameraRotation = new THREE.Vector3(0, THREE.MathUtils.degToRad(52.60), 0);
+      projectEntryCameraPosition = homeCamera.position.clone();
+      projectEntryCameraRotation = new THREE.Vector3(
+        homeCamera.rotation.x,
+        homeCamera.rotation.y,
+        homeCamera.rotation.z
+      );
+      setProjectControlsEnabled(false);
+      setProjectRowExpanded(false);
+      screenState = null;
+      manualCameraOverride = false;
     }
     wasInProjects = inProjects;
 

@@ -40,15 +40,7 @@
   width: 90vw;
   transition: all 0.5s var(--motion);
   margin: 0vw 5vw;
-}
-
-.projects-header span.clicked {
-  border-top: solid calc(var(--b) / 2) var(--secondary);
-  border-bottom: solid calc(var(--b) / 2) var(--secondary);
-  width: 100%;
-  padding: var(--b) 0;
-  justify-content: space-around;
-  font-size: 0.75rem;
+  position: relative;
 }
 
 .projects-header.clicked {
@@ -117,70 +109,12 @@
   height: 0rem;
   border-top: none;
   border-bottom: none;
+  opacity: 0;
+  pointer-events: none;
 
   h1 {
     height: 0rem;
   }
-}
-
-.projects-header span h3 {
-  font-family: NeoJapan;
-  font-size: 2rem;
-  -webkit-text-stroke: 1px var(--fifthly);
-  color: var(--sixthly);
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center;
-  pointer-events: auto !important;
-  cursor: pointer;
-  line-height: 100%;
-}
-
-.projects-header span h2 {
-  font-family: NeoJapan;
-  font-size: 2rem;
-  color: var(--fifthly);
-}
-
-.projects-header span {
-  gap: var(--b);
-  justify-content: start;
-  align-items: center;
-  border: none;
-  width: 50%;
-  position: relative;
-  display: flex;
-  transition: all 0.5s var(--motion);
-}
-
-.projects-header span.is-locked h3,
-.projects-header span.is-locked .primaryButton {
-  pointer-events: none !important;
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-.projects-header span .primaryButton img {
-  width: var(--iconSize);
-  height: var(--iconSize);
-}
-
-.projects-header span .primaryButton {
-  transform: translateY(-10px);
-  cursor: pointer;
-}
-
-.projects-header span div:nth-of-type(1) {
-  flex-basis: 33%;
-}
-
-.projects-header span div:nth-of-type(3) {
-  flex-basis: 33%;
-}
-
-.projects-header span div:nth-of-type(3) {
-  flex-basis: 33%;
 }
 
 #theOffice {
@@ -794,6 +728,49 @@
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.18);
 }
 
+.projectRow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  justify-content: space-between;
+  transition: width 0.4s var(--motion), opacity 0.25s var(--motion);
+}
+
+.projectRow.expanded {
+  width: 100%;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.projectRow > * {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.projectRow h3 {
+  font-size: 2.5rem;
+  font-family: LondrinaSolid;;
+  text-transform: uppercase;
+}
+
+.projectRow .primaryButton {
+  width: 100%;
+  height: 100px;
+  margin: 0 var(--header);
+}
+
+.projectRow .primaryButton img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 @media screen and (max-width: 900px) {
   .projects {
     padding-block: 3vh;
@@ -844,22 +821,6 @@
     font-size: 2.2rem;
     height: 3rem;
     top: 56%;
-  }
-
-  .projects-header span {
-    width: 100%;
-    justify-content: space-between;
-    gap: 0.35rem;
-  }
-
-  .projects-header span h3 {
-    font-size: 1rem;
-    -webkit-text-stroke: 0.5px var(--fifthly);
-  }
-
-  .projects-header span .primaryButton {
-    transform: none;
-    padding: 0.3rem 0.5rem;
   }
 
   .projects-inner {
