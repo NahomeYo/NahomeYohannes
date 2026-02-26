@@ -1,16 +1,17 @@
 .navBar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.5fr 0.5fr 0.5fr;
   width: 85vw;
   position: fixed;
   justify-content: space-between;
   align-items: start;
   margin: 10vh 7.5vw;
   gap: var(--header);
+  z-index: 2 !important;
 }
 
 .navBar > * {
   position: relative;
-  z-index: 9999;
 }
 
 .navBar span {
@@ -45,10 +46,6 @@
   width: 5vw;
   transform: translate(-6vw, -5vh);
   pointer-events: auto;
-}
-
-.homeBorder {
-  pointer-events: none;
 }
 
 .homeBorder .circle {
@@ -192,6 +189,11 @@
   justify-content: center;
 }
 
+/* Keep logo visually pinned when nav rail shifts on active state. */
+.navIconRail.menuShrink li:nth-of-type(1) {
+  transform: translate(6vw, 5vh);
+}
+
 .navIconRail li {
   position: absolute;
   transition: all 1s var(--motion);
@@ -216,6 +218,7 @@
   overflow: visible;
   transform: rotate(0deg);
   transition: all 1s var(--motion);
+  transform-origin: center center;
 }
 
 .nyLogo.rotateLogo {
@@ -352,20 +355,16 @@
 }
 
 .name {
+  position: relative;
   flex-grow: 0;
   transition: all 0.5s ease;
   overflow: visible;
-}
-
-.navBar > .name {
-  z-index: 1 !important;
+  z-index: 0 !important;
 }
 
 .name img {
   width: 100%;
   object-fit: contain;
-  mix-blend-mode: overlay;
-
 }
 
 @media screen and (max-width: 1439px) {

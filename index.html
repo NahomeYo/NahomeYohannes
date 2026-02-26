@@ -65,6 +65,9 @@
         <img src="./images/nameBanner.png" />
       </div>
 
+      <div>
+      </div>
+
       <span class="navDesktopLinks">
         <li class="primaryButton">
           <a href="#about">
@@ -1277,15 +1280,24 @@
 
   </script>
   <script>
-    window.addEventListener('beforeunload', function () {
+    const forceScrollTop = () => {
       window.scrollTo(0, 0);
-    });
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    };
 
-    if (history.scrollRestoration) {
+    if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
 
-    window.scrollTo(0, 0);
+    window.addEventListener('beforeunload', forceScrollTop);
+    window.addEventListener('load', () => {
+      forceScrollTop();
+      requestAnimationFrame(forceScrollTop);
+    });
+    window.addEventListener('pageshow', forceScrollTop);
+
+    forceScrollTop();
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script type="module" src="./main.js"></script>

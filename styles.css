@@ -254,6 +254,7 @@ body.rotationLocked {
 }
 
 .homeBorder {
+  pointer-events: none;
   position: fixed;
   inset: 0;
   width: 100%;
@@ -262,12 +263,12 @@ body.rotationLocked {
   display: flex;
   justify-content: start;
   align-items: start;
-  z-index: 10000;
+  z-index: 9999 !important;
 }
 
 .homeBorder svg {
   fill: none;
-  position: absolute;
+  position: fixed;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -275,6 +276,7 @@ body.rotationLocked {
   height: 90vh;
   pointer-events: none;
   overflow: visible;
+  z-index: 4 !important;
 }
 
 .homeBorder svg path {
