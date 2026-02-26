@@ -12,7 +12,7 @@
   margin: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 29 !important;
+  z-index: 2 !important;
   pointer-events: auto !important;
   filter:
     contrast(0.9) saturate(0.75) hue-rotate(-10deg);
@@ -24,7 +24,7 @@
   margin: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 28 !important;
+  z-index: 1 !important;
   pointer-events: none;
 }
 

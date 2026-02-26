@@ -31,54 +31,54 @@
   </div>
 
   <div class="homeBorder">
+
+    <span class="navIconRail">
+      <li>
+        <a href="#home">
+          <img class="nyLogo" src="./images/nyLogo.svg" alt="Logo" />
+        </a>
+      </li>
+
+      <li class="iconButton">
+        <a href="#about">
+          <img src="./icons/crib.svg" />
+        </a>
+      </li>
+
+      <li class="iconButton">
+        <a href="#projects">
+          <img src="./icons/projects.svg" />
+        </a>
+      </li>
+
+      <li class="iconButton">
+        <a href="#contact">
+          <img src="./icons/mail.svg" />
+        </a>
+      </li>
+    </span>
+
     <div class="circle"></div>
 
     <nav class="navBar">
-      <span>
-        <li>
-          <a href="#home">
-            <img class="nyLogo" src="./images/nyLogo.svg" alt="Logo" />
-          </a>
-        </li>
-
-        <li class="iconButton">
-          <a href="#about">
-            <img src="./icons/crib.svg" />
-          </a>
-        </li>
-
-        <li class="iconButton">
-          <a href="#projects">
-            <img src="./icons/projects.svg" />
-          </a>
-        </li>
-
-        <li class="iconButton">
-          <a href="#contact">
-            <img src="./icons/mail.svg" />
-          </a>
-        </li>
-      </span>
-
       <div class="name">
-        <h1>NAHOME</h1>
-        <h2>YOHANNES</h2>
+        <img src="./images/nameBanner.png" />
       </div>
 
-      <span>
-        <li>
+      <span class="navDesktopLinks">
+        <li class="primaryButton">
           <a href="#about">
-            <h2>About</h2>
+            <h3>About</h3>
           </a>
         </li>
-        <li>
+        <li class="primaryButton">
           <a href="#projects">
-            <h2>Projects</h2>
+            <h3>Projects</h3>
           </a>
         </li>
-        <li>
+        <li class="primaryButton">
           <a href="#contact">
-            <h2>Contact</h2>
+            <h3>Contact</h3>
           </a>
         </li>
       </span>
@@ -97,6 +97,8 @@
 
   <div class="home" id="home">
 
+    <img class="banner" src="./images/sunBanner.png" />
+
     <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
     <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
     <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
@@ -114,11 +116,6 @@
         <img src="./images/leaf003.svg" />
         <img src="./images/leaf005.svg" />
         <img src="./images/leaf007.svg" />
-      </div>
-
-      <div class="banner">
-        <img class="eritrean" src="./images/eritrean.svg" alt="eritrean.svg" />
-        <div class="sun"></div>
       </div>
 
       <img class="Seattle" src="./images/SeattleSkyline.svg" alt="Seattle.svg" />
@@ -891,9 +888,9 @@
           </legend>
           <textarea name="message" id="message" required></textarea>
         </fieldset>
-            <div class = 'primaryButton' type="submit" id="submit-btn">
-      <h2>submit</h2>
-            </div>
+        <div class='primaryButton' type="submit" id="submit-btn">
+          <h2>submit</h2>
+        </div>
       </li>
     </span>
 
@@ -930,9 +927,20 @@
     document.addEventListener("DOMContentLoaded", async () => {
       if (window.__debugSet) window.__debugSet('debug: DOMContentLoaded');
       const rotateGate = document.getElementById("rotateGate");
-      const mobilePortraitQuery = window.matchMedia("(max-width: 900px) and (orientation: portrait)");
-
-      const isBlockedByOrientation = () => mobilePortraitQuery.matches;
+      const navDesktopLinks = document.querySelector(".navBar .navDesktopLinks");
+      const isBlockedByOrientation = () => {
+        const cssWidth = window.innerWidth || document.documentElement.clientWidth || 9999;
+        const viewportWidth = window.visualViewport ? window.visualViewport.width : cssWidth;
+        const screenWidth = window.screen && window.screen.width ? window.screen.width : cssWidth;
+        const effectiveWidth = Math.min(cssWidth, viewportWidth, screenWidth);
+        return effectiveWidth <= 440;
+      };
+      const removeDesktopLinksForPhone = () => {
+        const cssWidth = window.innerWidth || document.documentElement.clientWidth || 9999;
+        if (cssWidth <= 1023 && navDesktopLinks && navDesktopLinks.parentNode) {
+          navDesktopLinks.parentNode.removeChild(navDesktopLinks);
+        }
+      };
       const setRotateGateState = (blocked) => {
         if (rotateGate) rotateGate.hidden = !blocked;
         document.body.classList.toggle("rotationLocked", blocked);
@@ -962,9 +970,13 @@
         if (!blocked) await maybeBootScene();
       };
 
+      removeDesktopLinksForPhone();
       await updateRotationGate();
       window.addEventListener("resize", updateRotationGate);
       window.addEventListener("orientationchange", updateRotationGate);
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener("resize", updateRotationGate);
+      }
 
       const aboutContainer = document.querySelector(".about");
       let aboutCanvasInitialized = false;
@@ -973,6 +985,7 @@
       const bars = document.querySelectorAll(
         ".progressContainer li .barContainer .bar"
       );
+      const navDesktopItems = document.querySelectorAll(".navBar .navDesktopLinks li");
 
       function loadingScreen() {
         const loadingScreen = document.getElementById("loadingScreen");
@@ -985,17 +998,24 @@
           if (borderSvg) {
             borderSvg.classList.add("animateBorder");
           }
+
+          setTimeout(() => {
+            navDesktopItems.forEach((item, index) => {
+              setTimeout(() => item.classList.add("expandBar"), index * 200);
+            });
+          }, 250);
+
         }
       }
 
-      const menuSpan001 = document.querySelector(".navBar span:nth-of-type(1)");
+      const menuSpan001 = document.querySelector(".navIconRail");
       const homeImgs = document.querySelectorAll(".home img");
       const banner = document.querySelector(".banner");
       const homeText = document.querySelector(".name");
       const borderSvg = document.querySelector(".homeBorder svg path");
       const nyLogo = document.querySelector(".nyLogo");
-      const menuText = document.querySelectorAll(".navBar span:nth-of-type(2) li");
-      const iconButtons = document.querySelectorAll(".navBar span:nth-of-type(1) .iconButton");
+      const menuText = document.querySelectorAll(".navBar .navDesktopLinks li");
+      const iconButtons = document.querySelectorAll(".navIconRail .iconButton");
       const menuCircle = document.querySelector(".homeBorder .circle");
       const cherryBranch = document.querySelector(".home .branch");
 
@@ -1037,7 +1057,7 @@
             menuCircle.classList.add("expandCircle");
 
             menuText.forEach((text) => {
-              text.classList.add("menuShrinkText");
+              text.classList.remove("expandBar");
             });
 
             if (!window.__menuToggleBound) {
@@ -1059,7 +1079,6 @@
             menuSpan001.classList.remove("menuShrink");
             nyLogo.classList.remove("rotateLogo");
             menuCircle.classList.remove("expandCircle");
-
             iconButtons.forEach((btn) => {
               btn.classList.remove("menuExpand");
             });
@@ -1086,7 +1105,7 @@
             });
 
             menuText.forEach((text) => {
-              text.classList.remove("menuShrinkText");
+              text.classList.add("expandBar");
             });
           }
 

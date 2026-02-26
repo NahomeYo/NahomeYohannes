@@ -20,7 +20,13 @@ let nahomeModel,
   javascript,
   photoshop,
   react,
-  bedroomModel;
+  bedroomModel,
+  chairModel;
+
+let chairInitialPosition = null;
+let chairInitialRotation = null;
+let chairOffscreenPosition = null;
+const chairOffscreenYOffset = 8;
 
 let nahomeNeckBone,
   nahomeWaistBone,
@@ -118,7 +124,9 @@ function getSectionState() {
 
   const aboutTop = aboutSectionEl.getBoundingClientRect().top + window.scrollY;
   const projectsTop = projectsSectionEl.getBoundingClientRect().top + window.scrollY;
-  const currentY = window.scrollY + 1;
+  // Trigger section state when the section is visibly entered, not only
+  // after its top reaches the very top of the viewport.
+  const currentY = window.scrollY + window.innerHeight * 0.2;
 
   return {
     inHome: currentY < aboutTop,
@@ -345,6 +353,15 @@ function addModel(scene, modelPath) {
           });
         }
 
+        if (modelPath.includes("chair.glb")) {
+          chairModel = root;
+          chairInitialPosition = root.position.clone();
+          chairInitialRotation = root.rotation.clone();
+          chairOffscreenPosition = chairInitialPosition.clone();
+          chairOffscreenPosition.y += chairOffscreenYOffset;
+          chairModel.position.copy(chairOffscreenPosition);
+        }
+
         resolve(root);
       },
       undefined,
@@ -560,6 +577,11 @@ async function homeInit() {
     console.error("apps.glb failed to load:", err);
   }
   try {
+    await addModel(scene, "./chair.glb");
+  } catch (err) {
+    console.error("chair.glb failed to load:", err);
+  }
+  try {
     await addModel(bedRoomScene, "./bedRoom.glb");
   } catch (err) {
     console.error("bedRoom.glb failed to load:", err);
@@ -759,7 +781,7 @@ async function homeInit() {
     }
     wasInProjects = inProjects;
 
-    if (nahomeModel && bedroomModel && appsContainer && appsContainer.length) {
+  if (nahomeModel && bedroomModel && appsContainer && appsContainer.length) {
 
       if (!inHome) {
 
@@ -791,7 +813,7 @@ async function homeInit() {
       if (inAbout) {
         if (typing && typing.isRunning()) {
           typing.fadeOut(0.2);
-          setTimeout(() => { if (typing) typing.stop(); }, 200);
+          typing.stop();
         }
         if (idle && !idle.isRunning()) {
           idle.reset();
@@ -804,13 +826,11 @@ async function homeInit() {
         if (typing && !typing.isRunning()) {
           if (idle && idle.isRunning()) idle.fadeOut(0.2);
           if (smiling && smiling.isRunning()) smiling.fadeOut(0.2);
-          setTimeout(() => {
-            if (idle) idle.stop();
-            if (smiling) smiling.stop();
-            typing.reset();
-            typing.fadeIn(0.2);
-            typing.play();
-          }, 200);
+          if (idle) idle.stop();
+          if (smiling) smiling.stop();
+          typing.reset();
+          typing.fadeIn(0.2);
+          typing.play();
         }
       }
 
@@ -860,6 +880,19 @@ async function homeInit() {
       }
 
       if (inProjects) {
+        if (chairModel) {
+          const chairProjectPosition = new THREE.Vector3(0, 0, 0.1);
+          chairModel.position.lerp(chairProjectPosition, 0.08);
+
+          const chairProjectRotationX = nahomeModel ? nahomeModel.rotation.x : 0;
+          const chairProjectRotationY = nahomeModel ? nahomeModel.rotation.y : 0;
+          const chairProjectRotationZ = nahomeModel ? nahomeModel.rotation.z : 0;
+
+          chairModel.rotation.x = THREE.MathUtils.lerp(chairModel.rotation.x, chairProjectRotationX, 0.08);
+          chairModel.rotation.y = THREE.MathUtils.lerp(chairModel.rotation.y, chairProjectRotationY, 0.08);
+          chairModel.rotation.z = THREE.MathUtils.lerp(chairModel.rotation.z, chairProjectRotationZ, 0.08);
+        }
+
         if (typing && !typing.isRunning()) {
           if (idle && idle.isRunning()) idle.fadeOut(0.3);
           if (smiling && smiling.isRunning()) smiling.fadeOut(0.3);
@@ -934,6 +967,15 @@ async function homeInit() {
         nahomeModel.position.lerp(new THREE.Vector3(0, 0, -0.980), 0.08);
         nahomeModel.rotation.y = THREE.MathUtils.lerp(nahomeModel.rotation.y, THREE.MathUtils.degToRad(-180.00), 0.08);
       } else {
+        if (chairModel && chairOffscreenPosition) {
+          chairModel.position.lerp(chairOffscreenPosition, 0.08);
+          if (chairInitialRotation) {
+            chairModel.rotation.x = THREE.MathUtils.lerp(chairModel.rotation.x, chairInitialRotation.x, 0.08);
+            chairModel.rotation.y = THREE.MathUtils.lerp(chairModel.rotation.y, chairInitialRotation.y, 0.08);
+            chairModel.rotation.z = THREE.MathUtils.lerp(chairModel.rotation.z, chairInitialRotation.z, 0.08);
+          }
+        }
+
         manualCameraOverride = false;
         bedroomModel.position.lerp(new THREE.Vector3(-10, 0, 0), 0.08);
         nahomeModel.position.lerp(new THREE.Vector3(0, 0, 0), 0.08);
