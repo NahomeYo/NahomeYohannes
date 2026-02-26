@@ -10,7 +10,7 @@
   z-index: 2 !important;
 }
 
-.navBar > * {
+.navBar>* {
   position: relative;
 }
 
@@ -32,6 +32,7 @@
 .navIconRail {
   transition: all 1s ease;
   position: relative;
+  z-index: 2;
   display: flex;
   justify-content: start;
   align-items: start;
@@ -324,10 +325,11 @@
   left: 0;
   top: 0;
   margin: 0;
-  width: 20vw;
   height: 10vh;
   transform: translate(35vw, 45vh) translateX(var(--cloudShift, 0px));
   z-index: 0;
+  object-fit: contain;
+  overflow: visible;
 }
 
 .cloud002 {
@@ -340,6 +342,9 @@
   transform: translate(78.889vw, 35vh) translateX(var(--cloudShift, 0px));
   z-index: 0;
   overflow: visible;
+  object-fit: contain;
+  overflow: visible;
+  object-position: 100% 0%;
 }
 
 .cloud003 {
@@ -352,6 +357,8 @@
   transform: translate(70vw, 10vh) translateX(var(--cloudShift, 0px));
   overflow: visible;
   z-index: 1;
+  object-fit: contain;
+  overflow: visible;
 }
 
 .name {

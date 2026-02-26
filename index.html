@@ -58,8 +58,6 @@
       </li>
     </span>
 
-    <div class="circle"></div>
-
     <nav class="navBar">
       <div class="name">
         <img src="./images/nameBanner.png" />
@@ -68,23 +66,8 @@
       <div>
       </div>
 
-      <span class="navDesktopLinks">
-        <li class="primaryButton">
-          <a href="#about">
-            <h3>About</h3>
-          </a>
-        </li>
-        <li class="primaryButton">
-          <a href="#projects">
-            <h3>Projects</h3>
-          </a>
-        </li>
-        <li class="primaryButton">
-          <a href="#contact">
-            <h3>Contact</h3>
-          </a>
-        </li>
-      </span>
+      <div>
+      </div>
     </nav>
 
     <svg preserveAspectRatio="none" viewBox="0 0 1334 944" xmlns="http://www.w3.org/2000/svg">
@@ -92,6 +75,8 @@
         d="M82.0002 5H1279C1306.61 5 1329 27.3858 1329 55V889C1329 916.614 1306.61 939 1279 939H55C27.3858 939 5 916.614 5 889V117"
         stroke="#ff3c00" stroke-width="10" stroke-linecap="round" />
     </svg>
+
+    <div class="circle"></div>
 
   </div>
 
@@ -1021,6 +1006,26 @@
       const iconButtons = document.querySelectorAll(".navIconRail .iconButton");
       const menuCircle = document.querySelector(".homeBorder .circle");
       const cherryBranch = document.querySelector(".home .branch");
+      const navDesktopAnchors = document.querySelectorAll(".navBar .navDesktopLinks a[href^='#']");
+
+      const navScrollMap = {
+        "#about": ".about",
+        "#projects": ".projects",
+        "#contact": ".footer",
+      };
+
+      navDesktopAnchors.forEach((anchor) => {
+        anchor.addEventListener("click", (event) => {
+          const targetSelector = navScrollMap[anchor.getAttribute("href")];
+          if (!targetSelector) return;
+
+          const targetElement = document.querySelector(targetSelector);
+          if (!targetElement) return;
+
+          event.preventDefault();
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
 
       const ENTER = 150;
       let active;
