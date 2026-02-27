@@ -497,7 +497,7 @@
               <line x1="4" y1="7" x2="12" y2="7" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="9" x2="10" y2="9" stroke="#666" stroke-width="0.5" />
             </svg>
-            <span>description.txt — Edited</span>
+            <span>description.txt</span>
           </div>
         </div>
         <div class="text-viewer-content">
@@ -1014,7 +1014,7 @@
       const cherryBranch = document.querySelector(".home .branch");
       const homeContainer = document.querySelector(".home");
       const leafLayers = document.querySelectorAll(".leafsFront, .leafsBack");
-      const navDesktopAnchors = document.querySelectorAll(".navBar .navDesktopLinks a[href^='#']");
+      const navSocialAnchors = document.querySelectorAll(".navSocialBubbles a");
       let appReady = false;
 
       const navScrollMap = {
@@ -1023,26 +1023,9 @@
         "#contact": ".footer",
       };
 
-      navDesktopAnchors.forEach((anchor) => {
-        anchor.addEventListener("click", (event) => {
-          const targetSelector = navScrollMap[anchor.getAttribute("href")];
-          if (!targetSelector) return;
-
-          const targetElement = document.querySelector(targetSelector);
-          if (!targetElement) return;
-
-          event.preventDefault();
-          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
-        });
-      });
-
       const ENTER = 150;
       let active;
       let wasActive = false;
-      const setNavSocialDirection = (isActive) => {
-        document.body.classList.toggle("navSocialReverse", !!isActive);
-        document.body.classList.toggle("navSocialForward", !isActive);
-      };
 
       if (homeImgs.length > 0) {
         window.addEventListener("scroll", () => {
@@ -1055,8 +1038,6 @@
           if (window.scrollY < ENTER) {
             active = false;
           }
-
-          setNavSocialDirection(!!active);
 
           if (homeContainer) {
             homeContainer.classList.toggle("assetsDropped", !!active);
@@ -1096,6 +1077,10 @@
               text.classList.remove("expandBar");
             });
 
+            navSocialAnchors.forEach((btn) => {
+              btn.classList.add("isInactive");
+            });
+
             if (!window.__menuToggleBound) {
               window.__menuToggleBound = true;
               menuSpan001.addEventListener("click", () => {
@@ -1116,6 +1101,10 @@
             nyLogo.classList.remove("rotateLogo");
             iconButtons.forEach((btn) => {
               btn.classList.remove("menuExpand");
+            });
+
+            navSocialAnchors.forEach((btn) => {
+              btn.classList.remove("isInactive");
             });
 
             iconButtons.forEach((btn, index) => {
@@ -1266,7 +1255,16 @@
         await waitForPaint();
 
         loadingScreen();
-        setNavSocialDirection(false);
+        document.body.classList.add("navSocialIntro");
+        if (navSocialAnchors) {
+          navSocialAnchors.forEach((btn) => {
+            btn.classList.remove("isActive");
+            btn.classList.remove("isInactive");
+          });
+        }
+        setTimeout(() => {
+          document.body.classList.remove("navSocialIntro");
+        }, 2200);
         appReady = true;
         window.__loadingCompleteFired = true;
         window.dispatchEvent(new Event("loadingComplete"));
