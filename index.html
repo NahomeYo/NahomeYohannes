@@ -30,15 +30,21 @@
     </div>
   </div>
 
+  <svg class="filter-container" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+    <defs>
+      <filter id="gooNav">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur" />
+        <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 22 -9" result="goo" />
+      </filter>
+    </defs>
+  </svg>
+
   <div class="homeBorder">
 
-    <span class="navIconRail">
-      <li>
-        <a href="#home">
-          <img class="nyLogo" src="./images/nyLogo.svg" alt="Logo" />
-        </a>
-      </li>
-
+    <ul class="navIconRail">
       <li class="iconButton">
         <a href="#about">
           <img src="./icons/crib.svg" />
@@ -56,60 +62,80 @@
           <img src="./icons/mail.svg" />
         </a>
       </li>
-    </span>
+    </ul>
 
     <nav class="navBar">
       <div class="name">
-        <img src="./images/nameBanner.png" />
+        <img class="name" src="./images/nameBanner.png" />
       </div>
-
-      <div>
-      </div>
-
       <div>
       </div>
     </nav>
 
-    <svg preserveAspectRatio="none" viewBox="0 0 1334 944" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M82.0002 5H1279C1306.61 5 1329 27.3858 1329 55V889C1329 916.614 1306.61 939 1279 939H55C27.3858 939 5 916.614 5 889V117"
-        stroke="#ff3c00" stroke-width="10" stroke-linecap="round" />
-    </svg>
-
     <div class="circle"></div>
-
   </div>
 
   <div id="nahomeScreen"></div>
+
+  <div class="homeBorder homeBorderSecond">
+
+    <a class="homeBtn" href="#home">
+      <img src="./images/nyLogo.svg" alt="Logo" />
+    </a>
+
+    <svg preserveAspectRatio="none" viewBox="0 0 1334 944" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M82.0002 5H1279C1306.61 5 1329 27.3858 1329 55V889C1329 916.614 1306.61 939 1279 939H55C27.3858 939 5 916.614 5 889V85.5"
+        stroke="#FA6519" stroke-width="10" stroke-linecap="round" />
+    </svg>
+  </div>
+
+  <div class="leafsContainer">
+    <img src="./images/leaf002.svg" />
+    <img src="./images/leaf004.svg" />
+    <img src="./images/leaf006.svg" />
+  </div>
+
+  <ul class="navSocialBubbles">
+    <li>
+      <a href="https://www.linkedin.com/in/nahome-y-198b8b294/" target="_blank" rel="noopener">
+        <img src="./icons/Linkedin.svg" alt="LinkedIn" />
+      </a>
+      <a href="https://github.com/NahomeYo" target="_blank" rel="noopener">
+        <img src="./icons/github.svg" alt="GitHub" />
+      </a>
+    </li>
+
+    <li>
+      <a href="https://www.fiverr.com/nahomeyohannes/buying?source=avatar_menu_profile" target="_blank" rel="noopener">
+        <img src="./icons/fiverr.svg" alt="Fiverr" />
+      </a>
+      <a href="https://www.upwork.com/freelancers/~0192a71278f2b630f0" target="_blank" rel="noopener">
+        <img src="./icons/upwork.svg" alt="Upwork" />
+      </a>
+    </li>
+  </ul>
+
   <div id="projectsScreen"></div>
 
   <div class="home" id="home">
-
     <img class="banner" src="./images/sunBanner.png" />
 
     <img class="inBetweenTrees" src="./images/inBetweenTrees.svg" alt="backTree.svg" />
     <img class="middleTrees" src="./images/MiddleTrees.svg" alt="backTree.svg" />
     <img class="backTree" src="./images/BackTrees.svg" alt="backTree.svg" />
+    <img class="Seattle" id="effect" src="./images/SeattleSkyline.svg" alt="Seattle.svg" />
+    <img class="cloud001" src="./images/Cloud001.png" alt="cloud001.png" />
+    <img class="cloud002" src="./images/Cloud002.png" alt="cloud002.png" />
+    <img class="cloud003" src="./images/Cloud003.png" alt="cloud003.png" />
 
-    <div class="branch">
+    <img class="cherryBlossom" src="./images/CherryBlossom.svg" />
 
-      <div class="leafsContainer">
-        <img src="./images/leaf002.svg" />
-        <img src="./images/leaf004.svg" />
-        <img src="./images/leaf006.svg" />
-      </div>
-
-      <div class="leafsContainer">
-        <img src="./images/leaf001.svg" />
-        <img src="./images/leaf003.svg" />
-        <img src="./images/leaf005.svg" />
-        <img src="./images/leaf007.svg" />
-      </div>
-
-      <img class="Seattle" src="./images/SeattleSkyline.svg" alt="Seattle.svg" />
-      <img class="cloud001" src="./images/Cloud001.png" alt="cloud001.png" />
-      <img class="cloud002" src="./images/Cloud002.png" alt="cloud002.png" />
-      <img class="cloud003" src="./images/Cloud003.png" alt="cloud003.png" />
+    <div class="leafsContainer">
+      <img src="./images/leaf001.svg" />
+      <img src="./images/leaf003.svg" />
+      <img src="./images/leaf005.svg" />
+      <img src="./images/leaf007.svg" />
     </div>
   </div>
 
@@ -120,14 +146,6 @@
   <div class="about">
 
     <div class="infoHeader">
-      <div class="infoTrack">
-        <div class="professionRow">
-          <img src="./icons/professionsBanner.png" alt="Professions banner" />
-        </div>
-        <div class="professionRow" aria-hidden="true">
-          <img src="./icons/professionsBanner.png" alt="" />
-        </div>
-      </div>
     </div>
 
     <img class="upsideDown" src="./images/upsideDownSeattle.png" />
@@ -284,17 +302,6 @@
           <h3>yohannesn1</b>
             @spu.edu</h3>
         </li>
-      </div>
-    </div>
-
-    <div class="contactHeader">
-      <div class="infoTrack">
-        <div class="professionRow">
-          <img src="./icons/contactBanner.png" alt="Professions banner" />
-        </div>
-        <div class="professionRow" aria-hidden="true">
-          <img src="./icons/contactBanner.png" alt="" />
-        </div>
       </div>
     </div>
 
@@ -996,17 +1003,19 @@
         }
       }
 
-      const menuSpan001 = document.querySelector(".navIconRail");
+      const menuSpan001 = document.querySelector(".homeBtn");
       const homeImgs = document.querySelectorAll(".home img");
       const banner = document.querySelector(".banner");
       const homeText = document.querySelector(".name");
       const borderSvg = document.querySelector(".homeBorder svg path");
-      const nyLogo = document.querySelector(".nyLogo");
+      const nyLogo = document.querySelector(".homeBtn");
       const menuText = document.querySelectorAll(".navBar .navDesktopLinks li");
       const iconButtons = document.querySelectorAll(".navIconRail .iconButton");
       const menuCircle = document.querySelector(".homeBorder .circle");
       const cherryBranch = document.querySelector(".home .branch");
+      const homeContainer = document.querySelector(".home");
       const navDesktopAnchors = document.querySelectorAll(".navBar .navDesktopLinks a[href^='#']");
+      let appReady = false;
 
       const navScrollMap = {
         "#about": ".about",
@@ -1030,15 +1039,27 @@
       const ENTER = 150;
       let active;
       let wasActive = false;
+      const setNavSocialDirection = (isActive) => {
+        document.body.classList.toggle("navSocialReverse", !!isActive);
+        document.body.classList.toggle("navSocialForward", !isActive);
+      };
 
       if (homeImgs.length > 0) {
         window.addEventListener("scroll", () => {
+          if (!appReady) return;
+
           if (window.scrollY >= ENTER) {
             active = true;
           }
 
           if (window.scrollY < ENTER) {
             active = false;
+          }
+
+          setNavSocialDirection(!!active);
+
+          if (homeContainer) {
+            homeContainer.classList.toggle("assetsDropped", !!active);
           }
 
           if (!active) {
@@ -1210,10 +1231,42 @@
         });
       }
 
-      setTimeout(() => {
+      const waitForWindowLoad = () =>
+        new Promise((resolve) => {
+          if (document.readyState === "complete") {
+            resolve();
+            return;
+          }
+          window.addEventListener("load", resolve, { once: true });
+        });
+
+      const waitForSceneReady = () =>
+        new Promise((resolve) => {
+          if (!sceneBooted) {
+            resolve();
+            return;
+          }
+          window.addEventListener("sceneReady", resolve, { once: true });
+        });
+
+      const waitForPaint = () =>
+        new Promise((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        });
+
+      const finalizeLoading = async () => {
+        await waitForWindowLoad();
+        await waitForSceneReady();
+        await waitForPaint();
+
         loadingScreen();
-        window.dispatchEvent(new Event('loadingComplete'));
-      }, 2000);
+        setNavSocialDirection(false);
+        appReady = true;
+        window.__loadingCompleteFired = true;
+        window.dispatchEvent(new Event("loadingComplete"));
+      };
+
+      finalizeLoading();
     });
   </script>
   <script>
@@ -1269,17 +1322,11 @@
 
     if (leafs) {
       leafs.forEach((l, index) => {
-        let delay;
-
-        if (index % 2 === 0) {
-          delay = index * 0.25;
-          l.style.animationDelay = `${delay}s`;
-          l.classList.add('descend');
-        } else {
-          delay = index * 0.75;
-          l.style.animationDelay = `${delay}s`;
-          l.classList.add('descend002');
-        }
+        const isEven = index % 2 === 0;
+        const duration = isEven ? 7 + (index % 3) * 0.35 : 8.5 + (index % 3) * 0.45;
+        l.classList.add(isEven ? 'descend' : 'descend002');
+        l.style.animationDuration = `${duration}s`;
+        l.style.animationDelay = `${-(Math.random() * duration).toFixed(2)}s`;
       });
     }
 
@@ -1305,7 +1352,6 @@
     forceScrollTop();
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <script type="module" src="./main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {

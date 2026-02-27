@@ -13,8 +13,8 @@ html {
   --thirdly: #af6243;
   --fourthly: #7f3f32;
   --fifthly: #ff0d00;
-  --sixthly: #FFD170;
-  --highLight: #ffdfac;
+  --sixthly: #ffda89;
+  --highLight: #ff7a38;
   --threshold: 50%;
   --motion: cubic-bezier(.34, 1.56, .64, 1);
   --textOutline:
@@ -66,7 +66,6 @@ p {
   font-size: 0.75rem;
   color: var(--secondary);
 }
-
 
 @font-face {
   font-family: LondrinaSketch;

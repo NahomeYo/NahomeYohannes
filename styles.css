@@ -45,6 +45,13 @@ body.rotationLocked {
   display: none;
 }
 
+.filter-container {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
 .rotateGateCard {
   max-width: 24rem;
   background: rgba(127, 63, 50, 0.9);
@@ -63,18 +70,6 @@ body.rotationLocked {
   color: var(--primary);
 }
 
-.leafsContainer {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-start;
-  padding: 5% 20% 0% 0%;
-  z-index: 7;
-}
-
 #nahomeScreen {
   position: fixed;
   left: 50%;
@@ -85,9 +80,9 @@ body.rotationLocked {
   transform: translate(-50%, -50%);
   transform-origin: center center;
   z-index: 3 !important;
-  pointer-events: none;
   filter:
     contrast(1.25) saturate(1);
+  pointer-events: none;
 }
 
 #bedRoomScene {
@@ -116,90 +111,88 @@ body.rotationLocked {
 }
 
 .leafsContainer:nth-of-type(1) {
-  z-index: 100;
+  z-index: 10 !important;
 }
 
 .leafsContainer:nth-of-type(2) {
-  z-index: 7;
+  z-index: 4 !important;
+}
+
+.leafsContainer:nth-of-type(1),
+.leafsContainer:nth-of-type(2) {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  pointer-events: none;
+  z-index: 4;
+  transform: translateX(var(--leafShiftX, 0vw));
+  transition: transform 0.75s var(--motion);
 }
 
 .leafsContainer img {
   position: relative !important;
+  width: calc(var(--iconSize) * 2);
+  height: calc(var(--iconSize) * 2);
+  opacity: 0;
 }
 
 .leafsContainer img.descend {
-  animation: 6s descendAnim ease-in-out infinite;
+  animation: 7s descendAnim linear infinite;
 }
 
 .leafsContainer img.descend002 {
-  animation: 8s descendAnim002 ease-in-out infinite;
-}
-
-.leafsContainer img {
-  filter: none;
+  animation: 8.5s descendAnim002 linear infinite;
 }
 
 @keyframes descendAnim {
   0% {
     opacity: 0;
-    transform: translate(0, 0) rotate(0deg) skew(0deg, 0deg);
+    transform: translate3d(0vw, 18vh, 0) rotate(-4deg) skew(15deg, 15deg);
   }
 
-  10% {
+  6% {
     opacity: 1;
-    transform: translate(auto) rotate(auto) skew(auto);
-  }
-
-  25% {
-    opacity: 1;
-    transform: translate(auto) rotate(20deg) skew(-5deg, 5deg);
   }
 
   50% {
-    opacity: 1;
-    transform: translate(auto) rotate(40deg) skew(0deg, 0deg);
+    transform: translate3d(56vw, 74vh, 0) rotate(90deg) skew(0deg);
   }
 
-  75% {
+  95% {
     opacity: 1;
-    transform: translate(auto) rotate(60deg) skew(-21.6deg, 18deg);
   }
 
   100% {
     opacity: 0;
-    transform: translate(100%, 100vh) rotate(90deg) skew(0deg, 0deg);
+    transform: translate3d(100vw, 34vh, 0) rotate(270deg) skew(-15deg, -45deg);
   }
 }
 
 @keyframes descendAnim002 {
   0% {
     opacity: 0;
-    transform: translate(0, 0) rotate(0deg) skew(0deg, 0deg);
+    transform: translate3d(0vw, 18vh, 0) rotate(4deg) skew(15deg, 15deg);
   }
 
-  10% {
+  6% {
     opacity: 1;
-    transform: translate(auto) rotate(-10deg) skew(5deg, -5deg);
-  }
-
-  25% {
-    opacity: 1;
-    transform: translate(auto) rotate(-25deg) skew(10deg, -10deg);
   }
 
   50% {
-    opacity: 1;
-    transform: translate(auto) rotate(-45deg) skew(0deg, 0deg);
+    transform: translate3d(26vw, 50vh, 0) rotate(-20deg) skew(0deg);
   }
 
-  75% {
+  95% {
     opacity: 1;
-    transform: translate(auto) rotate(-60deg) skew(-10deg, 10deg);
   }
 
   100% {
     opacity: 0;
-    transform: translate(100%, 100vh) rotate(-90deg) skew(0deg, 0deg);
+    transform: translate3d(100vw, 72vh, 0) rotate(-92deg) skew(-15deg, -45deg);
   }
 }
 
@@ -257,13 +250,35 @@ body.rotationLocked {
   pointer-events: none;
   position: fixed;
   inset: 0;
+  margin: 0;
   width: 100%;
   height: 100%;
+  padding: 5vh 5vw;
   overflow: visible;
   display: flex;
   justify-content: start;
   align-items: start;
   z-index: 9999 !important;
+}
+
+.homeBorder.homeBorderSecond {
+  z-index: 100000 !important;
+  pointer-events: none;
+}
+
+.homeBorder .navBar,
+.homeBorder .navBar * {
+  pointer-events: none;
+}
+
+.navSocialBubbles,
+.navSocialBubbles *,
+.navSocialBubbles a {
+  pointer-events: auto;
+}
+
+.navSocialBubbles a img {
+  pointer-events: none;
 }
 
 .homeBorder svg {
@@ -279,10 +294,15 @@ body.rotationLocked {
   z-index: 4 !important;
 }
 
+.homeBorder svg {
+  width: min(90vw, 100%);
+  height: 90%;
+}
+
 .homeBorder svg path {
   stroke-dashoffset: 7700;
   stroke-dasharray: 7700;
-  stroke-width: 10px;
+  stroke-width: 20px;
   stroke: var(--fifthly);
   transition: stroke-dashoffset 1s ease;
 }
@@ -301,7 +321,7 @@ body.rotationLocked {
   align-items: end;
   justify-content: center;
   pointer-events: none;
-  z-index: 99;
+  z-index: 99999 !important;
 }
 
 .upsideDownTrees {
@@ -316,9 +336,9 @@ body.rotationLocked {
 
 .home .banner {
   position: absolute;
-  left: 90%;
-  top: 50%;
-  transform: translate(-90%, -50%);
+  left: 120%;
+  top: 90%;
+  transform: translate(-120%, -90%);
   padding: 0;
   margin: 0;
   width: 70%;
@@ -620,6 +640,165 @@ body.rotationLocked {
   height: calc(var(--header) * 4);
 }
 
+.navSocialBubbles {
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--b);
+  position: fixed;
+  right: 0;
+  top: 0;
+  margin: 5vh 5vw;
+  padding: 2.5vh 2.5vw;
+  filter: url(#gooNav);
+  isolation: isolate;
+  z-index: 200;
+}
+
+.navSocialBubbles li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+}
+
+.navSocialBubbles a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(var(--header) * 4.5);
+  height: calc(var(--header) * 4.5);
+  background: none;
+  border: calc(var(--b) / 2) solid var(--fifthly);
+  box-shadow: -5px 5px 0 var(--fourthly);
+  border-radius: 18%;
+  opacity: 0;
+  transition: all 0.75s var(--motion);
+  will-change: transform, opacity, border-radius, filter;
+  cursor: pointer;
+  margin-bottom: var(--b);
+}
+
+.navSocialBubbles a img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+  transition: all 0.6s var(--motion);
+}
+
+body.scrollControl.navSocialForward .navSocialBubbles>li:nth-of-type(1)>a:nth-of-type(1) {
+  opacity: 1;
+  animation: bubbleParentLiquify 0.9s var(--motion) 0s forwards;
+}
+
+body.scrollControl.navSocialForward .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(1) {
+  animation: bubbleSpawn02 0.75s var(--motion) 0.3s forwards;
+}
+
+body.scrollControl.navSocialForward .navSocialBubbles>li:nth-of-type(1)>a:nth-of-type(2) {
+  animation: bubbleSpawn03 0.8s var(--motion) 0.6s forwards;
+}
+
+body.scrollControl.navSocialForward .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
+  animation: bubbleSpawn04 0.85s var(--motion) 0.9s forwards;
+}
+
+body.scrollControl.navSocialReverse .navSocialBubbles>li:nth-of-type(1)>a:nth-of-type(1) {
+  animation: bubbleParentLiquify 0.9s var(--motion) 0s reverse forwards;
+}
+
+body.scrollControl.navSocialReverse .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(1) {
+  animation: bubbleSpawn02 0.75s var(--motion) 0.3s reverse forwards;
+}
+
+body.scrollControl.navSocialReverse .navSocialBubbles>li:nth-of-type(1)>a:nth-of-type(2) {
+  animation: bubbleSpawn03 0.8s var(--motion) 0.6s reverse forwards;
+}
+
+body.scrollControl.navSocialReverse .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
+  animation: bubbleSpawn04 0.85s var(--motion) 0.9s reverse forwards;
+}
+
+@keyframes bubbleParentLiquify {
+  0% {
+    opacity: 0;
+    transform: scale(0.25);
+    border-radius: 100%;
+    filter: blur(2px);
+  }
+
+  55% {
+    transform: scale(1.12);
+    border-radius: 30% 22% 32% 20% / 22% 33% 19% 31%;
+    filter: blur(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    border-radius: 18%;
+  }
+}
+
+@keyframes bubbleSpawn02 {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(-1 * (var(--header) * 6))) scale(0.08);
+    filter: blur(3px);
+    border-radius: 100%;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    border-radius: 18%;
+  }
+}
+
+@keyframes bubbleSpawn03 {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(-1 * (var(--header) * 12))) scale(0.06);
+    filter: blur(3px);
+    border-radius: 100%;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    border-radius: 18%;
+  }
+}
+
+@keyframes bubbleSpawn04 {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(-1 * (var(--header) * 18))) scale(0.05);
+    filter: blur(3px);
+    border-radius: 100%;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+    border-radius: 18%;
+  }
+}
+
+.navSocialBubbles a:hover {
+  background: var(--fourthly) !important;
+  transform: translateY(calc(-1 * (var(--b) * 0.3))) scale(1.04) !important;
+  border-radius: 28% 72% 41% 59% / 42% 33% 67% 58% !important;
+}
+
+.navSocialBubbles a:hover img {
+  filter: brightness(4) !important;
+}
+
 .table {
   left: 0;
   top: 0;
@@ -843,7 +1022,7 @@ body.rotationLocked {
 .rsmCol:nth-of-type(2) {
   flex-grow: 1;
   position: relative;
-  overflow: visible;
+  overflow: hidden;
   height: 100%;
 }
 
@@ -867,21 +1046,20 @@ body.rotationLocked {
 }
 
 .rsmCol:nth-of-type(2) .iconCircle {
-  position: relative;
+  position: absolute;
   list-style: none;
   z-index: 40;
-  left: 50%;
-  top: 50%;
+  inset: 0;
+  overflow: hidden;
   z-index: 9999;
-  transform: translate(-50%, -50%);
 }
 
 .iconCircle li {
   position: absolute;
-  left: 0;
-  top: 0;
+  left: 50%;
+  top: 50%;
   padding: 0;
-  offset-path: circle(45% at 50% 50%);
+  offset-path: inset(12%);
   z-index: -20;
   offset-distance: 0%;
   transition: all 2.5s var(--motion);
@@ -997,6 +1175,7 @@ body.rotationLocked {
   mask-position: 0% 0%;
   mask-repeat: no-repeat;
   pointer-events: none;
+  z-index: 100 !important;
 }
 
 .infoTrack {
@@ -1041,4 +1220,8 @@ body.rotationLocked {
   100% {
     transform: translateX(0%);
   }
+}
+
+#effect {
+  filter: brightness(0.8) drop-shadow(0px -7px 2px var(--highLight));
 }

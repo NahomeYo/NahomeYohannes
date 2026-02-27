@@ -105,6 +105,7 @@ let cssSceneNeedsRender = true;
 let bedroomSceneNeedsRender = true;
 let animationFramesSinceLastRender = 0;
 const maxFramesBetweenRenders = 3;
+let hasLoadingCompleted = false;
 
 function updateScrollProgress() {
   const doc = document.documentElement;
@@ -147,7 +148,15 @@ function startAllAnimations() {
   pendingAnimations = [];
 }
 
-addEventListenerWithCleanup(window, 'loadingComplete', startAllAnimations);
+function onLoadingComplete() {
+  hasLoadingCompleted = true;
+  startAllAnimations();
+}
+
+addEventListenerWithCleanup(window, 'loadingComplete', onLoadingComplete);
+if (typeof window !== "undefined" && window.__loadingCompleteFired) {
+  onLoadingComplete();
+}
 
 function createRenderer(container, camera, composer = null) {
   const renderer = new THREE.WebGLRenderer({
@@ -256,7 +265,6 @@ function addModel(scene, modelPath) {
             THREE.AnimationClip.findByName(clips, "typing")
           );
 
-          runToJump.play();
           runToJump.loop = THREE.LoopOnce;
           runToJump.clampWhenFinished = true;
           pendingAnimations.push(runToJump);
@@ -755,6 +763,13 @@ async function homeInit() {
     const delta = clock.getDelta();
     mixers.forEach((m) => m.update(delta));
 
+    if (!hasLoadingCompleted) {
+      renderer.render(scene, homeCamera);
+      cssRenderer.render(cssScene, homeCamera);
+      bedRoomRenderer.render(bedRoomScene, homeCamera);
+      return;
+    }
+
     if (runToJump && runToJump.isRunning()) {
       const progress = runToJump.time / runToJump.getClip().duration;
       nahomeModel.position.z = THREE.MathUtils.lerp(-8, 0, progress);
@@ -1092,6 +1107,10 @@ async function homeInit() {
       lastCameraRotation.copy(cameraRotation);
     }
   }
+
+  requestAnimationFrame(() => {
+    window.dispatchEvent(new Event("sceneReady"));
+  });
 
   animate();
 }
