@@ -68,11 +68,16 @@
       <div class="name">
         <img class="name" src="./images/nameBanner.png" />
       </div>
-      <div>
+      <div class="circle">
       </div>
     </nav>
 
-    <div class="circle"></div>
+  </div>
+
+  <div class="leafsContainer leafsFront">
+    <img src="./images/leaf002.svg" />
+    <img src="./images/leaf004.svg" />
+    <img src="./images/leaf006.svg" />
   </div>
 
   <div id="nahomeScreen"></div>
@@ -88,12 +93,6 @@
         d="M82.0002 5H1279C1306.61 5 1329 27.3858 1329 55V889C1329 916.614 1306.61 939 1279 939H55C27.3858 939 5 916.614 5 889V85.5"
         stroke="#FA6519" stroke-width="10" stroke-linecap="round" />
     </svg>
-  </div>
-
-  <div class="leafsContainer">
-    <img src="./images/leaf002.svg" />
-    <img src="./images/leaf004.svg" />
-    <img src="./images/leaf006.svg" />
   </div>
 
   <ul class="navSocialBubbles">
@@ -131,7 +130,7 @@
 
     <img class="cherryBlossom" src="./images/CherryBlossom.svg" />
 
-    <div class="leafsContainer">
+    <div class="leafsContainer leafsBack">
       <img src="./images/leaf001.svg" />
       <img src="./images/leaf003.svg" />
       <img src="./images/leaf005.svg" />
@@ -1014,6 +1013,7 @@
       const menuCircle = document.querySelector(".homeBorder .circle");
       const cherryBranch = document.querySelector(".home .branch");
       const homeContainer = document.querySelector(".home");
+      const leafLayers = document.querySelectorAll(".leafsFront, .leafsBack");
       const navDesktopAnchors = document.querySelectorAll(".navBar .navDesktopLinks a[href^='#']");
       let appReady = false;
 
@@ -1062,6 +1062,14 @@
             homeContainer.classList.toggle("assetsDropped", !!active);
           }
 
+          if (leafLayers.length) {
+            leafLayers.forEach((layer) => layer.classList.toggle("isHidden", !!active));
+          }
+
+          if (menuCircle) {
+            menuCircle.classList.toggle("expandCircle", !!active);
+          }
+
           if (!active) {
             borderSvg.classList.add("animateBorder");
           } else {
@@ -1083,7 +1091,6 @@
             aboutContainer.classList.add("expanded");
             menuSpan001.classList.add("menuShrink");
             nyLogo.classList.add("rotateLogo");
-            menuCircle.classList.add("expandCircle");
 
             menuText.forEach((text) => {
               text.classList.remove("expandBar");
@@ -1107,7 +1114,6 @@
             aboutContainer.classList.remove("expanded");
             menuSpan001.classList.remove("menuShrink");
             nyLogo.classList.remove("rotateLogo");
-            menuCircle.classList.remove("expandCircle");
             iconButtons.forEach((btn) => {
               btn.classList.remove("menuExpand");
             });

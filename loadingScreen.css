@@ -9,7 +9,7 @@
     height: 100vh;
     background: var(--fourthly);
     pointer-events: none;
-    z-index: 10001 !important;
+    z-index: 400000 !important;
   }
   
   #loadingScreen svg {

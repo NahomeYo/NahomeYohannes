@@ -32,7 +32,7 @@
   position: absolute;
   left: 0;
   top: 50%;
-  z-index: 10000 !important;
+  z-index: 9997 !important;
   display: flex;
   gap: 50px;
   flex-direction: column;

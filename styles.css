@@ -110,16 +110,7 @@ body.rotationLocked {
   z-index: 1;
 }
 
-.leafsContainer:nth-of-type(1) {
-  z-index: 10 !important;
-}
-
-.leafsContainer:nth-of-type(2) {
-  z-index: 4 !important;
-}
-
-.leafsContainer:nth-of-type(1),
-.leafsContainer:nth-of-type(2) {
+.leafsContainer {
   position: fixed;
   inset: 0;
   width: 100%;
@@ -128,9 +119,23 @@ body.rotationLocked {
   display: flex;
   align-items: flex-start;
   pointer-events: none;
-  z-index: 4;
+  opacity: 1;
   transform: translateX(var(--leafShiftX, 0vw));
-  transition: transform 0.75s var(--motion);
+  transition:
+    transform 0.75s var(--motion),
+    opacity 0.75s var(--motion);
+}
+
+.leafsContainer.leafsFront {
+  z-index: 10 !important;
+}
+
+.leafsContainer.leafsBack {
+  z-index: 4 !important;
+}
+
+.leafsContainer.isHidden {
+  opacity: 0;
 }
 
 .leafsContainer img {
@@ -141,17 +146,17 @@ body.rotationLocked {
 }
 
 .leafsContainer img.descend {
-  animation: 7s descendAnim linear infinite;
+  animation: 1s descendAnim linear infinite;
 }
 
 .leafsContainer img.descend002 {
-  animation: 8.5s descendAnim002 linear infinite;
+  animation: 1.5s descendAnim002 linear infinite;
 }
 
 @keyframes descendAnim {
   0% {
     opacity: 0;
-    transform: translate3d(0vw, 18vh, 0) rotate(-4deg) skew(15deg, 15deg);
+    transform: translate3d(-8vw, 10vh, 0) rotate(-8deg) skew(8deg, 4deg);
   }
 
   6% {
@@ -159,7 +164,7 @@ body.rotationLocked {
   }
 
   50% {
-    transform: translate3d(56vw, 74vh, 0) rotate(90deg) skew(0deg);
+    transform: translate3d(40vw, 42vh, 0) rotate(55deg) skew(0deg, 0deg);
   }
 
   95% {
@@ -168,14 +173,14 @@ body.rotationLocked {
 
   100% {
     opacity: 0;
-    transform: translate3d(100vw, 34vh, 0) rotate(270deg) skew(-15deg, -45deg);
+    transform: translate3d(102vw, 64vh, 0) rotate(115deg) skew(-6deg, -3deg);
   }
 }
 
 @keyframes descendAnim002 {
   0% {
     opacity: 0;
-    transform: translate3d(0vw, 18vh, 0) rotate(4deg) skew(15deg, 15deg);
+    transform: translate3d(6vw, 30vh, 0) rotate(10deg) skew(14deg, 8deg);
   }
 
   6% {
@@ -183,7 +188,7 @@ body.rotationLocked {
   }
 
   50% {
-    transform: translate3d(26vw, 50vh, 0) rotate(-20deg) skew(0deg);
+    transform: translate3d(72vw, 62vh, 0) rotate(-35deg) skew(0deg, 0deg);
   }
 
   95% {
@@ -192,7 +197,7 @@ body.rotationLocked {
 
   100% {
     opacity: 0;
-    transform: translate3d(100vw, 72vh, 0) rotate(-92deg) skew(-15deg, -45deg);
+    transform: translate3d(112vw, 106vh, 0) rotate(-140deg) skew(-12deg, -20deg);
   }
 }
 
@@ -321,7 +326,7 @@ body.rotationLocked {
   align-items: end;
   justify-content: center;
   pointer-events: none;
-  z-index: 99999 !important;
+  z-index: 9998 !important;
 }
 
 .upsideDownTrees {
@@ -426,7 +431,7 @@ body.rotationLocked {
   justify-content: stretch;
   padding: 0 10vw;
   gap: var(--g);
-  z-index: 9999;
+  z-index: 9996;
 }
 
 .footer li:nth-of-type(1) h1 {
