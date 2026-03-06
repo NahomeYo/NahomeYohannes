@@ -4,6 +4,9 @@
   position: relative;
   padding: 0;
   margin-top: -20px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
 }
 
 #projectsScreen {
@@ -29,9 +32,7 @@
 }
 
 .projects-header {
-  position: absolute;
-  left: 0;
-  top: 50%;
+  position: relative;
   z-index: 9997 !important;
   display: flex;
   gap: 50px;
@@ -57,8 +58,6 @@
 }
 
 .headerLine {
-  border-top: solid calc(var(--b)) var(--sixthly);
-  border-bottom: solid calc(var(--b)) var(--sixthly);
   transition: all 0.25s var(--motion);
   display: flex;
   align-items: center;
@@ -69,28 +68,19 @@
   position: relative;
 }
 
-.headerLine h1 {
-  font-family: NeoJapan;
-  color: transparent;
-  font-size: 4.5rem;
-  text-shadow:
-    -1px -1px 0 var(--sixthly),
-    
-    1px -1px 0 var(--thirdly),
-    
-    -1px 1px 0 var(--thirdly),
-    
-    1px 1px 0 var(--thirdly);
+.headerLine t {
+  text-transform: uppercase;
+  font-family: Forza;
+  color: none !important;
+  -webkit-text-stroke: 2px var(--fifthly);
+  font-size: 6rem;
+  filter: drop-shadow(0 5px 0px var(--fifthly));
   margin: 0;
   pointer-events: auto;
   transition: all 0.5s var(--motion);
   text-align: justify;
   padding: 0;
   margin: 0;
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   overflow: hidden;
   height: 5rem;
 }
@@ -756,8 +746,6 @@
 
 .projectRow h3 {
   font-size: 2.5rem;
-  font-family: LondrinaSolid;;
-  text-transform: uppercase;
 }
 
 .projectRow .primaryButton {

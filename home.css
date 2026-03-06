@@ -133,7 +133,8 @@
   z-index: -1;
 }
 
-.navIconRail .iconButton img {
+.navIconRail .iconButton img,
+.navIconRail .iconButton svg {
   width: var(--nav-icon-button-size);
   height: var(--nav-icon-button-size);
 }

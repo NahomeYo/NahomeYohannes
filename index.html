@@ -30,6 +30,19 @@
     </div>
   </div>
 
+    <div class="homeBorder homeBorderSecond">
+
+    <a class="homeBtn" href="#home">
+      <img src="./images/nyLogo.svg" alt="Logo" />
+    </a>
+
+    <svg preserveAspectRatio="none" viewBox="0 0 1334 944" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path
+        d="M82.0002 5H1279C1306.61 5 1329 27.3858 1329 55V889C1329 916.614 1306.61 939 1279 939H55C27.3858 939 5 916.614 5 889V85.5"
+        stroke="#FA6519" stroke-width="10" stroke-linecap="round" />
+    </svg>
+  </div>
+
   <svg class="filter-container" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
     <defs>
       <filter id="gooNav">
@@ -81,19 +94,6 @@
   </div>
 
   <div id="nahomeScreen"></div>
-
-  <div class="homeBorder homeBorderSecond">
-
-    <a class="homeBtn" href="#home">
-      <img src="./images/nyLogo.svg" alt="Logo" />
-    </a>
-
-    <svg preserveAspectRatio="none" viewBox="0 0 1334 944" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M82.0002 5H1279C1306.61 5 1329 27.3858 1329 55V889C1329 916.614 1306.61 939 1279 939H55C27.3858 939 5 916.614 5 889V85.5"
-        stroke="#FA6519" stroke-width="10" stroke-linecap="round" />
-    </svg>
-  </div>
 
   <ul class="navSocialBubbles">
     <li>
@@ -320,7 +320,7 @@
 
     <div class="projects-header">
       <div class="headerLine">
-        <h1>projects</h1>
+        <t>projects</t>
       </div>
 
       <span class="projectRow">
@@ -783,7 +783,6 @@
           });
         });
 
-        // Close popup when clicking outside
         document.querySelectorAll('.folder-popup').forEach(popup => {
           popup.addEventListener('click', function (e) {
             if (e.target === this) {
@@ -860,25 +859,25 @@
       <li class="boxes">
         <fieldset>
           <legend>
-            <h2>NAME</h2>
+            <h3>NAME</h3>
           </legend>
           <input type="text" name="from_name" id="name" required />
         </fieldset>
         <fieldset>
           <legend>
-            <h2>EMAIL</h2>
+            <h3>Email</h3>
           </legend>
           <input type="email" name="from_email" id="email" required />
         </fieldset>
         <fieldset>
           <legend>
-            <h2>PHONE</h2>
+            <h3>Phone number</h3>
           </legend>
           <input type="tel" name="phone" id="phone" />
         </fieldset>
         <fieldset>
           <legend>
-            <h2>MESSAGE</h2>
+            <h3>Message</h3>
           </legend>
           <textarea name="message" id="message" required></textarea>
         </fieldset>
@@ -890,7 +889,7 @@
 
     <ol>
       <a href="https://www.linkedin.com/in/nahome-y-198b8b294/" target="_blank" rel="noopener">
-        <img src="./icons/linkedn.svg" alt="LinkedIn" />
+        <img src="./icons/Linkedin.svg" alt="LinkedIn" />
       </a>
       <a href="https://github.com/NahomeYo" target="_blank" rel="noopener">
         <img src="./icons/github.svg" alt="GitHub" />
@@ -915,6 +914,21 @@
       }
     </script>
   <script type="module">
+    import {
+      mailIcon,
+      personIcon,
+      phoneIcon,
+      pencilIcon,
+      cribIcon,
+      fiverrIcon,
+      githubIcon,
+      gitLogoIcon,
+      graduationIcon,
+      houseIcon,
+      linkedinIcon,
+      upworkIcon
+    } from "./styleguide.js";
+
     let initHome, initRoom;
     let sceneBooted = false;
 
@@ -922,6 +936,66 @@
       if (window.__debugSet) window.__debugSet('debug: DOMContentLoaded');
       const rotateGate = document.getElementById("rotateGate");
       const navDesktopLinks = document.querySelector(".navBar .navDesktopLinks");
+      const footerFields = document.querySelectorAll(".footer .boxes fieldset");
+      const footerIconFactories = [personIcon, mailIcon, phoneIcon, pencilIcon];
+      const fileIconFactories = {
+        "crib.svg": { make: cribIcon, color: "var(--secondary)" },
+        "fiverr.svg": { make: fiverrIcon, color: "var(--secondary)" },
+        "github.svg": { make: githubIcon, color: "var(--secondary)" },
+        "gitLogo.svg": { make: gitLogoIcon, color: "var(--secondary)" },
+        "graduation.svg": { make: graduationIcon, color: "var(--secondary)" },
+        "house.svg": { make: houseIcon, color: "var(--secondary)" },
+        "Linkedin.svg": { make: linkedinIcon, color: "var(--secondary)" },
+        "linkedn.svg": { make: linkedinIcon, color: "var(--secondary)" },
+        "upwork.svg": { make: upworkIcon, color: "var(--secondary)" },
+      };
+
+      const replaceIconImages = () => {
+        const iconImgs = document.querySelectorAll("img[src*=\"./icons/\"]");
+        iconImgs.forEach((img) => {
+          const src = img.getAttribute("src");
+          if (!src) return;
+          const fileName = src.split("/").pop();
+          const factory = fileIconFactories[fileName];
+          if (!factory) return;
+
+          const icon = factory.make({
+            color: factory.color,
+            className: "svgIcon",
+          });
+
+          img.classList.forEach((className) => icon.classList.add(className));
+          icon.style.cssText = img.style.cssText;
+
+          const alt = img.getAttribute("alt");
+          if (alt && alt.trim()) {
+            icon.setAttribute("role", "img");
+            icon.setAttribute("aria-label", alt.trim());
+          } else {
+            icon.setAttribute("aria-hidden", "true");
+          }
+
+          img.getAttributeNames().forEach((attr) => {
+            if (attr === "src" || attr === "alt" || attr === "class" || attr === "style") return;
+            icon.setAttribute(attr, img.getAttribute(attr));
+          });
+
+          img.replaceWith(icon);
+        });
+      };
+
+      replaceIconImages();
+
+      footerFields.forEach((fieldset, index) => {
+        const makeIcon = footerIconFactories[index];
+        if (!makeIcon) return;
+        const icon = makeIcon({
+          color: "var(--highLight)",
+          className: "footerFieldIcon",
+        });
+        fieldset.prepend(icon);
+      });
+
       const isBlockedByOrientation = () => {
         const cssWidth = window.innerWidth || document.documentElement.clientWidth || 9999;
         const viewportWidth = window.visualViewport ? window.visualViewport.width : cssWidth;
