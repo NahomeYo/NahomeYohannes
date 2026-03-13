@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dijkstra</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Dijkstra</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/dijkstra.git" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(V^2 + E)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(V^2 + E)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(V^2 + E)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(V + E)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>Dijkstra's algorithm finds the shortest path distances from one start vertex to every reachable vertex in a
+          weighted graph with non-negative edge weights. This implementation stores a set of unvisited vertices and
+          repeatedly selects the unvisited vertex with the smallest tentative distance before relaxing its outgoing
+          edges.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>Initialize every vertex distance to infinity except the start vertex, which begins at 0.</p>
+          </li>
+          <li>
+            <p>Place every vertex in the unvisited set.</p>
+          </li>
+          <li>
+            <p>Repeatedly choose the unvisited vertex with the smallest tentative distance.</p>
+          </li>
+          <li>
+            <p>For each outgoing edge from that vertex, test whether the path through the current vertex produces a
+              shorter distance to the neighbor.</p>
+          </li>
+          <li>
+            <p>If the new path is shorter, update the neighbor's stored distance.</p>
+          </li>
+          <li>
+            <p>Remove the current vertex from the unvisited set because its shortest distance is finalized.</p>
+          </li>
+          <li>
+            <p>Continue until no unvisited vertices remain.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>The key greedy idea is that once the algorithm selects the unvisited vertex with the smallest tentative
+          distance, that distance is final as long as every edge weight is non-negative. This version does not use a
+          priority queue. Instead, it scans the full unvisited set each round to find the next vertex to process, which
+          costs <code>O(V)</code> per selection and leads to a total runtime of <code>O(V^2 + E)</code>. The graph
+          representation and distance table together use <code>O(V + E)</code> space.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

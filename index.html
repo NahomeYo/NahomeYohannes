@@ -30,7 +30,7 @@
     </div>
   </div>
 
-    <div class="homeBorder homeBorderSecond">
+  <div class="homeBorder homeBorderSecond">
 
     <a class="homeBtn" href="#home">
       <img src="./images/nyLogo.svg" alt="Logo" />
@@ -318,21 +318,75 @@
       <source src="./theOffice.mp4" />
     </video>
 
-    <div class="projects-header">
-      <div class="headerLine">
-        <t>projects</t>
-      </div>
-
-      <span class="projectRow">
-        <h3>APPLICATIONS</h3>
-
-        <div class="primaryButton projectRowBackButton">
-          <img src="./icons/back.png" />
+    <div class="projects-topbar">
+      <div class="projects-header">
+        <div class="headerLine">
+          <t>projects</t>
         </div>
 
-        <h3>GRAPHICS</h3>
-      </span>
+        <span class="projectRow">
+          <h3>APPLICATIONS</h3>
 
+          <div class="primaryButton projectRowBackButton">
+            <img src="./icons/back.png" />
+          </div>
+
+          <h3>GRAPHICS</h3>
+        </span>
+
+      </div>
+
+      <div class="algorithmns">
+        <t>algorithmns</t>
+
+        <div>
+          <li class="DC">
+            <h3>Divide n Conquer</h3>
+            <a class="primaryButton" href="./algorithms/merge-sort/index.html">
+              <h2>Merge Sort</h2>
+            </a>
+            <a class="primaryButton" href="./algorithms/quick-sort/index.html">
+              <h2>Quick Sort</h2>
+            </a>
+            <a class="primaryButton" href="./algorithms/binary-search/index.html">
+              <h2>Binary Search</h2>
+            </a>
+            <a class="primaryButton" href="./algorithms/counting-inversions/index.html">
+              <h2>Counting Inversions</h2>
+            </a>
+          </li>
+
+          <li class="Greedy">
+            <h3>Greedy</h3>
+            <a class="primaryButton" href="./algorithms/interval-scheduling/index.html">
+              <h2>Interval Scheduling</h2>
+            </a>
+            <a class="primaryButton" href="./algorithms/dijkstra/index.html">
+              <h2>Dijkstra</h2>
+            </a>
+          </li>
+
+          <li class="DP">
+            <h3>Dynamic</h3>
+            <a class="primaryButton" href="./algorithms/fibonacci/index.html">
+              <h2>Fibonacci</h2>
+            </a>
+            <a class="primaryButton" href="./algorithms/knapsack/index.html">
+              <h2>Knapsack</h2>
+            </a>
+            <a class="primaryButton" href="./algorithms/lcs/index.html">
+              <h2>LCS</h2>
+            </a>
+          </li>
+
+          <li class="Elementary">
+            <h3>Elementary</h3>
+            <a class="primaryButton" href="./algorithms/elementary/index.html">
+              <h2>Elementary</h2>
+            </a>
+          </li>
+        </div>
+      </div>
     </div>
 
     <div class="projects-inner">
@@ -934,6 +988,7 @@
 
     document.addEventListener("DOMContentLoaded", async () => {
       if (window.__debugSet) window.__debugSet('debug: DOMContentLoaded');
+      const loadingScreenStart = performance.now();
       const rotateGate = document.getElementById("rotateGate");
       const navDesktopLinks = document.querySelector(".navBar .navDesktopLinks");
       const footerFields = document.querySelectorAll(".footer .boxes fieldset");
@@ -1327,6 +1382,12 @@
         await waitForWindowLoad();
         await waitForSceneReady();
         await waitForPaint();
+        const elapsed = performance.now() - loadingScreenStart;
+        const remainingDelay = Math.max(0, 2000 - elapsed);
+
+        if (remainingDelay > 0) {
+          await new Promise((resolve) => setTimeout(resolve, remainingDelay));
+        }
 
         loadingScreen();
         document.body.classList.add("navSocialIntro");

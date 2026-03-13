@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interval Scheduling</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Interval Scheduling</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/interval-scheduling.git"
+            target="_blank" rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(n)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>Interval scheduling selects the largest possible set of mutually compatible intervals. Two intervals are
+          compatible when one starts at or after the other finishes. This implementation uses the standard greedy rule:
+          sort by finishing time and always take the next interval that finishes earliest among the remaining
+          compatible choices.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>Sort the intervals by finishing time in ascending order.</p>
+          </li>
+          <li>
+            <p>Select the first interval in that sorted order.</p>
+          </li>
+          <li>
+            <p>Track the finish time of the most recently selected interval.</p>
+          </li>
+          <li>
+            <p>Scan the remaining intervals from left to right.</p>
+          </li>
+          <li>
+            <p>Whenever the current interval starts at or after the stored finish time, add it to the solution and
+              update the stored finish time.</p>
+          </li>
+          <li>
+            <p>Return the full list of selected intervals after the scan completes.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>The greedy choice is correct because selecting the interval with the earliest finish time leaves as much room
+          as possible for later intervals. After sorting, the algorithm makes a single linear pass and keeps every
+          interval that remains compatible with the current schedule. Sorting dominates the runtime, so the total time
+          complexity is <code>O(n log n)</code>. This JavaScript implementation returns a new list of selected
+          intervals, so the extra space used for the result is <code>O(n)</code> in the worst case.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,20 @@
+---
+title: "LCS HTML Encoding"
+output: github_document
+---
+
+# HTML Encoding Map
+
+The LCS page is encoded as one algorithm card with a standard algorithm-page layout:
+
+1. `\<title>` and the visible heading label the page "LCS".
+2. The top bar stores navigation buttons and the complexity boxes.
+3. `Problem Description` defines the longest common subsequence problem for two strings.
+4. `Code` is injected into the `codeBox` container from `main.js`.
+5. `Algorithm Steps` is encoded as an unordered list whose entries all use `\<li><p>...\</p></li>`.
+6. `Explanation` describes the two-dimensional dynamic-programming table and the match-versus-skip recurrence.
+7. `Example/Demo` is the `exampleBox` output block.
+
+# Structural Notes
+
+The HTML wording is aligned to the current implementation, which returns the LCS length only. The complexity notes therefore refer to filling a full `(m + 1) x (n + 1)` table in `O(mn)` time and space.

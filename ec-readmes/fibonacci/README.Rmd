@@ -1,0 +1,20 @@
+---
+title: "Fibonacci HTML Encoding"
+output: github_document
+---
+
+# HTML Encoding Map
+
+The Fibonacci page is encoded as one algorithm card with these ordered sections:
+
+1. `\<title>` and the visible card heading label the page as "Fibonacci".
+2. The top bar holds navigation links and the complexity summary.
+3. `Problem Description` explains the bottom-up dynamic-programming approach for computing the `n`th Fibonacci number.
+4. `Code` is loaded into the shared `codeBox` element from `main.js`.
+5. `Algorithm Steps` is a normalized unordered list with paragraph-wrapped list items.
+6. `Explanation` contrasts the iterative dynamic-programming approach with naive recursive recomputation and states the `O(n)` time and `O(n)` space costs.
+7. `Example/Demo` is the output `exampleBox` block.
+
+# Structural Notes
+
+The page keeps the standard algorithm viewer attributes on the `body` element. The prose is aligned to the current JavaScript implementation, which stores Fibonacci values in an array and returns the final table entry.

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fibonacci</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Fibonacci</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/fibonacci.git" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(n)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>This implementation computes the <code>n</code>th Fibonacci number with dynamic programming. The Fibonacci
+          sequence starts with 0 and 1, and each later value is the sum of the two previous values. Instead of
+          recomputing the same smaller values many times, the algorithm stores them in a table and builds the answer
+          from the bottom up.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>Create an array to store the Fibonacci values for smaller indices.</p>
+          </li>
+          <li>
+            <p>Set the base cases <code>F[0] = 0</code> and <code>F[1] = 1</code>.</p>
+          </li>
+          <li>
+            <p>Loop from index 2 up to <code>n</code>.</p>
+          </li>
+          <li>
+            <p>At each index, compute <code>F[i] = F[i - 1] + F[i - 2]</code>.</p>
+          </li>
+          <li>
+            <p>Return <code>F[n]</code> after the table is complete.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>A naive recursive Fibonacci solution repeats the same subproblems many times and therefore has exponential
+          runtime. This bottom-up dynamic programming version avoids that repetition by storing each Fibonacci value
+          exactly once. The loop performs one constant-time update for each index from 2 through <code>n</code>, so the
+          runtime is <code>O(n)</code>. The table stores all values from 0 through <code>n</code>, giving the
+          implementation <code>O(n)</code> space usage.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

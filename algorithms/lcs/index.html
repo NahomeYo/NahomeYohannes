@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LCS</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>LCS</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/lcs.git" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(mn)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(mn)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(mn)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(mn)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>The longest common subsequence algorithm finds the length of the longest sequence of characters that appears
+          in both input strings while preserving order. The characters do not need to be adjacent, so a subsequence is
+          more flexible than a substring.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>Create a dynamic programming table with <code>m + 1</code> rows and <code>n + 1</code> columns.</p>
+          </li>
+          <li>
+            <p>Use the first row and first column as base cases for comparisons against an empty prefix.</p>
+          </li>
+          <li>
+            <p>Fill the table row by row.</p>
+          </li>
+          <li>
+            <p>If the current characters match, set the current cell to the diagonal value plus 1.</p>
+          </li>
+          <li>
+            <p>If the current characters differ, set the current cell to the larger of the value above and the value to
+              the left.</p>
+          </li>
+          <li>
+            <p>Return the bottom-right value as the LCS length.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>Each entry <code>dp[i][j]</code> stores the LCS length for the first <code>i</code> characters of the first
+          string and the first <code>j</code> characters of the second string. When the current characters match, the
+          subsequence can grow by one from the diagonal subproblem. When they differ, the best answer comes from
+          skipping one character from either the first string or the second string. Because the table has
+          <code>(m + 1)(n + 1)</code> cells and each cell takes constant time to compute, both the runtime and the
+          space complexity are <code>O(mn)</code>.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

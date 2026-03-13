@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Counting Inversions</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Counting Inversions</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/counting-inversions.git"
+            target="_blank" rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(n)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>Counting inversions measures how far an array is from being sorted. An inversion is a pair of indices
+          <code>i &lt; j</code> such that <code>S[i] &gt; S[j]</code>. A sorted array has zero inversions, while a
+          reverse-sorted array has the largest possible number.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>Split the array recursively until each subarray has length 0 or 1.</p>
+          </li>
+          <li>
+            <p>Count the inversions in the left half.</p>
+          </li>
+          <li>
+            <p>Count the inversions in the right half.</p>
+          </li>
+          <li>
+            <p>Merge the two sorted halves back together.</p>
+          </li>
+          <li>
+            <p>Whenever a value from the right half is placed before the remaining values in the left half, add the
+              number of unmerged left values to the inversion count.</p>
+          </li>
+          <li>
+            <p>Add the left, right, and cross-half inversion counts to obtain the final answer.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>This implementation uses the same divide-and-conquer structure as merge sort. Each recursive level sorts the
+          two halves and counts the inversions that stay entirely within those halves. During the merge step, if the
+          next value comes from the right half before the current left value, that right value forms an inversion with
+          every remaining value in the left half, so the algorithm can count several inversions in one step. Because
+          each level does linear merge work across the array and there are <code>log n</code> levels, the runtime is
+          <code>O(n log n)</code>. The implementation also uses <code>O(n)</code> extra space for the merged arrays.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

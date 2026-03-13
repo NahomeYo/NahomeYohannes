@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elementary Algorithms</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Elementary Algorithms</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/bubble-sort" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+      </div>
+
+      <article class="algoGroup">
+        <h2>Bubble Sort</h2>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(1)</p>
+          </span>
+        </div>
+        <section class="algoSection">
+          <h2>Problem Description</h2>
+          <p>Bubble sort repeatedly compares adjacent values and swaps them when they are out of order until the array
+            is sorted.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Code:</h2>
+          <pre class="codeBox"><code>function bubble(array) {
+  for (let end = array.length - 1; end > 0; end--) {
+    let swapped = false;
+
+    for (let index = 0; index &lt; end; index++) {
+      if (array[index] &gt; array[index + 1]) {
+        const temp = array[index];
+        array[index] = array[index + 1];
+        array[index + 1] = temp;
+        swapped = true;
+      }
+    }
+
+    if (!swapped) {
+      break;
+    }
+  }
+
+  return array;
+}</code></pre>
+        </section>
+        <section class="algoSection">
+          <h2>Algorithm Steps</h2>
+          <ul>
+            <li>
+              <p>Scan the array from left to right, comparing each adjacent pair.</p>
+            </li>
+            <li>
+              <p>Swap a pair whenever the left value is greater than the right value.</p>
+            </li>
+            <li>
+              <p>After one pass, the largest unsorted value has moved to the end of the unsorted region.</p>
+            </li>
+            <li>
+              <p>Repeat on the remaining unsorted prefix until no swaps are needed.</p>
+            </li>
+          </ul>
+        </section>
+        <section class="algoSection">
+          <h2>Explanation</h2>
+          <p>This version uses a swapped flag so it can stop early when the array is already sorted, which gives a best
+            case of <code>O(n)</code>. In the average and worst cases, bubble sort still performs quadratic work, but
+            it uses only constant extra space because it sorts in place.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Example/Demo</h2>
+          <pre class="exampleBox">Original array = [42, 7, 91, 18, 63, 25, 4, 77, 56, 13]
+Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
+        </section>
+      </article>
+
+      <article class="algoGroup">
+        <h2>Insertion Sort</h2>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(1)</p>
+          </span>
+        </div>
+        <section class="algoSection">
+          <h2>Problem Description</h2>
+          <p>Insertion sort builds a sorted prefix one value at a time by inserting each new value into its correct
+            position.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Code:</h2>
+          <pre class="codeBox"><code>function insertion(array) {
+  for (let index = 1; index &lt; array.length; index++) {
+    const key = array[index];
+    let position = index - 1;
+
+    while (position &gt;= 0 &amp;&amp; array[position] &gt; key) {
+      array[position + 1] = array[position];
+      position--;
+    }
+
+    array[position + 1] = key;
+  }
+
+  return array;
+}</code></pre>
+        </section>
+        <section class="algoSection">
+          <h2>Algorithm Steps</h2>
+          <ul>
+            <li>
+              <p>Treat the first element as a sorted prefix of length one.</p>
+            </li>
+            <li>
+              <p>Take the next value as the key to insert.</p>
+            </li>
+            <li>
+              <p>Shift larger sorted values one position to the right.</p>
+            </li>
+            <li>
+              <p>Place the key into the gap that remains.</p>
+            </li>
+          </ul>
+        </section>
+        <section class="algoSection">
+          <h2>Explanation</h2>
+          <p>Insertion sort is efficient on small or nearly sorted inputs because each key may move only a short
+            distance. It still has <code>O(n^2)</code> average and worst-case time, but it sorts in place and needs
+            only <code>O(1)</code> extra space.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Example/Demo</h2>
+          <pre class="exampleBox">Original array = [42, 7, 91, 18, 63, 25, 4, 77, 56, 13]
+Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
+        </section>
+      </article>
+
+      <article class="algoGroup">
+        <h2>Selection Sort</h2>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(1)</p>
+          </span>
+        </div>
+        <section class="algoSection">
+          <h2>Problem Description</h2>
+          <p>Selection sort repeatedly finds the smallest value in the unsorted suffix and swaps it into the next
+            sorted position.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Code:</h2>
+          <pre class="codeBox"><code>function selection(array) {
+  for (let start = 0; start &lt; array.length - 1; start++) {
+    let smallest = start;
+
+    for (let index = start + 1; index &lt; array.length; index++) {
+      if (array[index] &lt; array[smallest]) {
+        smallest = index;
+      }
+    }
+
+    const temp = array[start];
+    array[start] = array[smallest];
+    array[smallest] = temp;
+  }
+
+  return array;
+}</code></pre>
+        </section>
+        <section class="algoSection">
+          <h2>Algorithm Steps</h2>
+          <ul>
+            <li>
+              <p>Assume the first unsorted position holds the smallest remaining value.</p>
+            </li>
+            <li>
+              <p>Scan the rest of the unsorted suffix to find the true minimum.</p>
+            </li>
+            <li>
+              <p>Swap that minimum into the next sorted position.</p>
+            </li>
+            <li>
+              <p>Repeat until the unsorted suffix is empty.</p>
+            </li>
+          </ul>
+        </section>
+        <section class="algoSection">
+          <h2>Explanation</h2>
+          <p>Selection sort performs the same number of comparisons regardless of the input order, so its runtime stays
+            <code>O(n^2)</code> in every case. Its main advantage is the simple in-place structure and
+            <code>O(1)</code> extra space usage.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Example/Demo</h2>
+          <pre class="exampleBox">Original array = [42, 7, 91, 18, 63, 25, 4, 77, 56, 13]
+Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
+        </section>
+      </article>
+
+      <article class="algoGroup">
+        <h2>Linear Search</h2>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(1)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(1)</p>
+          </span>
+        </div>
+        <section class="algoSection">
+          <h2>Problem Description</h2>
+          <p>Linear search scans the array from left to right until it finds the target value or reaches the end.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Code:</h2>
+          <pre class="codeBox"><code>function linearSearch(array, target) {
+  for (let index = 0; index &lt; array.length; index++) {
+    if (array[index] === target) {
+      return index;
+    }
+  }
+
+  return -1;
+}</code></pre>
+        </section>
+        <section class="algoSection">
+          <h2>Algorithm Steps</h2>
+          <ul>
+            <li>
+              <p>Start at the first element of the array.</p>
+            </li>
+            <li>
+              <p>Compare the current value to the target.</p>
+            </li>
+            <li>
+              <p>Return the current index as soon as a match is found.</p>
+            </li>
+            <li>
+              <p>Continue until the array ends, then return <code>-1</code> if the target is absent.</p>
+            </li>
+          </ul>
+        </section>
+        <section class="algoSection">
+          <h2>Explanation</h2>
+          <p>Linear search works on any unsorted or sorted array because it does not rely on any special ordering. Its
+            simplicity makes it useful for small inputs, but in the worst case it must inspect every element, giving a
+            runtime of <code>O(n)</code>.</p>
+        </section>
+        <section class="algoSection">
+          <h2>Example/Demo</h2>
+          <pre class="exampleBox">Original array = [42, 7, 91, 18, 63, 25, 4, 77, 56, 13]
+Target = 63
+Result index = 4</pre>
+        </section>
+      </article>
+    </section>
+  </main>
+</body>
+
+</html>

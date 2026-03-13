@@ -1,0 +1,224 @@
+.algorithm-page {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--secondary);
+  box-sizing: border-box;
+}
+
+.algoPage {
+  width: 90vw;
+  margin: 0 5vw;
+  padding: calc(var(--header) * 2) 0;
+  display: grid;
+  gap: calc(var(--header) * 1.5);
+}
+
+.algoPage .primaryButton {
+  background: var(--background);
+}
+
+.algoPage .primaryButton:hover {
+  background: var(--secondary);
+}
+
+.algoPage .primaryButton:hover h2 {
+  color: var(--background);
+}
+
+.algoPage .primaryButton:hover img {
+  filter: brightness(1);
+}
+
+.algoPage .primaryButton > img {
+  filter: brightness(4);
+}
+
+.algoCard {
+  border: 1rem solid var(--fifthly);
+  border-radius: calc(var(--header) * 5);
+  overflow: hidden;
+}
+
+.algoHead {
+  padding: calc(var(--header) * 1.5);
+}
+
+.algoHead t {
+  display: block;
+  font-size: 5rem;
+  color: var(--fifthly);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  text-transform: uppercase;
+}
+
+.algoBar {
+  display: flex;
+  gap: var(--header);
+  align-items: flex-start;
+  padding: 0 calc(var(--header) * 1.5);
+}
+
+.algoBtns,
+.algoStats {
+  width: 50%;
+}
+
+.algoBtns {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+  gap: var(--g);
+}
+
+.githubButton {
+  display: inline-flex;
+  gap: var(--g);
+}
+
+.githubButton img {
+  width: calc(var(--iconSize) * 2);
+  height: calc(var(--iconSize) * 2);
+  object-fit: contain;
+}
+
+.githubButton h2 {
+  display: flex;
+  align-items: center;
+  gap: var(--g);
+}
+
+.algoStats {
+  display: flex;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: var(--g);
+}
+
+.statBox {
+  width: min-content;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--g);
+  pointer-events: none;
+  cursor: default;
+  border: 0;
+  box-shadow: none;
+  background: var(--background);
+  flex-grow: 2;
+}
+
+.statBox h3,
+.statBox p {
+  margin: 0;
+  text-align: left;
+  color: var(--secondary);
+  white-space: nowrap;
+}
+
+.statBox h3 {
+  text-transform: uppercase;
+  text-shadow: none;
+  color: var(--highLight) !important;
+}
+
+.statBox p {
+  font-size: calc(var(--type-h3-size) * 2);
+  font-weight: 700;
+}
+
+.algoSection {
+  padding: calc(var(--header) * 1.5);
+}
+
+.algoSection h2 {
+  margin: 0 0 var(--header);
+  color: var(--fourthly);
+}
+
+.algoSection p,
+.algoSection li {
+  color: var(--fourthly);
+}
+
+.algoSection p,
+.algoGroup p,
+.statBox p {
+  font-size: 1.25rem;
+}
+
+.algoSection ul {
+  margin: 0;
+  padding-left: calc(var(--header) * 1.5);
+}
+
+.algoGroup {
+  padding: calc(var(--header) * 1.5);
+  border-top: calc(var(--b) / 2) solid var(--fourthly);
+}
+
+.algoGroup:first-of-type {
+  border-top: 0;
+}
+
+.algoGroup > h2 {
+  margin: 0 0 var(--header);
+  color: var(--fourthly);
+}
+
+.algoGroup .algoStats {
+  width: 100%;
+  margin-bottom: calc(var(--header) * 1.5);
+}
+
+.codeBox,
+.exampleBox {
+  margin: 0;
+  border-radius: var(--header);
+  padding: var(--header);
+  background: var(--background);
+  color: var(--secondary);
+  overflow: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+  line-height: 1.5;
+}
+
+.exampleBox {
+  min-height: 3rem;
+}
+
+.algorithm-empty {
+  color: var(--secondary);
+  font-style: italic;
+}
+
+@media (max-width: 900px) {
+  .algoBar {
+    flex-direction: column;
+  }
+
+  .algoBtns,
+  .algoStats {
+    width: 100%;
+  }
+}
+
+@media (max-width: 700px) {
+  .algoPage {
+    padding: var(--header) 0;
+  }
+
+  .algoBar,
+  .algoSection {
+    padding-inline: var(--header);
+  }
+
+  .statBox {
+    flex-basis: 100%;
+  }
+}

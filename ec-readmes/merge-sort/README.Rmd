@@ -1,0 +1,20 @@
+---
+title: "Merge Sort HTML Encoding"
+output: github_document
+---
+
+# HTML Encoding Map
+
+The Merge Sort page is encoded as one algorithm card with these sections:
+
+1. `\<title>` and the visible heading identify the page as "Merge Sort".
+2. The top bar contains the navigation controls and complexity statistics.
+3. `Problem Description` introduces merge sort as a divide-and-conquer sorting algorithm.
+4. `Code` is rendered through `codeBox` and loaded from `main.js`.
+5. `Algorithm Steps` is a normalized unordered list with paragraph-wrapped items.
+6. `Explanation` states that merge sort performs `O(n)` merge work across `O(log n)` recursive levels and uses `O(n)` extra space in this implementation.
+7. `Example/Demo` is the output `exampleBox`.
+
+# Structural Notes
+
+The prose is tied to the actual JavaScript implementation, which uses `slice()` to build recursive halves and concatenation to finish the merge step. The structure also matches the shared algorithm-page viewer format used elsewhere in the folder.

@@ -117,12 +117,13 @@ p {
   box-shadow: 0px 5px 0px var(--fourthly);
   background: none;
   transition: all 0.25s ease-in-out;
-  flex-grow: 0;
+  flex-grow: 1;
   pointer-events: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: var(--b);
+  height: 100%;
 }
 
 .primaryButton h2 {

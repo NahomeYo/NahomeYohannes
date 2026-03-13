@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Merge Sort</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Merge Sort</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/merge-sort.git" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(n)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>Merge sort is a divide-and-conquer sorting algorithm. It splits the input array into smaller halves, sorts
+          each half recursively, and then merges the sorted halves into one sorted result.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>If the array has length 0 or 1, return it immediately because it is already sorted.</p>
+          </li>
+          <li>
+            <p>Find the middle index and split the array into a left half and a right half.</p>
+          </li>
+          <li>
+            <p>Recursively sort both halves.</p>
+          </li>
+          <li>
+            <p>Merge the two sorted halves by repeatedly taking the smaller front value.</p>
+          </li>
+          <li>
+            <p>Append any remaining values once one half is exhausted.</p>
+          </li>
+          <li>
+            <p>Return the merged sorted array.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>Merge sort performs <code>O(n)</code> merge work at each recursive level, and there are
+          <code>O(log n)</code> levels because the array is halved each time. That gives the algorithm a total runtime
+          of <code>O(n log n)</code> in the best, average, and worst cases. This implementation creates sliced halves
+          and merged output arrays, so it uses <code>O(n)</code> extra space.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quick Sort</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Quick Sort</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/quick-sort.git" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n^2)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(n)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>This quick sort implementation chooses a pivot, partitions the array into values less than, equal to, and
+          greater than that pivot, recursively sorts the left and right partitions, and concatenates the results.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>If the array has length 0 or 1, return it because it is already sorted.</p>
+          </li>
+          <li>
+            <p>Choose a pivot value.</p>
+          </li>
+          <li>
+            <p>Partition the array into three groups: values less than the pivot, values equal to the pivot, and values
+              greater than the pivot.</p>
+          </li>
+          <li>
+            <p>Recursively quick sort the left and right groups.</p>
+          </li>
+          <li>
+            <p>Concatenate the sorted left group, the middle group, and the sorted right group.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>When the pivot splits the array fairly evenly, quick sort has about <code>log n</code> recursive levels and
+          does <code>O(n)</code> partition work per level, giving an average runtime of <code>O(n log n)</code>. If the
+          pivot choices are consistently unbalanced, the recursion can degenerate to <code>O(n^2)</code>. This version
+          builds new <code>left</code>, <code>middle</code>, and <code>right</code> arrays during partitioning, so it
+          uses <code>O(n)</code> additional space.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

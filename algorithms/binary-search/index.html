@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Binary Search</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Binary Search</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/binary-search.git" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(n log n)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(n)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>This page demonstrates binary search on a sorted copy of an input array. Binary search itself repeatedly
+          compares the target to the middle value of the current search range and discards half of the remaining values
+          after each comparison. Because the example begins with an unsorted array, it first sorts the data with merge
+          sort and then performs binary search on that sorted result.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>Copy the original array and sort that copy with merge sort so the data satisfies binary search's sorted
+              input requirement.</p>
+          </li>
+          <li>
+            <p>Initialize <code>low</code> to the first index and <code>high</code> to the last index of the sorted
+              array.</p>
+          </li>
+          <li>
+            <p>Compute the middle index of the current search range.</p>
+          </li>
+          <li>
+            <p>If the middle value matches the target, return that index from the sorted array.</p>
+          </li>
+          <li>
+            <p>If the target is smaller than the middle value, move the search range left by setting
+              <code>high = mid - 1</code>.</p>
+          </li>
+          <li>
+            <p>If the target is larger than the middle value, move the search range right by setting
+              <code>low = mid + 1</code>.</p>
+          </li>
+          <li>
+            <p>Repeat until the target is found or the search range becomes empty.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>Binary search alone runs in <code>O(log n)</code> time because every comparison eliminates half of the
+          remaining search range. In this implementation, however, the program first sorts the array with merge sort,
+          which costs <code>O(n log n)</code> time and <code>O(n)</code> extra space. That sorting step dominates the
+          total runtime, so the full example on this page runs in <code>O(n log n)</code> time and returns the target's
+          index in the sorted copy, not in the original unsorted array.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>

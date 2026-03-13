@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Knapsack</title>
+  <link rel="stylesheet" href="../../stylesheet.css" />
+  <link rel="stylesheet" href="../viewer.css" />
+</head>
+
+<body class="algorithm-page" data-source="./main.js" data-runtime="javascript">
+  <main class="algoPage">
+    <section class="algoCard">
+      <header class="algoHead">
+        <t>Knapsack</t>
+      </header>
+      <div class="algoBar">
+        <div class="algoBtns">
+          <a class="primaryButton" href="../../index.html#projects">
+            <h2>Back To Projects</h2>
+          </a>
+          <a class="primaryButton githubButton" href="https://github.com/NahomeYo/knapsack.git" target="_blank"
+            rel="noopener">
+            <img src="../../icons/github.svg" alt="GitHub" />
+            <h2>Open GitHub Repo</h2>
+          </a>
+        </div>
+        <div class="algoStats">
+          <span class="primaryButton statBox">
+            <h3>Best:</h3>
+            <p>O(nk)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Worst:</h3>
+            <p>O(nk)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Avg:</h3>
+            <p>O(nk)</p>
+          </span>
+          <span class="primaryButton statBox">
+            <h3>Space:</h3>
+            <p>O(nk)</p>
+          </span>
+        </div>
+      </div>
+      <section class="algoSection">
+        <h2>Problem Description</h2>
+        <p>The 0-1 knapsack problem asks for the maximum total value that can fit within a fixed capacity when each item
+          may be chosen at most once. This implementation uses dynamic programming to compute the best value for every
+          prefix of items and every capacity from 0 through <code>k</code>.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Code:</h2>
+        <pre class="codeBox"><code id="codeBox"></code></pre>
+      </section>
+      <section class="algoSection">
+        <h2>Algorithm Steps</h2>
+        <ul>
+          <li>
+            <p>Create a dynamic programming table with <code>n + 1</code> rows and <code>k + 1</code> columns.</p>
+          </li>
+          <li>
+            <p>Use row <code>i</code> to represent the first <code>i</code> items and column <code>j</code> to
+              represent capacity <code>j</code>.</p>
+          </li>
+          <li>
+            <p>Initialize the first row and first column to 0 to represent empty-item and zero-capacity cases.</p>
+          </li>
+          <li>
+            <p>For each item and capacity, decide whether taking the item improves the best known value.</p>
+          </li>
+          <li>
+            <p>If the item fits, choose the larger of skipping it and taking it once.</p>
+          </li>
+          <li>
+            <p>If the item does not fit, copy the value from the row above.</p>
+          </li>
+          <li>
+            <p>Return the completed table after every row and capacity has been processed.</p>
+          </li>
+        </ul>
+      </section>
+      <section class="algoSection">
+        <h2>Explanation</h2>
+        <p>Each table entry <code>dp[i][j]</code> stores the best total value obtainable with the first <code>i</code>
+          items and capacity <code>j</code>. If item <code>i</code> fits, the recurrence compares the value of skipping
+          it, <code>dp[i - 1][j]</code>, with the value of taking it once,
+          <code>dp[i - 1][j - weight] + value</code>. Because the table contains <code>(n + 1)(k + 1)</code> cells and
+          each cell is filled in constant time, the runtime is <code>O(nk)</code> and the space usage is also
+          <code>O(nk)</code>.</p>
+      </section>
+      <section class="algoSection">
+        <h2>Example/Demo</h2>
+        <pre class="exampleBox algorithm-empty" id="exampleBox"></pre>
+      </section>
+    </section>
+  </main>
+  <script src="./script.js" defer></script>
+  <script src="./main.js" defer></script>
+</body>
+
+</html>
