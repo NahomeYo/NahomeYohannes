@@ -12,7 +12,7 @@
     }
 
     try {
-      return JSON.stringify(value, null, 2);
+      return JSON.stringify(value);
     } catch (error) {
       return String(value);
     }

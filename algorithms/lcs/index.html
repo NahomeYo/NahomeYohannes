@@ -93,6 +93,10 @@
           algorithm uses <code>dp[i - 1][j - 1] + 1</code>. When the characters do not match, the algorithm cannot
           extend a common subsequence at that position, so it takes the better of two smaller possibilities: skip the
           current character from the first string or skip the current character from the second string.</p>
+        <p>In JavaScript, the 2D table is built with <code>Array.from()</code> and <code>fill(0)</code>, which makes it
+          easy to create the row-and-column structure for the dynamic programming process. When characters do not match,
+          the code uses <code>Math.max()</code> to pick the better of the two smaller subproblems, so the recurrence is
+          written very directly in the implementation.</p>
         <p>Because the table has <code>(m + 1)(n + 1)</code> cells and each cell takes constant time to compute, both
           the runtime and the space complexity are <code>O(mn)</code>. This is one of the clearest examples of how
           dynamic programming converts repeated recursive comparisons into an organized table-filling process.</p>

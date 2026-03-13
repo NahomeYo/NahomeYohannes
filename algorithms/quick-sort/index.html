@@ -41,7 +41,7 @@
           </span>
           <span class="primaryButton statBox">
             <h3>Space:</h3>
-            <p>O(n)</p>
+            <p>O(n^2)</p>
           </span>
         </div>
       </div>
@@ -90,9 +90,16 @@
           <code>O(n)</code> partition work at each level, which gives an average runtime of
           <code>O(n log n)</code>. If the pivot choices are consistently poor and the partitions become heavily
           unbalanced, the recursion can stretch out and the runtime can degrade to <code>O(n^2)</code>.</p>
+        <p>In this JavaScript version, values are placed into the <code>left</code>, <code>middle</code>, and
+          <code>right</code> arrays with <code>push()</code>, and the final answer is rebuilt with the spread operator
+          in <code>[...sortedLeft, ...middle, ...sortedRight]</code>. The demo also uses <code>Math.floor()</code> and
+          <code>Math.random()</code> to choose pivots for recursive calls on the smaller subarrays, which keeps the
+          quick sort implementation close to the way the algorithm is explained on the page.</p>
         <p>This implementation uses a three-way partition with <code>left</code>, <code>middle</code>, and
           <code>right</code> arrays, which handles duplicate values cleanly. Because it builds new arrays during each
-          partitioning step instead of sorting fully in place, it uses <code>O(n)</code> additional space.</p>
+          partitioning step instead of sorting fully in place, its extra space is <code>O(n)</code> on balanced
+          recursion paths, but it can grow to <code>O(n^2)</code> in the worst case if the partitions stay heavily
+          unbalanced. The stat box reflects that worst-case bound for this specific implementation.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

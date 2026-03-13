@@ -90,6 +90,10 @@
           with the recurrence <code>F[i] = F[i - 1] + F[i - 2]</code>. Since the two needed previous values have
           already been computed and saved, each new step takes constant time. The algorithm therefore moves through the
           table in a clean, predictable way without any repeated subproblem work.</p>
+        <p>In the JavaScript implementation, the table is just a normal array, and the Fibonacci values are stored by
+          index with assignments like <code>values[i] = values[i - 1] + values[i - 2]</code>. That makes the code very
+          direct, because the array itself acts as the dynamic programming table without needing any extra helper
+          functions.</p>
         <p>The loop performs one constant-time update for each index from 2 through <code>n</code>, so the runtime is
           <code>O(n)</code>. Because the implementation stores all Fibonacci values from 0 through <code>n</code>, the
           space usage is also <code>O(n)</code>.</p>

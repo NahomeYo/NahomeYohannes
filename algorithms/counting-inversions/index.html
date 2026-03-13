@@ -94,6 +94,10 @@
           every remaining value in the left half. So instead of counting those inversions one at a time, the algorithm
           adds all of them in a single step. That is what makes the method much faster than the brute-force
           <code>O(n^2)</code> approach.</p>
+        <p>In the JavaScript version, <code>slice()</code> is used to create the smaller recursive halves, and
+          <code>concat()</code> is used when the merge step finishes building the combined sorted array. The function
+          also returns an object with both the sorted result and the inversion count, which keeps the recursive return
+          values organized while the algorithm combines the left, right, and cross-half counts.</p>
         <p>Because each recursive level performs linear merge work and there are <code>log n</code> levels, the total
           runtime is <code>O(n log n)</code>. The implementation also uses <code>O(n)</code> extra space for the merged
           arrays that are created while the recursion combines results.</p>

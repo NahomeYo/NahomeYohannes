@@ -93,6 +93,10 @@
           finish time, and then scans the remaining intervals from left to right. Whenever the next interval starts at
           or after the stored finish time, that interval is compatible with everything selected so far, so it is added
           to the result and its finish time becomes the new boundary.</p>
+        <p>In JavaScript, the implementation uses <code>[...intervals]</code> to copy the original input before
+          calling <code>sort()</code>, so the original array is not rearranged by the greedy step. The helper
+          <code>formatIntervals()</code> then uses <code>map()</code> and <code>join()</code> to turn the interval list
+          into a readable string for the demo output.</p>
         <p>Sorting dominates the runtime, so the total time complexity is <code>O(n log n)</code>. The scan itself is
           only <code>O(n)</code>. This JavaScript implementation returns a new list of selected intervals, so the extra
           space used for the result is <code>O(n)</code> in the worst case.</p>

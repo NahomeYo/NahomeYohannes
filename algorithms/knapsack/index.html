@@ -96,9 +96,15 @@
           keep the value <code>dp[i - 1][j]</code>, or take the item once and add its value to the best answer from the
           remaining capacity, <code>dp[i - 1][j - weight] + value</code>. If the item does not fit, the algorithm has
           no decision to make and simply copies the value from the row above.</p>
+        <p>In the JavaScript implementation, the dynamic programming table is created with
+          <code>Array.from()</code> and <code>fill(0)</code>, which gives a full 2D table of zeros before the algorithm
+          begins. Then <code>Math.max()</code> is used in the recurrence to choose between skipping the item and taking
+          it once. The formatting helpers later use <code>map()</code> and <code>join()</code> so the items and the
+          finished table can be displayed clearly in the example output.</p>
         <p>Because the table contains <code>(n + 1)(k + 1)</code> cells and each cell is filled in constant time, the
           runtime is <code>O(nk)</code>. The implementation stores the entire table, so the space usage is also
-          <code>O(nk)</code>.</p>
+          <code>O(nk)</code>. That runtime is pseudo-polynomial because it depends on the numeric capacity
+          <code>k</code>, not just on the number of items.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

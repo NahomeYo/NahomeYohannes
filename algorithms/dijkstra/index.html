@@ -96,6 +96,10 @@
           means it checks whether going through the current vertex gives a shorter path to a neighbor than the best path
           recorded so far. If it does, the stored distance for that neighbor is updated. Repeating that process causes
           the correct shortest-path distances to spread outward from the start vertex.</p>
+        <p>In the JavaScript code, the unvisited vertices are stored in a <code>Set</code>, which makes it easy to add,
+          remove, and check whether a vertex has already been finalized. The graph itself is stored as an object whose
+          values are arrays of <code>[neighbor, weight]</code> pairs, so the algorithm can loop through edges with
+          <code>for...of</code> and update the <code>distances</code> object directly.</p>
         <p>This version does not use a priority queue. Instead, it scans the entire unvisited set each round to find
           the next vertex to process. That selection step costs <code>O(V)</code> each time, so the full
           implementation runs in <code>O(V^2 + E)</code> time. The graph representation and distance table together use

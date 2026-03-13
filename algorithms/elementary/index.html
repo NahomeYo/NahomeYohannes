@@ -106,6 +106,10 @@
             nearly sorted. In the average and worst cases, however, bubble sort still performs quadratic work because it
             may need many passes and many swaps. The main advantage is that it sorts in place and therefore uses only
             constant extra space.</p>
+          <p>In this JavaScript version, the swap is done with a temporary variable and direct index assignment, so the
+            array is updated in place. The demo in <code>main()</code> uses the spread operator to make copies such as
+            <code>[...array]</code> before sorting, which keeps the original sample input unchanged for the other
+            examples.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
@@ -185,6 +189,9 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
           <p>Its average and worst-case runtime are still <code>O(n^2)</code> because in a poorly ordered array each
             new key may need to move past many earlier elements. Even so, the algorithm remains useful because it sorts
             in place, needs only <code>O(1)</code> extra space, and has a very simple structure.</p>
+          <p>In JavaScript, the key part of the implementation is the <code>while</code> loop that shifts larger values
+            to the right one position at a time. The algorithm does not call array helpers like <code>sort()</code>;
+            instead, it relies on direct index updates so each move is easy to follow in the code.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
@@ -266,6 +273,9 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
           <p>Its main strengths are simplicity and low memory usage. The algorithm sorts in place, uses
             <code>O(1)</code> extra space, and performs relatively few swaps compared with some other elementary
             sorting methods, even though the total number of comparisons remains quadratic.</p>
+          <p>In the JavaScript code, the inner loop updates the index of the current minimum, and then one final swap is
+            done with a temporary variable after the scan finishes. Like the other elementary sorting examples, it uses
+            direct array indexing instead of built-in helpers, which makes the actual algorithm steps very visible.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
@@ -339,6 +349,9 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
           <p>Its best case is <code>O(1)</code> when the target appears immediately, but in the worst case it must
             inspect every element, which gives a runtime of <code>O(n)</code>. Even though it is not asymptotically
             fast, its simplicity makes it very useful for small inputs and straightforward lookup tasks.</p>
+          <p>In JavaScript, this implementation is just a basic <code>for</code> loop with a strict equality check,
+            <code>===</code>, and it returns the index of the match rather than the value itself. If nothing is found,
+            it returns <code>-1</code>, which is the usual JavaScript-style signal that the target is not present.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
