@@ -48,8 +48,12 @@
       <section class="algoSection">
         <h2>Problem Description</h2>
         <p>The 0-1 knapsack problem asks for the maximum total value that can fit within a fixed capacity when each item
-          may be chosen at most once. This implementation uses dynamic programming to compute the best value for every
-          prefix of items and every capacity from 0 through <code>k</code>.</p>
+          may be chosen at most once. Every item has both a weight and a value, so the challenge is not just to pack as
+          many items as possible, but to choose the combination that gives the best total value without exceeding the
+          capacity limit.</p>
+        <p>This implementation uses dynamic programming to compute the best value for every prefix of items and every
+          capacity from 0 through <code>k</code>. The problem is called 0-1 knapsack because for each item there are
+          only two choices: take it once or do not take it at all.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -84,11 +88,16 @@
       </section>
       <section class="algoSection">
         <h2>Explanation</h2>
-        <p>Each table entry <code>dp[i][j]</code> stores the best total value obtainable with the first <code>i</code>
-          items and capacity <code>j</code>. If item <code>i</code> fits, the recurrence compares the value of skipping
-          it, <code>dp[i - 1][j]</code>, with the value of taking it once,
-          <code>dp[i - 1][j - weight] + value</code>. Because the table contains <code>(n + 1)(k + 1)</code> cells and
-          each cell is filled in constant time, the runtime is <code>O(nk)</code> and the space usage is also
+        <p>Each table entry <code>dp[i][j]</code> stores the best total value obtainable using the first
+          <code>i</code> items with capacity <code>j</code>. That means every cell represents a smaller version of the
+          original problem. Instead of exploring every possible subset directly, the algorithm fills the table one row
+          at a time and reuses answers that have already been computed.</p>
+        <p>If the current item fits inside the current capacity, the recurrence compares two choices: skip the item and
+          keep the value <code>dp[i - 1][j]</code>, or take the item once and add its value to the best answer from the
+          remaining capacity, <code>dp[i - 1][j - weight] + value</code>. If the item does not fit, the algorithm has
+          no decision to make and simply copies the value from the row above.</p>
+        <p>Because the table contains <code>(n + 1)(k + 1)</code> cells and each cell is filled in constant time, the
+          runtime is <code>O(nk)</code>. The implementation stores the entire table, so the space usage is also
           <code>O(nk)</code>.</p>
       </section>
       <section class="algoSection">

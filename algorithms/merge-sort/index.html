@@ -47,8 +47,12 @@
       </div>
       <section class="algoSection">
         <h2>Problem Description</h2>
-        <p>Merge sort is a divide-and-conquer sorting algorithm. It splits the input array into smaller halves, sorts
-          each half recursively, and then merges the sorted halves into one sorted result.</p>
+        <p>Merge sort is a divide-and-conquer sorting algorithm. Instead of trying to sort the entire array in one pass,
+          it repeatedly splits the input into smaller halves, sorts those smaller parts recursively, and then merges the
+          sorted halves back together into one final ordered result.</p>
+        <p>This strategy is powerful because once two halves are already sorted, combining them is much easier than
+          sorting from scratch. The algorithm never depends on lucky input order, so it keeps the same strong runtime
+          even on difficult or poorly arranged data.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -79,10 +83,17 @@
       </section>
       <section class="algoSection">
         <h2>Explanation</h2>
-        <p>Merge sort performs <code>O(n)</code> merge work at each recursive level, and there are
-          <code>O(log n)</code> levels because the array is halved each time. That gives the algorithm a total runtime
-          of <code>O(n log n)</code> in the best, average, and worst cases. This implementation creates sliced halves
-          and merged output arrays, so it uses <code>O(n)</code> extra space.</p>
+        <p>The recursive structure of merge sort is what gives it its predictable performance. Each split cuts the array
+          into smaller halves until the base case is reached, and then the algorithm rebuilds the full solution by
+          merging sorted pieces together. Since the array is halved at every level, there are
+          <code>O(log n)</code> recursive levels.</p>
+        <p>At each of those levels, the merge work across all subarrays totals <code>O(n)</code> because every element
+          is copied into a merged result exactly once at that stage. Combining <code>O(n)</code> work per level with
+          <code>O(log n)</code> levels gives a total runtime of <code>O(n log n)</code> in the best, average, and worst
+          cases.</p>
+        <p>This implementation creates sliced halves and merged output arrays rather than sorting fully in place, so it
+          uses <code>O(n)</code> extra space. That additional memory is the main tradeoff for merge sort's stable and
+          consistently strong runtime.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

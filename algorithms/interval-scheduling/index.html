@@ -48,9 +48,12 @@
       <section class="algoSection">
         <h2>Problem Description</h2>
         <p>Interval scheduling selects the largest possible set of mutually compatible intervals. Two intervals are
-          compatible when one starts at or after the other finishes. This implementation uses the standard greedy rule:
-          sort by finishing time and always take the next interval that finishes earliest among the remaining
-          compatible choices.</p>
+          compatible when one starts at or after the other finishes, so the goal is to keep as many intervals as
+          possible without introducing overlaps.</p>
+        <p>This implementation uses the standard greedy rule: sort by finishing time and always take the next interval
+          that finishes earliest among the remaining compatible choices. That rule is important because the interval
+          that ends sooner leaves more room for later intervals, which is exactly what helps the algorithm build an
+          optimal schedule.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -83,10 +86,16 @@
       <section class="algoSection">
         <h2>Explanation</h2>
         <p>The greedy choice is correct because selecting the interval with the earliest finish time leaves as much room
-          as possible for later intervals. After sorting, the algorithm makes a single linear pass and keeps every
-          interval that remains compatible with the current schedule. Sorting dominates the runtime, so the total time
-          complexity is <code>O(n log n)</code>. This JavaScript implementation returns a new list of selected
-          intervals, so the extra space used for the result is <code>O(n)</code> in the worst case.</p>
+          as possible for later intervals. If an interval finishes earlier, it cannot block more future choices than an
+          interval that finishes later. That is why sorting by finishing time gives the correct rule for building a
+          maximum-size compatible set.</p>
+        <p>Once the intervals are sorted, the algorithm is straightforward. It keeps the first interval, stores its
+          finish time, and then scans the remaining intervals from left to right. Whenever the next interval starts at
+          or after the stored finish time, that interval is compatible with everything selected so far, so it is added
+          to the result and its finish time becomes the new boundary.</p>
+        <p>Sorting dominates the runtime, so the total time complexity is <code>O(n log n)</code>. The scan itself is
+          only <code>O(n)</code>. This JavaScript implementation returns a new list of selected intervals, so the extra
+          space used for the result is <code>O(n)</code> in the worst case.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

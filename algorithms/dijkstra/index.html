@@ -48,9 +48,12 @@
       <section class="algoSection">
         <h2>Problem Description</h2>
         <p>Dijkstra's algorithm finds the shortest path distances from one start vertex to every reachable vertex in a
-          weighted graph with non-negative edge weights. This implementation stores a set of unvisited vertices and
-          repeatedly selects the unvisited vertex with the smallest tentative distance before relaxing its outgoing
-          edges.</p>
+          weighted graph with non-negative edge weights. Instead of trying every possible route, the algorithm builds
+          the correct distances one step at a time by always focusing on the currently closest unfinished vertex.</p>
+        <p>This implementation keeps a set of unvisited vertices and repeatedly selects the unvisited vertex with the
+          smallest tentative distance before relaxing its outgoing edges. The important restriction is that all edge
+          weights must be non-negative. If negative edges are allowed, the greedy decision that Dijkstra relies on is
+          no longer guaranteed to stay correct.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -85,11 +88,18 @@
       </section>
       <section class="algoSection">
         <h2>Explanation</h2>
-        <p>The key greedy idea is that once the algorithm selects the unvisited vertex with the smallest tentative
-          distance, that distance is final as long as every edge weight is non-negative. This version does not use a
-          priority queue. Instead, it scans the full unvisited set each round to find the next vertex to process, which
-          costs <code>O(V)</code> per selection and leads to a total runtime of <code>O(V^2 + E)</code>. The graph
-          representation and distance table together use <code>O(V + E)</code> space.</p>
+        <p>The greedy idea behind Dijkstra's algorithm is that once the algorithm selects the unvisited vertex with the
+          smallest tentative distance, that distance is final, provided all edge weights are non-negative. No later
+          path can come back and improve it, because any alternative path would have to pass through a vertex that is
+          already at least as far away.</p>
+        <p>After choosing the current vertex, the algorithm examines each outgoing edge and performs relaxation. That
+          means it checks whether going through the current vertex gives a shorter path to a neighbor than the best path
+          recorded so far. If it does, the stored distance for that neighbor is updated. Repeating that process causes
+          the correct shortest-path distances to spread outward from the start vertex.</p>
+        <p>This version does not use a priority queue. Instead, it scans the entire unvisited set each round to find
+          the next vertex to process. That selection step costs <code>O(V)</code> each time, so the full
+          implementation runs in <code>O(V^2 + E)</code> time. The graph representation and distance table together use
+          <code>O(V + E)</code> space.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

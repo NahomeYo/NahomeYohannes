@@ -48,9 +48,13 @@
       <section class="algoSection">
         <h2>Problem Description</h2>
         <p>This implementation computes the <code>n</code>th Fibonacci number with dynamic programming. The Fibonacci
-          sequence starts with 0 and 1, and each later value is the sum of the two previous values. Instead of
-          recomputing the same smaller values many times, the algorithm stores them in a table and builds the answer
-          from the bottom up.</p>
+          sequence starts with 0 and 1, and every later value is the sum of the two values that come before it. That
+          creates a very simple recurrence, but it also creates repeated subproblems if the sequence is computed with a
+          naive recursive method.</p>
+        <p>Instead of recomputing the same smaller Fibonacci values over and over, this version stores earlier answers
+          in a table and builds the result from the bottom up. Even though Fibonacci is a small example, it shows the
+          central idea behind dynamic programming very clearly: solve smaller subproblems once, save their answers, and
+          reuse them when building larger ones.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -78,11 +82,17 @@
       </section>
       <section class="algoSection">
         <h2>Explanation</h2>
-        <p>A naive recursive Fibonacci solution repeats the same subproblems many times and therefore has exponential
-          runtime. This bottom-up dynamic programming version avoids that repetition by storing each Fibonacci value
-          exactly once. The loop performs one constant-time update for each index from 2 through <code>n</code>, so the
-          runtime is <code>O(n)</code>. The table stores all values from 0 through <code>n</code>, giving the
-          implementation <code>O(n)</code> space usage.</p>
+        <p>A naive recursive Fibonacci solution looks simple, but it performs a large amount of repeated work because
+          it recalculates the same smaller Fibonacci values many times. That causes the recursive version to grow
+          exponentially. This bottom-up dynamic programming version avoids that repetition by storing each Fibonacci
+          value exactly once.</p>
+        <p>After the base cases <code>F[0] = 0</code> and <code>F[1] = 1</code> are set, every later value is built
+          with the recurrence <code>F[i] = F[i - 1] + F[i - 2]</code>. Since the two needed previous values have
+          already been computed and saved, each new step takes constant time. The algorithm therefore moves through the
+          table in a clean, predictable way without any repeated subproblem work.</p>
+        <p>The loop performs one constant-time update for each index from 2 through <code>n</code>, so the runtime is
+          <code>O(n)</code>. Because the implementation stores all Fibonacci values from 0 through <code>n</code>, the
+          space usage is also <code>O(n)</code>.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

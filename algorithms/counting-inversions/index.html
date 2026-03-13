@@ -48,8 +48,11 @@
       <section class="algoSection">
         <h2>Problem Description</h2>
         <p>Counting inversions measures how far an array is from being sorted. An inversion is a pair of indices
-          <code>i &lt; j</code> such that <code>S[i] &gt; S[j]</code>. A sorted array has zero inversions, while a
-          reverse-sorted array has the largest possible number.</p>
+          <code>i &lt; j</code> such that <code>S[i] &gt; S[j]</code>. In other words, the earlier value is larger than
+          a later value even though those two elements should appear in the opposite order in a sorted array.</p>
+        <p>This makes inversion counting a useful way to describe how mixed up a sequence is. A perfectly sorted array
+          has zero inversions, while a reverse-sorted array has the maximum possible number. The challenge is to count
+          all of those out-of-order pairs efficiently without comparing every possible pair one at a time.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -81,12 +84,19 @@
       </section>
       <section class="algoSection">
         <h2>Explanation</h2>
-        <p>This implementation uses the same divide-and-conquer structure as merge sort. Each recursive level sorts the
-          two halves and counts the inversions that stay entirely within those halves. During the merge step, if the
-          next value comes from the right half before the current left value, that right value forms an inversion with
-          every remaining value in the left half, so the algorithm can count several inversions in one step. Because
-          each level does linear merge work across the array and there are <code>log n</code> levels, the runtime is
-          <code>O(n log n)</code>. The implementation also uses <code>O(n)</code> extra space for the merged arrays.</p>
+        <p>This implementation uses the same divide-and-conquer structure as merge sort. The array is split into two
+          halves, each half is processed recursively, and then the two sorted halves are merged back together. That
+          structure is important because it lets the algorithm count inversions in three parts: inversions entirely in
+          the left half, inversions entirely in the right half, and inversions that cross from the left half to the
+          right half.</p>
+        <p>The merge step is where the main idea appears. If the next value to place comes from the right half before
+          the current value from the left half, then that right-half value is smaller than not just one left value, but
+          every remaining value in the left half. So instead of counting those inversions one at a time, the algorithm
+          adds all of them in a single step. That is what makes the method much faster than the brute-force
+          <code>O(n^2)</code> approach.</p>
+        <p>Because each recursive level performs linear merge work and there are <code>log n</code> levels, the total
+          runtime is <code>O(n log n)</code>. The implementation also uses <code>O(n)</code> extra space for the merged
+          arrays that are created while the recursion combines results.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

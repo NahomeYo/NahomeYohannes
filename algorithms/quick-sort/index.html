@@ -48,7 +48,12 @@
       <section class="algoSection">
         <h2>Problem Description</h2>
         <p>This quick sort implementation chooses a pivot, partitions the array into values less than, equal to, and
-          greater than that pivot, recursively sorts the left and right partitions, and concatenates the results.</p>
+          greater than that pivot, recursively sorts the left and right partitions, and concatenates the results. The
+          key idea is that once the pivot is chosen, every value can be grouped according to how it compares with that
+          pivot.</p>
+        <p>That partitioning step turns one larger sorting problem into smaller ones. After the smaller left and right
+          parts are sorted, the final result is built by placing the sorted smaller values first, the pivot group in the
+          middle, and the sorted larger values last.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -77,11 +82,17 @@
       </section>
       <section class="algoSection">
         <h2>Explanation</h2>
-        <p>When the pivot splits the array fairly evenly, quick sort has about <code>log n</code> recursive levels and
-          does <code>O(n)</code> partition work per level, giving an average runtime of <code>O(n log n)</code>. If the
-          pivot choices are consistently unbalanced, the recursion can degenerate to <code>O(n^2)</code>. This version
-          builds new <code>left</code>, <code>middle</code>, and <code>right</code> arrays during partitioning, so it
-          uses <code>O(n)</code> additional space.</p>
+        <p>Quick sort is another divide-and-conquer algorithm, but unlike merge sort, it divides the problem around a
+          pivot rather than around the middle index. The quality of that pivot choice matters a great deal. If the
+          pivot splits the array into fairly balanced parts, the recursion stays shallow and the algorithm performs very
+          well.</p>
+        <p>In that balanced case, quick sort has about <code>log n</code> recursive levels and performs
+          <code>O(n)</code> partition work at each level, which gives an average runtime of
+          <code>O(n log n)</code>. If the pivot choices are consistently poor and the partitions become heavily
+          unbalanced, the recursion can stretch out and the runtime can degrade to <code>O(n^2)</code>.</p>
+        <p>This implementation uses a three-way partition with <code>left</code>, <code>middle</code>, and
+          <code>right</code> arrays, which handles duplicate values cleanly. Because it builds new arrays during each
+          partitioning step instead of sorting fully in place, it uses <code>O(n)</code> additional space.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

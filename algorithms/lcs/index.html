@@ -48,8 +48,12 @@
       <section class="algoSection">
         <h2>Problem Description</h2>
         <p>The longest common subsequence algorithm finds the length of the longest sequence of characters that appears
-          in both input strings while preserving order. The characters do not need to be adjacent, so a subsequence is
-          more flexible than a substring.</p>
+          in both input strings while preserving order. The characters do not need to be adjacent, which makes a
+          subsequence more flexible than a substring. For that reason, two strings can share an LCS even when the
+          matching characters are separated by many other characters in between.</p>
+        <p>This problem is a classic dynamic programming example because many smaller prefix comparisons repeat across
+          the full problem. Instead of solving those same comparisons again and again, the algorithm stores partial
+          answers in a table and builds the final result from them.</p>
       </section>
       <section class="algoSection">
         <h2>Code:</h2>
@@ -82,11 +86,16 @@
       <section class="algoSection">
         <h2>Explanation</h2>
         <p>Each entry <code>dp[i][j]</code> stores the LCS length for the first <code>i</code> characters of the first
-          string and the first <code>j</code> characters of the second string. When the current characters match, the
-          subsequence can grow by one from the diagonal subproblem. When they differ, the best answer comes from
-          skipping one character from either the first string or the second string. Because the table has
-          <code>(m + 1)(n + 1)</code> cells and each cell takes constant time to compute, both the runtime and the
-          space complexity are <code>O(mn)</code>.</p>
+          string and the first <code>j</code> characters of the second string. That means every cell represents a
+          smaller prefix version of the original problem, which is why a table-based dynamic programming approach works
+          so well here.</p>
+        <p>When the current characters match, the subsequence can grow by one from the diagonal subproblem, so the
+          algorithm uses <code>dp[i - 1][j - 1] + 1</code>. When the characters do not match, the algorithm cannot
+          extend a common subsequence at that position, so it takes the better of two smaller possibilities: skip the
+          current character from the first string or skip the current character from the second string.</p>
+        <p>Because the table has <code>(m + 1)(n + 1)</code> cells and each cell takes constant time to compute, both
+          the runtime and the space complexity are <code>O(mn)</code>. This is one of the clearest examples of how
+          dynamic programming converts repeated recursive comparisons into an organized table-filling process.</p>
       </section>
       <section class="algoSection">
         <h2>Example/Demo</h2>

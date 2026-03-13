@@ -50,8 +50,11 @@
         </div>
         <section class="algoSection">
           <h2>Problem Description</h2>
-          <p>Bubble sort repeatedly compares adjacent values and swaps them when they are out of order until the array
-            is sorted.</p>
+          <p>Bubble sort is one of the most straightforward sorting methods because it repeatedly compares adjacent
+            values and swaps them when they are out of order. As those swaps keep happening, larger values gradually
+            move toward the end of the array, which is why the algorithm is said to make values "bubble" upward.</p>
+          <p>Even though bubble sort is easy to understand, it is not efficient for large inputs. Its main value is as
+            a simple example of repeated passes, adjacent comparisons, and in-place swapping.</p>
         </section>
         <section class="algoSection">
           <h2>Code:</h2>
@@ -95,9 +98,14 @@
         </section>
         <section class="algoSection">
           <h2>Explanation</h2>
-          <p>This version uses a swapped flag so it can stop early when the array is already sorted, which gives a best
-            case of <code>O(n)</code>. In the average and worst cases, bubble sort still performs quadratic work, but
-            it uses only constant extra space because it sorts in place.</p>
+          <p>This version uses a swapped flag so it can stop early when the array is already sorted. That matters
+            because a basic bubble sort always performs all of its passes, even when the data becomes sorted before the
+            algorithm finishes. With the swapped flag, the algorithm can recognize that a full pass made no changes and
+            stop immediately.</p>
+          <p>That early stop gives bubble sort a best case of <code>O(n)</code> when the input is already sorted or
+            nearly sorted. In the average and worst cases, however, bubble sort still performs quadratic work because it
+            may need many passes and many swaps. The main advantage is that it sorts in place and therefore uses only
+            constant extra space.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
@@ -129,7 +137,10 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
         <section class="algoSection">
           <h2>Problem Description</h2>
           <p>Insertion sort builds a sorted prefix one value at a time by inserting each new value into its correct
-            position.</p>
+            position among the values that have already been processed. It works much like sorting a small hand of cards
+            by taking one card at a time and sliding it into the right place.</p>
+          <p>Because of that structure, insertion sort is often much better on small inputs or nearly sorted arrays
+            than its worst-case complexity alone might suggest.</p>
         </section>
         <section class="algoSection">
           <h2>Code:</h2>
@@ -168,9 +179,12 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
         </section>
         <section class="algoSection">
           <h2>Explanation</h2>
-          <p>Insertion sort is efficient on small or nearly sorted inputs because each key may move only a short
-            distance. It still has <code>O(n^2)</code> average and worst-case time, but it sorts in place and needs
-            only <code>O(1)</code> extra space.</p>
+          <p>Insertion sort is efficient on small or nearly sorted inputs because each key may need to move only a short
+            distance before it reaches its correct position. When the array is already close to sorted, the shifting
+            work is limited, which is why insertion sort has a best case of <code>O(n)</code>.</p>
+          <p>Its average and worst-case runtime are still <code>O(n^2)</code> because in a poorly ordered array each
+            new key may need to move past many earlier elements. Even so, the algorithm remains useful because it sorts
+            in place, needs only <code>O(1)</code> extra space, and has a very simple structure.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
@@ -201,8 +215,11 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
         </div>
         <section class="algoSection">
           <h2>Problem Description</h2>
-          <p>Selection sort repeatedly finds the smallest value in the unsorted suffix and swaps it into the next
-            sorted position.</p>
+          <p>Selection sort repeatedly finds the smallest value in the unsorted suffix and swaps it into the next sorted
+            position. Rather than moving values little by little, it makes one direct selection for each position in the
+            final sorted order.</p>
+          <p>That makes the algorithm conceptually simple: each pass chooses exactly which value should come next in the
+            sorted prefix. The tradeoff is that it still has to scan the remaining unsorted values every time.</p>
         </section>
         <section class="algoSection">
           <h2>Code:</h2>
@@ -243,9 +260,12 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
         </section>
         <section class="algoSection">
           <h2>Explanation</h2>
-          <p>Selection sort performs the same number of comparisons regardless of the input order, so its runtime stays
-            <code>O(n^2)</code> in every case. Its main advantage is the simple in-place structure and
-            <code>O(1)</code> extra space usage.</p>
+          <p>Selection sort performs the same number of comparisons regardless of the input order because each pass must
+            still scan the remaining unsorted suffix to discover the smallest value. For that reason, the runtime stays
+            <code>O(n^2)</code> in the best, average, and worst cases.</p>
+          <p>Its main strengths are simplicity and low memory usage. The algorithm sorts in place, uses
+            <code>O(1)</code> extra space, and performs relatively few swaps compared with some other elementary
+            sorting methods, even though the total number of comparisons remains quadratic.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
@@ -276,7 +296,11 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
         </div>
         <section class="algoSection">
           <h2>Problem Description</h2>
-          <p>Linear search scans the array from left to right until it finds the target value or reaches the end.</p>
+          <p>Linear search scans the array from left to right until it finds the target value or reaches the end. It is
+            the most direct searching method because it does not rely on sorting, indexing tricks, or any extra data
+            structure.</p>
+          <p>That simplicity makes linear search broadly applicable. If the array is small or unsorted, a direct scan
+            is often the easiest correct method to use.</p>
         </section>
         <section class="algoSection">
           <h2>Code:</h2>
@@ -309,9 +333,12 @@ Sorted array = [4, 7, 13, 18, 25, 42, 56, 63, 77, 91]</pre>
         </section>
         <section class="algoSection">
           <h2>Explanation</h2>
-          <p>Linear search works on any unsorted or sorted array because it does not rely on any special ordering. Its
-            simplicity makes it useful for small inputs, but in the worst case it must inspect every element, giving a
-            runtime of <code>O(n)</code>.</p>
+          <p>Linear search works on any unsorted or sorted array because it does not rely on any special ordering. The
+            algorithm simply checks each value in order until it either finds the target or runs out of elements to
+            inspect.</p>
+          <p>Its best case is <code>O(1)</code> when the target appears immediately, but in the worst case it must
+            inspect every element, which gives a runtime of <code>O(n)</code>. Even though it is not asymptotically
+            fast, its simplicity makes it very useful for small inputs and straightforward lookup tasks.</p>
         </section>
         <section class="algoSection">
           <h2>Example/Demo</h2>
