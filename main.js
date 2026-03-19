@@ -47,10 +47,11 @@ let screenLeft, screenMiddle, screenRight;
 let videoEl = null;
 let projectsEl = null;
 let galleryEl = null;
+let algorithmsEl = null;
 let scrollProgress;
 
 let cssScene, cssRenderer;
-let videoCSS3DObject, projectsCSS3DObject, galleryCSS3DObject;
+let videoCSS3DObject, projectsCSS3DObject, galleryCSS3DObject, algorithmsCSS3DObject;
 
 let appsContainer = [];
 let scrollTriggered = false;
@@ -93,10 +94,18 @@ if (typeof window !== 'undefined') {
 let lastVideoScreenPosition = new THREE.Vector3();
 let lastProjectsScreenPosition = new THREE.Vector3();
 let lastGalleryScreenPosition = new THREE.Vector3();
+let lastAlgorithmsScreenPosition = new THREE.Vector3();
 let lastVideoScreenQuaternion = new THREE.Quaternion();
 let lastProjectsScreenQuaternion = new THREE.Quaternion();
 let lastGalleryScreenQuaternion = new THREE.Quaternion();
+let lastAlgorithmsScreenQuaternion = new THREE.Quaternion();
 const positionUpdateThreshold = 0.01;
+
+function mountAlgorithmsPanel() {
+  if (algorithmsEl) return;
+
+  algorithmsEl = document.querySelector('.algorithmns');
+}
 
 let lastCameraPosition = new THREE.Vector3();
 let lastCameraRotation = new THREE.Euler();
@@ -386,38 +395,46 @@ function setupCSS3DObjects() {
     bedroomModel.parent.updateMatrixWorld(true);
   }
 
-  if (videoEl && screenLeft) {
-    videoEl.loop = true;
-    videoEl.muted = true;
+  if (algorithmsEl && screenLeft) {
+    const algorithmsPanelWidth = 1440;
+    const algorithmsPanelHeight = 1024;
 
-    videoEl.style.width = '1440px';
-    videoEl.style.height = '1024px';
-    videoEl.style.opacity = '1';
-    videoEl.style.background = '#000000';
+    algorithmsEl.style.width = `${algorithmsPanelWidth}px`;
+    algorithmsEl.style.height = `${algorithmsPanelHeight}px`;
+    algorithmsEl.style.opacity = '1';
+    algorithmsEl.style.pointerEvents = 'auto';
 
-    videoCSS3DObject = new CSS3DObject(videoEl);
-    videoCSS3DObject.element.style.pointerEvents = 'auto';
+    algorithmsCSS3DObject = new CSS3DObject(algorithmsEl);
+    algorithmsCSS3DObject.element.style.pointerEvents = 'auto';
 
     const leftBox = new THREE.Box3().setFromObject(screenLeft);
     const leftSize = new THREE.Vector3();
     leftBox.getSize(leftSize);
 
-    const scaleX = leftSize.x / 1440;
-    const scaleY = leftSize.y / 1024;
-    videoCSS3DObject.scale.set(scaleX, scaleY, 1);
+    const scaleX = leftSize.x / algorithmsPanelWidth;
+    const scaleY = leftSize.y / algorithmsPanelHeight;
+    algorithmsCSS3DObject.scale.set(scaleX * 1.3, scaleY, 1);
 
     const screenPos = new THREE.Vector3();
     const screenQuat = new THREE.Quaternion();
     screenLeft.getWorldPosition(screenPos);
     screenLeft.getWorldQuaternion(screenQuat);
 
-    const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
-    screenQuat.multiply(rotationOffset);
+    const algorithmsRotationOffsetX = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(1, 0, 0),
+      THREE.MathUtils.degToRad(-90)
+    );
+    const algorithmsRotationOffsetZ = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(0, 0, 1),
+      THREE.MathUtils.degToRad(180)
+    );
+    screenQuat.multiply(algorithmsRotationOffsetX);
+    screenQuat.multiply(algorithmsRotationOffsetZ);
 
-    videoCSS3DObject.position.copy(screenPos);
-    videoCSS3DObject.quaternion.copy(screenQuat);
+    algorithmsCSS3DObject.position.copy(screenPos);
+    algorithmsCSS3DObject.quaternion.copy(screenQuat);
 
-    cssScene.add(videoCSS3DObject);
+    cssScene.add(algorithmsCSS3DObject);
 
     screenLeft.material.opacity = 0.3;
     screenLeft.material.transparent = true;
@@ -444,13 +461,19 @@ function setupCSS3DObjects() {
     screenMiddle.getWorldPosition(screenPos);
     screenMiddle.getWorldQuaternion(screenQuat);
 
-    const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(90));
-    screenQuat.multiply(rotationOffset);
+    const projectsRotationOffsetX = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(1, 0, 0),
+      THREE.MathUtils.degToRad(-90)
+    );
+    const projectsRotationOffsetZ = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(0, 0, 1),
+      THREE.MathUtils.degToRad(180)
+    );
+    screenQuat.multiply(projectsRotationOffsetX);
+    screenQuat.multiply(projectsRotationOffsetZ);
 
     projectsCSS3DObject.position.copy(screenPos);
     projectsCSS3DObject.quaternion.copy(screenQuat);
-
-    projectsCSS3DObject.scale.x *= -1;
 
     cssScene.add(projectsCSS3DObject);
 
@@ -609,6 +632,7 @@ async function homeInit() {
 
   appsContainer = [blender, figma, illustrator, javascript, photoshop, react].filter(Boolean);
 
+  mountAlgorithmsPanel();
   videoEl = document.getElementById('theOffice');
   projectsEl = document.querySelector('.projects-inner');
   galleryEl = document.querySelector('.gallery');
@@ -661,45 +685,17 @@ async function homeInit() {
   });
   applyOrangeTint(bedroomModel);
 
-  const projectsHeader = document.querySelector('.headerLine');
-  const projectsHeaderSpan = document.querySelector('.projects-header span');
-  const projectCategories = document.querySelectorAll(".projects-header h3");
-  const projectsBackButton = document.querySelector('.projects-header span .projectRowBackButton');
-  const projectsHeaderContainer = document.querySelector('.projects-header');
-
-  const setProjectRowExpanded = (expanded) => {
-    if (projectsHeader) {
-      projectsHeader.classList.toggle('dissapear', expanded);
-    }
-    if (projectsHeaderSpan) {
-      projectsHeaderSpan.classList.toggle('expanded', expanded);
-      projectsHeaderSpan.setAttribute('aria-hidden', expanded ? 'false' : 'true');
-    }
-    if (projectsHeaderContainer) {
-      projectsHeaderContainer.classList.toggle('clicked', expanded);
-    }
-  };
+  const projectsHeader = document.querySelector('.projects-header');
+  const projectCategories = document.querySelectorAll(".projects-buttons .primaryButton");
 
   const setProjectControlsEnabled = (enabled) => {
     projectsUnlocked = enabled;
-    if (!projectsHeaderSpan) return;
-
-    projectsHeaderSpan.classList.toggle('is-locked', !enabled);
     projectCategories.forEach((el) => {
       el.setAttribute('aria-disabled', enabled ? 'false' : 'true');
     });
   };
 
-  setProjectControlsEnabled(false);
-  setProjectRowExpanded(false);
-
-  if (projectsHeader) {
-    addEventListenerWithCleanup(projectsHeader, 'click', () => {
-      manualCameraOverride = true;
-      setProjectControlsEnabled(true);
-      setProjectRowExpanded(true);
-    });
-  }
+  setProjectControlsEnabled(true);
 
   if (projectCategories) {
     projectCategories.forEach((el, index) => {
@@ -707,30 +703,31 @@ async function homeInit() {
         if (!projectsUnlocked) return;
 
         if (index === 0) {
-          screenState = 1;
+          screenState = 0;
         }
         if (index === 1) {
+          screenState = 1;
+        }
+        if (index === 2) {
           screenState = 2;
         }
       });
     });
   }
 
-  if (projectsBackButton) {
-    addEventListenerWithCleanup(projectsBackButton, 'click', () => {
-      if (!projectsUnlocked) return;
+  const setActiveScreenDom = (activeScreen) => {
+    if (algorithmsCSS3DObject?.element) {
+      algorithmsCSS3DObject.element.style.pointerEvents = activeScreen === 0 ? 'auto' : 'none';
+    }
+    if (projectsCSS3DObject?.element) {
+      projectsCSS3DObject.element.style.pointerEvents = activeScreen === 1 ? 'auto' : 'none';
+    }
+    if (galleryCSS3DObject?.element) {
+      galleryCSS3DObject.element.style.pointerEvents = activeScreen === 2 ? 'auto' : 'none';
+    }
+  };
 
-      screenState = null;
-      manualCameraOverride = false;
-      setProjectControlsEnabled(false);
-      setProjectRowExpanded(false);
-
-      if (projectEntryCameraPosition && projectEntryCameraRotation) {
-        targetCameraPosition = projectEntryCameraPosition.clone();
-        targetCameraRotation = projectEntryCameraRotation.clone();
-      }
-    });
-  }
+  setActiveScreenDom(null);
 
   function animate() {
     requestAnimationFrame(animate);
@@ -782,6 +779,11 @@ async function homeInit() {
 
     const { inHome, inAbout, inProjects } = getSectionState();
 
+    if (projectsHeader) {
+      projectsHeader.classList.toggle('in-view', inProjects);
+    }
+    setProjectControlsEnabled(inProjects);
+
     if (inProjects && !wasInProjects) {
       projectEntryCameraPosition = homeCamera.position.clone();
       projectEntryCameraRotation = new THREE.Vector3(
@@ -789,8 +791,6 @@ async function homeInit() {
         homeCamera.rotation.y,
         homeCamera.rotation.z
       );
-      setProjectControlsEnabled(false);
-      setProjectRowExpanded(false);
       screenState = null;
       manualCameraOverride = false;
     }
@@ -916,28 +916,61 @@ async function homeInit() {
           typing.play();
         }
 
-        if (screenState === 1) {
-          if (screenMiddle && projectsScreenContainer && cssRenderer && container) {
+        if (screenState === 0) {
+          if (screenLeft && projectsScreenContainer && cssRenderer && container) {
+            setActiveScreenDom(0);
 
-            projectsScreenContainer.style.zIndex = '9998 !important';
+            projectsScreenContainer.style.zIndex = '9998';
             projectsScreenContainer.style.pointerEvents = 'auto';
-            cssRenderer.domElement.style.zIndex = '9998 !important';
+            cssRenderer.domElement.style.zIndex = '9998';
+            cssRenderer.domElement.style.pointerEvents = 'auto';
+
+            const screenLeftPos = getWorldPositionCached(screenLeft, 'screenLeftFocus');
+            const offsetX = 0.5;
+            const offsetZ = 0.5;
+
+            homeCamera.updateProjectionMatrix();
+
+            targetCameraPosition = new THREE.Vector3(
+              screenLeftPos.x + offsetX,
+              screenLeftPos.y,
+              screenLeftPos.z + offsetZ
+            );
+            targetCameraRotation = new THREE.Vector3(
+              homeCamera.rotation.x,
+              THREE.MathUtils.degToRad(45),
+              homeCamera.rotation.z,
+            );
+          }
+        } else if (screenState === 1) {
+          if (screenMiddle && projectsScreenContainer && cssRenderer && container) {
+            setActiveScreenDom(1);
+
+            projectsScreenContainer.style.zIndex = '9998';
+            projectsScreenContainer.style.pointerEvents = 'auto';
+            cssRenderer.domElement.style.zIndex = '9998';
             cssRenderer.domElement.style.pointerEvents = 'auto';
 
             const screenMiddlePos = getWorldPositionCached(screenMiddle, 'screenMiddle');
-
+            const offsetX = 0;
             const offsetZ = 0.75;
 
             homeCamera.updateProjectionMatrix();
 
             targetCameraPosition = new THREE.Vector3(
-              screenMiddlePos.x,
+              screenMiddlePos.x + offsetX,
               screenMiddlePos.y,
               screenMiddlePos.z + offsetZ
+            );
+            targetCameraRotation = new THREE.Vector3(
+              homeCamera.rotation.x,
+              THREE.MathUtils.degToRad(0),
+              homeCamera.rotation.z,
             );
           }
         } else if (screenState === 2) {
           if (screenRight && projectsScreenContainer && cssRenderer && container) {
+            setActiveScreenDom(2);
 
             projectsScreenContainer.style.zIndex = '9999';
             projectsScreenContainer.style.pointerEvents = 'auto';
@@ -945,21 +978,28 @@ async function homeInit() {
             cssRenderer.domElement.style.pointerEvents = 'auto';
 
             const screenRightPos = getWorldPositionCached(screenRight, 'screenRight');
-
+            const offsetX = 0;
             const offsetZ = 0.75;
 
             homeCamera.updateProjectionMatrix();
 
             targetCameraPosition = new THREE.Vector3(
-              screenRightPos.x,
+              screenRightPos.x + offsetX,
               screenRightPos.y,
               screenRightPos.z + offsetZ
             );
+            targetCameraRotation = new THREE.Vector3(
+              homeCamera.rotation.x,
+              THREE.MathUtils.degToRad(0),
+              homeCamera.rotation.z,
+            );
           }
         } else if (manualCameraOverride === false) {
+          setActiveScreenDom(null);
           targetCameraPosition = new THREE.Vector3(2.980, 1.080, 1.460);
           targetCameraRotation = new THREE.Vector3(0, THREE.MathUtils.degToRad(52.60), 0);
         } else {
+          setActiveScreenDom(null);
           if (nahomeNeckBone) {
             const neckWorldPos = getWorldPositionCached(nahomeNeckBone, 'neckBone');
 
@@ -1009,38 +1049,54 @@ async function homeInit() {
 
     bedRoomScene.updateMatrixWorld(true);
 
-    if (videoCSS3DObject && screenLeft) {
-      const screenPos = getWorldPositionCached(screenLeft, 'screenLeft');
-      const screenQuat = getWorldQuaternionCached(screenLeft, 'screenLeft');
-
-      if (screenPos.distanceTo(lastVideoScreenPosition) > positionUpdateThreshold ||
-        screenQuat.angleTo(lastVideoScreenQuaternion) > 0.01) {
-        const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(0, 1, 0), Math.PI);
-        screenQuat.multiply(rotationOffset);
-
-        videoCSS3DObject.position.copy(screenPos);
-        videoCSS3DObject.quaternion.copy(screenQuat);
-
-        lastVideoScreenPosition.copy(screenPos);
-        lastVideoScreenQuaternion.copy(screenQuat);
-        cssSceneNeedsRender = true;
-      }
-    }
-
     if (projectsCSS3DObject && screenMiddle) {
       const screenPos = getWorldPositionCached(screenMiddle, 'screenMiddle');
       const screenQuat = getWorldQuaternionCached(screenMiddle, 'screenMiddle');
 
       if (screenPos.distanceTo(lastProjectsScreenPosition) > positionUpdateThreshold ||
         screenQuat.angleTo(lastProjectsScreenQuaternion) > 0.01) {
-        const rotationOffset = new THREE.Quaternion().setFromAxisAngle(new THREE.Vector3(1, 0, 0), THREE.MathUtils.degToRad(5));
-        screenQuat.multiply(rotationOffset);
+        const projectsRotationOffsetX = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(1, 0, 0),
+          THREE.MathUtils.degToRad(-90)
+        );
+        const projectsRotationOffsetZ = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(0, 0, 1),
+          THREE.MathUtils.degToRad(180)
+        );
+        screenQuat.multiply(projectsRotationOffsetX);
+        screenQuat.multiply(projectsRotationOffsetZ);
 
         projectsCSS3DObject.position.copy(screenPos);
         projectsCSS3DObject.quaternion.copy(screenQuat);
 
         lastProjectsScreenPosition.copy(screenPos);
         lastProjectsScreenQuaternion.copy(screenQuat);
+        cssSceneNeedsRender = true;
+      }
+    }
+
+    if (algorithmsCSS3DObject && screenLeft) {
+      const screenPos = getWorldPositionCached(screenLeft, 'screenLeftAlgorithms');
+      const screenQuat = getWorldQuaternionCached(screenLeft, 'screenLeftAlgorithms');
+
+      if (screenPos.distanceTo(lastAlgorithmsScreenPosition) > positionUpdateThreshold ||
+        screenQuat.angleTo(lastAlgorithmsScreenQuaternion) > 0.01) {
+        const algorithmsRotationOffsetX = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(1, 0, 0),
+          THREE.MathUtils.degToRad(-90)
+        );
+        const algorithmsRotationOffsetZ = new THREE.Quaternion().setFromAxisAngle(
+          new THREE.Vector3(0, 0, 1),
+          THREE.MathUtils.degToRad(180)
+        );
+        screenQuat.multiply(algorithmsRotationOffsetX);
+        screenQuat.multiply(algorithmsRotationOffsetZ);
+
+        algorithmsCSS3DObject.position.copy(screenPos);
+        algorithmsCSS3DObject.quaternion.copy(screenQuat);
+
+        lastAlgorithmsScreenPosition.copy(screenPos);
+        lastAlgorithmsScreenQuaternion.copy(screenQuat);
         cssSceneNeedsRender = true;
       }
     }

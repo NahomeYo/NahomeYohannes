@@ -1,7 +1,10 @@
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
+  <meta charset="UTF-8">
   <title>Nahome Yohannes portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./stylesheet.css" />
   <link rel="stylesheet" href="./screens.css" />
@@ -9,8 +12,6 @@
   <link rel="stylesheet" href="./gallery.css" />
   <link rel="stylesheet" href="./projects.css" />
   <link rel="stylesheet" href="./loadingScreen.css" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
@@ -143,9 +144,24 @@
   </div>
 
   <div class="about">
-
-    <div class="infoHeader">
-    </div>
+    <ul class="background">
+      <li>
+        <img src="./icons/crib.svg" />
+        <h3>23 YRS</h3>
+      </li>
+      <li>
+        <img src="./icons/house.svg" />
+        <h3>Seattle, WA</h3>
+      </li>
+      <li>
+        <img src="./icons/graduation.svg" />
+        <h3>Seattle Pacific</h3>
+      </li>
+      <li>
+        <img src="./icons/mail.svg" />
+        <h3>yohannesn1</br>@spu.edu</h3>
+      </li>
+    </ul>
 
     <img class="upsideDown" src="./images/upsideDownSeattle.png" />
 
@@ -156,7 +172,7 @@
           target="_blank" rel="noopener">
           <h2>resume</h2>
         </a>
-        <div class="progressContainer">
+        <ul class="progressContainer">
           <li>
             <div class="text">
               <h2>HTML</h2>
@@ -239,7 +255,7 @@
               <div class="bar"></div>
             </div>
           </li>
-        </div>
+        </ul>
       </div>
 
       <div class="rsmCol">
@@ -280,28 +296,6 @@
           </li>
         </div>
       </div>
-
-      <div class="background">
-        <li>
-          <img src="./icons/crib.svg" />
-          <h3>23 YRS</h3>
-        </li>
-        <li>
-          <img src="./icons/house.svg" />
-          <h3>Seattle, WA</h3>
-        </li>
-        <li>
-          <img src="./icons/graduation.svg" />
-          <h3>Seattle</b>
-            Pacific
-          </h3>
-        </li>
-        <li>
-          <img src="./icons/mail.svg" />
-          <h3>yohannesn1</b>
-            @spu.edu</h3>
-        </li>
-      </div>
     </div>
 
     <img class="maskBottom" src="./images/upsideUpSeattle.png" />
@@ -310,84 +304,27 @@
   </div>
 
   <div class="projects" id="projects">
-    <img class="upsideDownTrees" src="./images/FrontTrees 1.png" />
+    <img class="upsideDownTrees" src="./images/upsideDownTrees.png" />
 
     <div id="bedRoomScene"></div>
 
-    <video id="theOffice">
-      <source src="./theOffice.mp4" />
-    </video>
-
-    <div class="projects-topbar">
-      <div class="projects-header">
-        <div class="headerLine">
-          <t>projects</t>
-        </div>
-
-        <span class="projectRow">
-          <h3>APPLICATIONS</h3>
-
-          <div class="primaryButton projectRowBackButton">
-            <img src="./icons/back.png" />
-          </div>
-
-          <h3>GRAPHICS</h3>
-        </span>
-
-      </div>
-
-      <div class="algorithmns">
-        <t>algorithmns</t>
-
-        <div>
-          <li class="DC">
-            <h3>Divide n Conquer</h3>
-            <a class="primaryButton" href="./algorithms/merge-sort/index.html">
-              <h2>Merge Sort</h2>
-            </a>
-            <a class="primaryButton" href="./algorithms/quick-sort/index.html">
-              <h2>Quick Sort</h2>
-            </a>
-            <a class="primaryButton" href="./algorithms/binary-search/index.html">
-              <h2>Binary Search</h2>
-            </a>
-            <a class="primaryButton" href="./algorithms/counting-inversions/index.html">
-              <h2>Counting Inversions</h2>
-            </a>
-          </li>
-
-          <li class="Greedy">
-            <h3>Greedy</h3>
-            <a class="primaryButton" href="./algorithms/interval-scheduling/index.html">
-              <h2>Interval Scheduling</h2>
-            </a>
-            <a class="primaryButton" href="./algorithms/dijkstra/index.html">
-              <h2>Dijkstra</h2>
-            </a>
-          </li>
-
-          <li class="DP">
-            <h3>Dynamic</h3>
-            <a class="primaryButton" href="./algorithms/fibonacci/index.html">
-              <h2>Fibonacci</h2>
-            </a>
-            <a class="primaryButton" href="./algorithms/knapsack/index.html">
-              <h2>Knapsack</h2>
-            </a>
-            <a class="primaryButton" href="./algorithms/lcs/index.html">
-              <h2>LCS</h2>
-            </a>
-          </li>
-
-          <li class="Elementary">
-            <h3>Elementary</h3>
-            <a class="primaryButton" href="./algorithms/elementary/index.html">
-              <h2>Elementary</h2>
-            </a>
-          </li>
-        </div>
-      </div>
+    <div class="projects-header">
+      <span>
+        <t>projects</t>
+      </span>
     </div>
+
+    <ul class="projects-buttons">
+      <div class="primaryButton">
+        <h3>ALGORITHMS</h3>
+      </div>
+      <div class="primaryButton">
+        <h3>Websites / apps</h3>
+      </div>
+      <div class="primaryButton">
+        <h3>GRAPHICS</h3>
+      </div>
+    </ul>
 
     <div class="projects-inner">
       <div class="projects-window">
@@ -742,6 +679,54 @@
       </div>
     </div>
 
+    <ul class="algorithmns">
+      <li class="DC">
+        <h3>Divide n Conquer</h3>
+        <a class="primaryButton" href="./algorithms/merge-sort/index.html">
+          <h2>Merge Sort</h2>
+        </a>
+        <a class="primaryButton" href="./algorithms/quick-sort/index.html">
+          <h2>Quick Sort</h2>
+        </a>
+        <a class="primaryButton" href="./algorithms/binary-search/index.html">
+          <h2>Binary Search</h2>
+        </a>
+        <a class="primaryButton" href="./algorithms/counting-inversions/index.html">
+          <h2>Counting Inversions</h2>
+        </a>
+      </li>
+
+      <li class="Greedy">
+        <h3>Greedy</h3>
+        <a class="primaryButton" href="./algorithms/interval-scheduling/index.html">
+          <h2>Interval Scheduling</h2>
+        </a>
+        <a class="primaryButton" href="./algorithms/dijkstra/index.html">
+          <h2>Dijkstra</h2>
+        </a>
+      </li>
+
+      <li class="DP">
+        <h3>Dynamic</h3>
+        <a class="primaryButton" href="./algorithms/fibonacci/index.html">
+          <h2>Fibonacci</h2>
+        </a>
+        <a class="primaryButton" href="./algorithms/knapsack/index.html">
+          <h2>Knapsack</h2>
+        </a>
+        <a class="primaryButton" href="./algorithms/lcs/index.html">
+          <h2>LCS</h2>
+        </a>
+      </li>
+
+      <li class="Elementary">
+        <h3>Elementary</h3>
+        <a class="primaryButton" href="./algorithms/elementary/index.html">
+          <h2>Bubble, Insert, Select and Linear</h2>
+        </a>
+      </li>
+    </ul>
+
     <div class="gallery" id="gallery">
 
       <div class="cols">
@@ -805,7 +790,6 @@
           });
         });
 
-        // Text file thumbnail click handlers
         document.querySelectorAll('.appContainer').forEach(thumbnail => {
           thumbnail.addEventListener('click', function () {
             const projectId = this.getAttribute('data-project');
@@ -906,11 +890,14 @@
   <div class="footer">
 
     <span>
-      <h1 class="contactBanner">
-        Let's work together!
-      </h1>
+      <div class="desperation">
+        <h3>Contact</h3>
+        <t>ME</t>
+        <h3>Let's Work</h3>
+        <h3>Together!</h3>
+      </div>
 
-      <li class="boxes">
+      <div class="boxes">
         <fieldset>
           <legend>
             <h3>NAME</h3>
@@ -938,22 +925,31 @@
         <div class='primaryButton' type="submit" id="submit-btn">
           <h2>submit</h2>
         </div>
-      </li>
+      </div>
     </span>
 
     <ol>
-      <a href="https://www.linkedin.com/in/nahome-y-198b8b294/" target="_blank" rel="noopener">
-        <img src="./icons/Linkedin.svg" alt="LinkedIn" />
-      </a>
-      <a href="https://github.com/NahomeYo" target="_blank" rel="noopener">
-        <img src="./icons/github.svg" alt="GitHub" />
-      </a>
-      <a href="https://www.fiverr.com/nahomeyohannes/buying?source=avatar_menu_profile" target="_blank" rel="noopener">
-        <img src="./icons/fiverr.svg" alt="Fiverr" />
-      </a>
-      <a href="https://www.upwork.com/freelancers/~0192a71278f2b630f0" target="_blank" rel="noopener">
-        <img src="./icons/upwork.svg" alt="Upwork" />
-      </a>
+      <li>
+        <a href="https://www.linkedin.com/in/nahome-y-198b8b294/" target="_blank" rel="noopener">
+          <img src="./icons/Linkedin.svg" alt="LinkedIn" />
+        </a>
+      </li>
+      <li>
+        <a href="https://github.com/NahomeYo" target="_blank" rel="noopener">
+          <img src="./icons/github.svg" alt="GitHub" />
+        </a>
+      </li>
+      <li>
+        <a href="https://www.fiverr.com/nahomeyohannes/buying?source=avatar_menu_profile" target="_blank"
+          rel="noopener">
+          <img src="./icons/fiverr.svg" alt="Fiverr" />
+        </a>
+      </li>
+      <li>
+        <a href="https://www.upwork.com/freelancers/~0192a71278f2b630f0" target="_blank" rel="noopener">
+          <img src="./icons/upwork.svg" alt="Upwork" />
+        </a>
+      </li>
     </ol>
     <p class="Copyright">@Copyright 2026 All Rights Reserved</p>
   </div>
@@ -995,14 +991,15 @@
       const footerIconFactories = [personIcon, mailIcon, phoneIcon, pencilIcon];
       const fileIconFactories = {
         "crib.svg": { make: cribIcon, color: "var(--secondary)" },
-        "fiverr.svg": { make: fiverrIcon, color: "var(--secondary)" },
-        "github.svg": { make: githubIcon, color: "var(--secondary)" },
+        "fiverr.svg": { make: fiverrIcon, color: "var(--fifthly)" },
+        "github.svg": { make: githubIcon, color: "var(--fifthly)" },
         "gitLogo.svg": { make: gitLogoIcon, color: "var(--secondary)" },
         "graduation.svg": { make: graduationIcon, color: "var(--secondary)" },
         "house.svg": { make: houseIcon, color: "var(--secondary)" },
-        "Linkedin.svg": { make: linkedinIcon, color: "var(--secondary)" },
-        "linkedn.svg": { make: linkedinIcon, color: "var(--secondary)" },
-        "upwork.svg": { make: upworkIcon, color: "var(--secondary)" },
+        "mail.svg": { make: mailIcon, color: "var(--secondary)" },
+        "Linkedin.svg": { make: linkedinIcon, color: "var(--fifthly)" },
+        "linkedn.svg": { make: linkedinIcon, color: "var(--fifthly)" },
+        "upwork.svg": { make: upworkIcon, color: "var(--fifthly)" },
       };
 
       const replaceIconImages = () => {
@@ -1293,7 +1290,7 @@
               bar.classList.remove("expandBar");
               bar.style.transition = "none";
               bar.style.transitionDelay = "0s";
-              bar.style.width = "0%";
+              bar.style.height = "0%";
             });
           }
 
@@ -1301,9 +1298,9 @@
             requestAnimationFrame(() => {
               bars.forEach((bar, i) => {
                 const delay = i * 0.1;
-                bar.style.transition = "width 2s ease-in-out";
+                bar.style.transition = "height 2s ease-in-out";
                 bar.style.transitionDelay = `${delay}s`;
-                bar.style.width = scales[i] || "100%";
+                bar.style.height = scales[i] || "100%";
               });
             });
           }
@@ -1493,15 +1490,28 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
+      const projectsSection = document.querySelector('.projects');
+
+      if (projectsSection) {
+        const projectsObserver = new IntersectionObserver(
+          ([entry]) => {
+            projectsSection.classList.toggle('in-view', entry.isIntersecting);
+          },
+          {
+            threshold: 0.3,
+          }
+        );
+
+        projectsObserver.observe(projectsSection);
+      }
+
       setTimeout(() => {
         const projectsScreenContainer = document.getElementById('projectsScreen');
 
-        const projectCategory1 = document.querySelector('.projects-header h3:nth-of-type(1)');
-        const projectCategory2 = document.querySelector('.projects-header h3:nth-of-type(2)');
+        const projectButtons = document.querySelectorAll('.projects-buttons .primaryButton');
 
-        if (projectCategory1) {
-          projectCategory1.addEventListener('click', () => {
-            console.log('Direct click on category 1 - Setting zIndex and pointer events');
+        if (projectButtons[0]) {
+          projectButtons[0].addEventListener('click', () => {
             if (projectsScreenContainer) {
               projectsScreenContainer.style.zIndex = '9998';
               projectsScreenContainer.style.pointerEvents = 'auto';
@@ -1513,9 +1523,21 @@
           });
         }
 
-        if (projectCategory2) {
-          projectCategory2.addEventListener('click', () => {
-            console.log('Direct click on category 2 - Setting zIndex and pointer events');
+        if (projectButtons[1]) {
+          projectButtons[1].addEventListener('click', () => {
+            if (projectsScreenContainer) {
+              projectsScreenContainer.style.zIndex = '9999';
+              projectsScreenContainer.style.pointerEvents = 'auto';
+            }
+            if (window.cssRenderer && window.cssRenderer.domElement) {
+              window.cssRenderer.domElement.style.zIndex = '9999';
+              window.cssRenderer.domElement.style.pointerEvents = 'auto';
+            }
+          });
+        }
+
+        if (projectButtons[2]) {
+          projectButtons[2].addEventListener('click', () => {
             if (projectsScreenContainer) {
               projectsScreenContainer.style.zIndex = '9999';
               projectsScreenContainer.style.pointerEvents = 'auto';

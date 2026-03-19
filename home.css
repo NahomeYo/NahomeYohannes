@@ -83,16 +83,14 @@
 
 .navBar .navDesktopLinks li:hover {
   border: calc(var(--b) / 2) solid var(--sixthly);
+}
 
-  h3 {
-    color: var(--sixthly);
-  }
+.navBar .navDesktopLinks li:hover h3 {
+  color: var(--sixthly);
 }
 
 .navBar .navDesktopLinks li h3 {
-  font-family: NeoJapan;
   text-transform: uppercase;
-  font-weight: 900;
   color: var(--fifthly);
   text-decoration-line: none;
 }

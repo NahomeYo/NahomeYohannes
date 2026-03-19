@@ -1,12 +1,77 @@
 .projects {
   width: 100%;
-  height: 100vh;
+  min-height: 100dvh;
   position: relative;
   padding: 0;
   margin-top: -20px;
   display: flex;
+  flex-direction: column;
   justify-content: start;
   align-items: center;
+  gap: 0;
+}
+
+.projects-buttons {
+  position: relative;
+  z-index: 9998;
+  display: flex;
+  list-style: none;
+  margin: 0;
+  width: 100%;
+  padding: 0 10vw;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+  gap: calc(var(--header) * 1.25);
+}
+
+.projects-buttons>* {
+  display: flex;
+  flex: 1 1 0;
+  overflow: hidden;
+}
+
+.projects-buttons .primaryButton h3 {
+  font-size: var(--type-h2-size);
+  width: 100%;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--secondary);
+  -webkit-text-stroke: 0;
+  text-shadow: none;
+  margin: 0;
+  text-align: center;
+  font-family: NeoJapanBold;
+  white-space: nowrap !important;
+}
+
+.projects-buttons .primaryButton {
+  width: 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: calc(var(--header) / 2);
+  border-color: var(--highLight);
+  background: transparent;
+  overflow: hidden;
+  transition:
+    width 0.75s var(--motion),
+    opacity 0.75s var(--motion),
+    flex-grow 0.75s var(--motion),
+    background-color 0.75s var(--motion);
+  opacity: 0;
+  flex: 1 1 0;
+}
+
+.projects-buttons .primaryButton:hover {
+  width: 100%;
+  flex-grow: 2;
+  background-color: var(--fourthly);
+}
+
+.projects-buttons .primaryButton:hover h3 {
+  color: var(--secondary);
 }
 
 #projectsScreen {
@@ -14,7 +79,7 @@
   inset: 0;
   margin: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   z-index: 2 !important;
   pointer-events: auto !important;
   filter:
@@ -26,7 +91,7 @@
   inset: 0;
   margin: 0;
   width: 100vw;
-  height: 100vh;
+  height: 100dvh;
   z-index: 1 !important;
   pointer-events: none;
 }
@@ -35,86 +100,201 @@
   position: relative;
   z-index: 9997 !important;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  width: 50%;
-  height: 100%;
-  flex-basis: 50%;
-  transition: all 0.5s var(--motion);
-  position: relative;
-  overflow: visible;
-}
-
-.projects-topbar {
-  position: relative;
-  z-index: 9997 !important;
-  width: 90vw;
-  margin: 0 5vw;
-  display: flex;
-  justify-content: space-between;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: flex-start;
-  padding: 5vh 0;
-}
-
-.projects-header.clicked {
-  top: 25%;
-}
-
-.projects-header h2 {
-  margin: 0;
-  padding: 0;
-  color: var(--primary);
-  font-family: LondrinaSolid;
-  font-size: 1rem;
-}
-
-.headerLine {
-  transition: all 0.25s var(--motion);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  width: 100%;
-  position: relative;
-}
-
-.headerLine t {
-  text-transform: uppercase;
-  font-family: Forza;
-  color: none !important;
-  font-size: 6rem;
-  margin: 0;
-  pointer-events: auto;
+  width: 100vw;
   transition: all 0.5s var(--motion);
-  text-align: justify;
-  padding: 0;
   margin: 0;
-  overflow: hidden;
-  color: var(--fifthly);
+  overflow: visible;
+  mask-image: url('./images/upsideDownTrees.png');
+  mask-size: 100%;
+  mask-repeat: no-repeat;
+  padding: 2vw 0 0 10vw;
+  pointer-events: none;
 }
 
-.headerLine:hover {
-  padding: 50px 0;
-  border-top: solid calc(var(--b)) #fff7e4;
-  border-bottom: solid calc(var(--b)) #fff7e4;
-
-  h1 {
-    color: hsl(42, 100%, 95%);
-    text-shadow: none;
-  }
+.upsideDownTrees {
+  width: 100%;
+  z-index: 100;
+  position: absolute;
+  left: 0;
+  top: 0;
+  object-fit: fill;
+  pointer-events: none;
 }
 
-.headerLine.dissapear {
-  height: 0rem;
-  border-top: none;
-  border-bottom: none;
+.upsideDown {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25dvh;
+  object-fit: cover;
+  width: 100%;
+  z-index: 29;
+  pointer-events: none;
+}
+
+.aboutFill {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+  background: var(--fifthly);
+  pointer-events: none;
+  margin: 0;
+  padding: 0;
+  z-index: 1;
+}
+
+.about .maskBottom {
+  position: absolute;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  z-index: 31;
+  overflow: visible;
+  height: 25dvh;
+  object-fit: cover;
+}
+
+.projects-header,
+.projects-header * {
+  pointer-events: none;
+}
+
+.projects-header>span {
+  flex: 0 0 50%;
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-header>span:first-child {
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.projects-header>span:last-child {
+  justify-content: center;
+  align-items: flex-start;
+  gap: calc(var(--header) * 0.75);
+}
+
+.projects-header>span:first-child>t {
+  text-transform: uppercase;
+  font-family: NeoJapan;
+  font-size: clamp(1rem, 8vw, 6rem);
+  color: var(--secondary);
+  -webkit-text-stroke: 5px var(--highLight) !important;
+}
+
+.projects-header>span:last-child h3 {
+  position: relative;
+  margin: 0;
+  font-size: var(--type-h2-size) !important;
+  color: #ff0d0056 !important;
+  transform: translateX(-100px);
+  opacity: 0;
+  transition:
+    transform 0.75s var(--motion),
+    opacity 0.75s var(--motion);
+}
+
+.projects-header>span:last-child h3:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.projects-header>span:last-child h3:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.projects.in-view .projects-header>span:last-child h3 {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.projects.in-view .projects-buttons .primaryButton {
+  width: 100%;
+  opacity: 1;
+}
+
+.projects.in-view .projects-buttons li:nth-child(2) .primaryButton {
+  transition-delay: 0.1s;
+}
+
+.projects.in-view .projects-buttons li:nth-child(3) .primaryButton {
+  transition-delay: 0.2s;
+}
+
+.projects-category-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  justify-content: flex-start;
+  gap: calc(var(--header) * 1.25);
+  align-items: stretch;
+  width: min(38rem, 42vw);
+  margin: 0;
+  padding: 0;
+}
+
+.projects-category-list li {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  width: 0;
+  max-width: 100%;
+  height: var(--iconSize);
+  overflow: visible;
+  position: relative;
+  transition:
+    width 0.75s var(--motion),
+    opacity 0.5s var(--motion),
+    transform 0.75s var(--motion);
+  transform-origin: left center;
+  transform: scaleX(0);
   opacity: 0;
   pointer-events: none;
+}
 
-  h1 {
-    height: 0rem;
-  }
+.projects-header.in-view .projects-category-list li {
+  width: 100%;
+  transform: scaleX(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.projects-category-list li:nth-child(2) {
+  transition-delay: 0.1s;
+}
+
+.projects-category-list li:nth-child(3) {
+  transition-delay: 0.2s;
+}
+
+.projects-category-list li h3 {
+  font-size: var(--type-h3-size);
+  display: flex;
+  width: 100%;
+  justify-content: start;
+  align-items: center;
+  border: calc(var(--b) / 3) solid var(--secondary);
+  border-radius: 0 calc(var(--iconSize) * 2) calc(var(--iconSize) * 2) 0;
+  transition: all 0.75s var(--motion);
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: var(--header) calc(var(--iconSize) + var(--g));
+  line-height: 1.2;
+  color: var(--fifthly);
+  background: rgba(188, 102, 84, 0.88);
+  cursor: pointer;
+}
+
+.projects-category-list li:hover h3 {
+  background: var(--fourthly);
+  color: var(--sixthly);
 }
 
 #theOffice {
@@ -146,7 +326,6 @@
   pointer-events: auto;
 }
 
-
 .desktop-folders {
   display: flex;
   flex-direction: column;
@@ -176,7 +355,7 @@
 
 .folder-item p {
   color: white;
-  font-size: 0.75rem;
+  font-size: var(--type-caption-size);
   font-weight: 500;
   text-align: center;
   width: 100%;
@@ -236,7 +415,7 @@
 
 .window-title {
   font-weight: 500;
-  font-size: 13px;
+  font-size: var(--type-small-size);
   color: #3c3c3c;
   letter-spacing: -0.01em;
 }
@@ -272,7 +451,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: var(--type-small-size);
   color: #4a4a4a;
   letter-spacing: 0.2px;
 }
@@ -291,7 +470,7 @@
 }
 
 .sidebar-title {
-  font-size: 0.7rem;
+  font-size: var(--type-caption-size);
   font-weight: 600;
   color: #8e8e93;
   text-transform: uppercase;
@@ -305,7 +484,7 @@
   align-items: center;
   gap: 8px;
   padding: 4px 12px;
-  font-size: 0.85rem;
+  font-size: var(--type-small-size);
   color: #3c3c3c;
   cursor: pointer;
   transition: background 0.15s ease;
@@ -352,7 +531,7 @@
   border: 1px solid #d1d1d1;
   border-radius: 5px;
   padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: var(--type-small-size);
   color: #3c3c3c;
   cursor: pointer;
   transition: all 0.15s ease;
@@ -380,7 +559,7 @@
 }
 
 .project-details h3 {
-  font-size: 1.5rem;
+  font-size: var(--type-h2-size);
   margin: 0 0 1rem 0;
   color: #222;
 }
@@ -475,11 +654,11 @@
   background: #ff5f56;
 }
 
-.viewer-button.Minimize {
+.viewer-button.minimize {
   background: #ffbd2e;
 }
 
-.viewer-button.Maximize {
+.viewer-button.maximize {
   background: #27c93f;
 }
 
@@ -491,7 +670,7 @@
 
 .text-viewer-title span {
   font-weight: 500;
-  font-size: 13px;
+  font-size: var(--type-small-size);
   color: #3c3c3c;
   letter-spacing: -0.01em;
 }
@@ -509,7 +688,7 @@
 }
 
 .project-details p {
-  font-size: 1rem;
+  font-size: var(--type-body-size);
   line-height: 1.6;
   color: #555;
   margin-bottom: 1.5rem;
@@ -523,7 +702,7 @@
 }
 
 .app-icon-label {
-  font-size: 14px;
+  font-size: var(--type-small-size);
   color: #1d1d1f;
   text-align: center;
   font-weight: 400;
@@ -531,45 +710,9 @@
 }
 
 .folder-name {
-  font-size: 1rem;
+  font-size: var(--type-body-size);
   color: #ffffff;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.713));
-}
-
-
-@media (max-width: 768px) {
-  .desktop-folders {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1.5rem;
-    padding: 1rem;
-  }
-
-  .folder-icon {
-    width: 60px;
-    height: 48px;
-  }
-
-  .folder-name {
-    font-size: 0.8rem;
-  }
-
-  .popup-window {
-    width: 95%;
-    max-height: 90vh;
-  }
-
-  .window-content {
-    padding: 1.5rem;
-  }
-
-  .project-actions {
-    flex-direction: column;
-  }
-
-  .action-button {
-    width: 100%;
-    justify-content: center;
-  }
 }
 
 .projects .tabs {
@@ -627,7 +770,7 @@
 }
 
 .projects .tabs li h3 {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 0.35vw + 0.92rem, 1.2rem);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   margin: 0 0 0.35rem;
@@ -677,7 +820,7 @@
 .projects .tabs li span button p {
   margin: 0;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: var(--type-body-size);
 }
 
 .projects .tabs li span button:hover {
@@ -707,7 +850,7 @@
 }
 
 .projects-nav span {
-  font-size: 1.5rem;
+  font-size: var(--type-h2-size);
   font-weight: 800;
   line-height: 1;
   transform: translateY(-1px);
@@ -731,13 +874,15 @@
 .projectRow {
   position: relative;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: start;
   width: 0;
   max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
   opacity: 0;
   pointer-events: none;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: var(--header);
   transition: width 0.4s var(--motion), opacity 0.25s var(--motion);
 }
 
@@ -747,160 +892,54 @@
   pointer-events: auto;
 }
 
-.projectRow>* {
+.projectRow>div:first-child {
+  flex: 1 1 auto;
+  width: 100%;
+  justify-content: space-between;
   display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .projectRow h3 {
-  font-size: 2.5rem;
-}
-
-.projectRow .primaryButton {
-  width: 100%;
-  height: 100px;
-  margin: 0 var(--header);
-}
-
-.projectRow .primaryButton img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  font-size: clamp(1.75rem, 1.2vw + 1.4rem, 2.5rem);
 }
 
 .algorithmns {
-  position: relative;
-  z-index: 3;
-  width: min(56vw, 760px);
-  flex: 1 1 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: stretch;
-}
-
-.algorithmns>t {
-  text-transform: uppercase;
-  font-family: Forza;
-  color: none !important;
-  font-size: 3rem;
+  position: absolute;
+  width: 1440px;
+  height: 1024px;
+  left: 0;
+  top: 0;
   margin: 0;
-  pointer-events: auto;
-  transition: all 0.5s var(--motion);
-  text-align: justify;
   padding: 0;
-  margin: 0;
-  overflow: hidden;
-  color: var(--fifthly);
+  z-index: 3;
+  display: flex;
+  background: var(--thirdly);
+  overflow: scroll;
+  flex-wrap: wrap;
+  list-style: none;
+  gap: var(--g);
+  pointer-events: auto;
 }
 
-.algorithmns>div {
+.algorithmns li {
   display: flex;
   flex-direction: column;
   list-style: none;
-  margin: 0;
   padding: 0;
+  flex-grow: 1;
+  margin: var(--g);
 }
 
-.algorithmns>div>li>h3 {
+.algorithmns li h3 {
   text-transform: uppercase !important;
-  margin: 0;
+  color: var(--secondary) !important;
 }
 
-.algorithmns>div>li {
-  gap: 0;
-  margin: 0.25rem 0;
-}
-
-.algorithmns div li {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+.algorithmns .primaryButton {
+  flex-grow: 1;
+  height: min-content;
 }
 
 .algorithmns .primaryButton h2 {
-  font-size: 0.8rem;
-}
-
-@media screen and (max-width: 900px) {
-  .projects {
-    padding-block: 3vh;
-    min-height: 60vh;
-  }
-
-  .projects-inner {
-    flex-direction: column;
-    gap: 1.5rem;
-  }
-
-  .projects-nav {
-    order: 2;
-  }
-
-  .projects-window {
-    order: 1;
-    width: 100%;
-  }
-
-  .projects-topbar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .projects-header,
-  .algorithmns {
-    width: 100%;
-  }
-
-  .algorithmns {
-    justify-content: flex-start;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .projects {
-    height: auto;
-    min-height: 100vh;
-    padding: 0 0 1.5rem;
-  }
-
-  .projects-header.clicked {
-    top: auto;
-  }
-
-  .headerLine {
-    width: 100%;
-    height: 3rem;
-  }
-
-  .headerLine h1 {
-    font-size: 2.2rem;
-    height: 3rem;
-    top: 56%;
-  }
-
-  .projects-inner {
-    position: relative;
-    width: 100%;
-    max-width: 100vw;
-    height: 65vh;
-    min-height: 25rem;
-    margin-top: 0.75rem;
-  }
-
-  .desktop-folders {
-    align-content: flex-start;
-    padding: 0.5rem;
-  }
-
-  .folder-item img {
-    width: 110px;
-    height: 110px;
-  }
-
-  .folder-item p {
-    font-size: 0.65rem;
-    white-space: normal;
-  }
+  font-size: var(--type-small-size);
 }

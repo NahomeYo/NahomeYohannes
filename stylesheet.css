@@ -1,5 +1,12 @@
 html {
-  font-size: 16px;
+  font-size: clamp(12px, 0.4vw + 12px, 18px);
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 :root {
@@ -24,10 +31,13 @@ html {
     0 -1px var(--fifthly),
     0 1px var(--fifthly);
   --nav-icon-button-size: 70px;
-  --type-t-size: 16rem;
-  --type-h1-size: 3rem;
-  --type-h2-size: 2rem;
-  --type-h3-size: 1rem;
+  --type-t-size: clamp(4.5rem, 10vw, 16rem);
+  --type-h1-size: clamp(2.1rem, 1.5vw + 1.7rem, 3.5rem);
+  --type-h2-size: clamp(1.25rem, 0.85vw + 1rem, 2rem);
+  --type-h3-size: clamp(0.9rem, 0.3vw + 0.82rem, 1.15rem);
+  --type-body-size: clamp(0.9rem, 0.2vw + 0.84rem, 1.05rem);
+  --type-small-size: clamp(0.78rem, 0.12vw + 0.75rem, 0.9rem);
+  --type-caption-size: clamp(0.68rem, 0.12vw + 0.65rem, 0.82rem);
 }
 
 t {
@@ -57,21 +67,15 @@ h2 {
 }
 
 h3 {
-  font-family: NeoJapan;
+  font-family: NeoJapanBold;
   font-size: var(--type-h3-size) !important;
   color: var(--fifthly) !important;
-  font-weight: 1000;
-  text-shadow:
-    -2px -2px 0 var(--secondary),
-    2px -2px 0 var(--secondary),
-    -2px 2px 0 var(--secondary),
-    2px 2px 0 var(--secondary);
   letter-spacing: var(--letterSpacing);
 }
 
 p {
   font-family: LondrinaSolidLight;
-  font-size: 0.75rem;
+  font-size: var(--type-body-size);
   color: var(--secondary);
 }
 
@@ -96,10 +100,14 @@ p {
 }
 
 @font-face {
-  font-family: NeoJapan;
-  src: url(./fonts/Neo\ Nippon-Regular.ttf);
+  font-family: NeoJapanBold;
+  src: url('./fonts/NeoNipponBold.ttf');
 }
 
+@font-face {
+  font-family: NeoJapan;
+  src: url('./fonts/Neo\ Nippon-Regular.ttf');
+}
 
 .footer ol a {
   display: inline-flex;
@@ -117,7 +125,6 @@ p {
   box-shadow: 0px 5px 0px var(--fourthly);
   background: none;
   transition: all 0.25s ease-in-out;
-  flex-grow: 1;
   pointer-events: auto;
   display: flex;
   justify-content: center;
@@ -128,7 +135,7 @@ p {
 .primaryButton h2 {
   color: var(--primary);
   -webkit-text-stroke: none;
-  font-family: 'NeoJapan';
+  font-family: NeoJapanBold;
   margin: 0;
   text-align: center;
 }
@@ -143,22 +150,4 @@ p {
 .primaryButton:hover {
   background: var(--fourthly);
   flex-grow: 0.25;
-}
-
-@media (max-width: 1024px) {
-  html {
-    font-size: 15px;
-  }
-}
-
-@media (max-width: 768px) {
-  html {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 480px) {
-  html {
-    font-size: 13px;
-  }
 }
