@@ -1,23 +1,27 @@
 .navBar {
-  display: grid;
-  grid-template-columns: 0.5fr 0.5fr;
-  justify-content: space-between;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
   margin: 0;
   z-index: 2 !important;
-  width: 90vw;
-  padding: 5vh 0;
+  width: 100vw;
+  padding: 12vh 0 5vh 5vw;
   position: absolute;
   overflow: visible;
-  align-items: center;
 }
 
-.homeBorder .navBar,
-.homeBorder .navBar * {
+.navBar .name {
+  flex: 0 0 60%;
+  max-width: 60%;
+}
+
+.navBar,
+.navBar * {
   pointer-events: none !important;
 }
 
-.homeBorder .navIconRail,
-.homeBorder .navIconRail * {
+.navIconRail,
+.navIconRail * {
   pointer-events: auto !important;
 }
 
@@ -404,7 +408,8 @@
 
 .name {
   position: relative;
-  flex-grow: 0;
+  flex: 0 0 75%;
+  max-width: 75%;
   transition: all 0.5s ease;
   overflow: visible;
   z-index: 0 !important;
@@ -412,13 +417,6 @@
 }
 
 .name img {
-  width: 125%;
+  width: 100%;
   object-fit: cover;
-}
-
-@media screen and (max-width: 1439px) {
-  .navBar .navInfoGroup {
-    flex-direction: column;
-    align-items: flex-end;
-  }
 }

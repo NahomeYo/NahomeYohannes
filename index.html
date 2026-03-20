@@ -56,36 +56,30 @@
     </defs>
   </svg>
 
-  <div class="homeBorder">
+  <ul class="navIconRail">
+    <li class="iconButton">
+      <a href="#about">
+        <img src="./icons/crib.svg" />
+      </a>
+    </li>
 
-    <ul class="navIconRail">
-      <li class="iconButton">
-        <a href="#about">
-          <img src="./icons/crib.svg" />
-        </a>
-      </li>
+    <li class="iconButton">
+      <a href="#projects">
+        <img src="./icons/projects.svg" />
+      </a>
+    </li>
 
-      <li class="iconButton">
-        <a href="#projects">
-          <img src="./icons/projects.svg" />
-        </a>
-      </li>
+    <li class="iconButton">
+      <a href="#contact">
+        <img src="./icons/mail.svg" />
+      </a>
+    </li>
+  </ul>
 
-      <li class="iconButton">
-        <a href="#contact">
-          <img src="./icons/mail.svg" />
-        </a>
-      </li>
-    </ul>
-
-    <nav class="navBar">
-      <div class="name">
-        <img class="name" src="./images/nameBanner.png" />
-      </div>
-      <div class="circle">
-      </div>
-    </nav>
-
+  <div class="navBar">
+    <div class="name">
+      <img src="./images/nameBanner.png" />
+    </div>
   </div>
 
   <div class="leafsContainer leafsFront">
@@ -173,7 +167,7 @@
           <h2>resume</h2>
         </a>
         <ul class="progressContainer">
-          <li>
+          <li style="--skill-level: 100%;">
             <div class="text">
               <h2>HTML</h2>
             </div>
@@ -181,7 +175,7 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 100%;">
             <div class="text">
               <h2>CSS</h2>
             </div>
@@ -189,7 +183,7 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 90%;">
             <div class="text">
               <h2>JAVA</h2>
               <h2>SCRIPT</h2>
@@ -198,7 +192,7 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 90%;">
             <div class="text">
               <h2>React</h2>
             </div>
@@ -206,7 +200,7 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 80%;">
             <div class="text">
               <h2>Node</h2>
               <h2>.JS</h2>
@@ -215,7 +209,7 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 80%;">
             <div class="text">
               <h2>Express</h2>
             </div>
@@ -223,7 +217,7 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 70%;">
             <div class="text">
               <h2>C++</h2>
             </div>
@@ -231,15 +225,16 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 75%;">
             <div class="text">
-              <h2>MongoDB</h2>
+              <h2>Mongo</h2>
+              <h2>DB</h2>
             </div>
             <div class="barContainer">
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 60%;">
             <div class="text">
               <h2>MySQL</h2>
             </div>
@@ -247,7 +242,7 @@
               <div class="bar"></div>
             </div>
           </li>
-          <li>
+          <li style="--skill-level: 90%;">
             <div class="text">
               <h2>Git</h2>
             </div>
@@ -309,9 +304,7 @@
     <div id="bedRoomScene"></div>
 
     <div class="projects-header">
-      <span>
-        <t>projects</t>
-      </span>
+      <t>projects</t>
     </div>
 
     <ul class="projects-buttons">
@@ -891,6 +884,7 @@
 
     <span>
       <div class="desperation">
+        <h3 class="desperationCompact">CONTACT ME, let's work TOGETHER!</h3>
         <h3>Contact</h3>
         <t>ME</t>
         <h3>Let's Work</h3>
@@ -1106,6 +1100,7 @@
         ".progressContainer li .barContainer .bar"
       );
       const navDesktopItems = document.querySelectorAll(".navBar .navDesktopLinks li");
+      const progressBarsRowLayout = window.matchMedia("(max-width: 90rem)");
 
       function loadingScreen() {
         const loadingScreen = document.getElementById("loadingScreen");
@@ -1270,27 +1265,16 @@
           const enteringActive = active && !wasActive;
           const leavingActive = !active && wasActive;
 
-          const scales = [
-            "100%", // 1
-            "100%", // 2
-            "90%",  // 3
-            "90%",  // 4
-            "80%",  // 5
-            "80%",  // 6
-            "70%",  // 7
-            "75%",  // 8
-            "60%",  // 9
-            "90%",  // 10
-            "100%", // 11
-            "100%"  // 12
-          ];
+          const barAxis = progressBarsRowLayout.matches ? "width" : "height";
+          const resetAxis = progressBarsRowLayout.matches ? "height" : "width";
 
           if (enteringActive || leavingActive) {
             bars.forEach((bar) => {
               bar.classList.remove("expandBar");
               bar.style.transition = "none";
               bar.style.transitionDelay = "0s";
-              bar.style.height = "0%";
+              bar.style[barAxis] = "0%";
+              bar.style[resetAxis] = "";
             });
           }
 
@@ -1298,9 +1282,11 @@
             requestAnimationFrame(() => {
               bars.forEach((bar, i) => {
                 const delay = i * 0.1;
-                bar.style.transition = "height 2s ease-in-out";
+                const skillLevel =
+                  getComputedStyle(bar).getPropertyValue("--skill-level").trim() || "100%";
+                bar.style.transition = `${barAxis} 2s ease-in-out`;
                 bar.style.transitionDelay = `${delay}s`;
-                bar.style.height = scales[i] || "100%";
+                bar.style[barAxis] = skillLevel;
               });
             });
           }

@@ -260,8 +260,8 @@ body.rotationLocked {
   pointer-events: none;
 }
 
-.homeBorder .navBar,
-.homeBorder .navBar * {
+.navBar,
+.navBar * {
   pointer-events: none;
 }
 
@@ -423,9 +423,9 @@ body.rotationLocked {
   height: calc(var(--iconSize) * 2);
   padding: calc(var(--b));
   overflow: visible;
-  border-radius: 25%;
-  border: 0.25rem solid var(--fifthly);
-  background-color: var(--background);
+  border-radius: 0;
+  border: none;
+  background: transparent;
   object-fit: cover;
   z-index: 1;
   flex-shrink: 0;
@@ -520,6 +520,10 @@ body.rotationLocked {
   text-transform: uppercase;
   color: var(--fifthly);
   margin: 0;
+}
+
+.footer span .desperation>.desperationCompact {
+  display: none;
 }
 
 .footer span .desperation>h3:nth-of-type(2) {
@@ -884,7 +888,7 @@ body.navSocialIntro .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
   transition: all 0.75s var(--motion);
   z-index: 1;
   flex-shrink: 0;
-  position: absolute;
+  position: relative;
 }
 
 .about>.background li svg {
@@ -905,13 +909,14 @@ body.navSocialIntro .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
 .about>.background li h3 {
   font-size: var(--background-label-size);
   display: flex;
+  position: relative;
   flex: 1;
   min-height: var(--background-icon-size);
   justify-content: start;
   align-items: center;
   box-sizing: border-box;
   border: none;
-  transform: translateX(-100px);
+  transform: translateX(-200px);
   transition:
     transform 0.75s var(--motion),
     opacity 0.5s var(--motion),
@@ -921,11 +926,9 @@ body.navSocialIntro .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
   text-overflow: clip;
   line-height: 1.1;
   color: var(--fifthly) !important;
-  background: transparent;
   width: 100%;
   max-width: 0;
   opacity: 0;
-  padding-left: calc(var(--background-icon-size) + var(--header));
 }
 
 .about>.background li:hover h3 {
@@ -952,7 +955,10 @@ body.navSocialIntro .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
   height: 100%;
   z-index: 100;
   background-image: url("./images/itemBorder.png");
+  background-repeat: no-repeat;
+  background-position: center;
   background-size: 100% 100%;
+  overflow: visible;
 }
 
 .rsmCol:nth-of-type(1) button {
@@ -1002,14 +1008,16 @@ body.navSocialIntro .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
   flex-direction: column;
   align-items: flex-start;
   position: relative;
-  width: 100%;
+  flex: 1 1 clamp(1.5rem, 2vw, 4rem);
+  min-width: clamp(1.5rem, 2vw, 4rem);
+  max-width: 100%;
   gap: var(--b);
 }
 
 .progressContainer li .text {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   justify-content: start;
   width: 100%;
   overflow: visible;
@@ -1024,6 +1032,7 @@ body.navSocialIntro .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
   font-family: LondrinaSketch;
   font-size: var(--type-small-size);
   white-space: normal !important;
+  text-align: center;
 }
 
 .progressContainer h2:nth-of-type(odd) {
@@ -1042,6 +1051,7 @@ body.navSocialIntro .navSocialBubbles>li:nth-of-type(2)>a:nth-of-type(2) {
   flex: 1;
   order: 1;
   flex-basis: 90%;
+  border-radius: var(--g);
 }
 
 .progressContainer li .barContainer .bar {

@@ -115,6 +115,9 @@ let bedroomSceneNeedsRender = true;
 let animationFramesSinceLastRender = 0;
 const maxFramesBetweenRenders = 3;
 let hasLoadingCompleted = false;
+const aboutCameraNarrowViewport = typeof window !== "undefined"
+  ? window.matchMedia("(max-width: 75rem)")
+  : { matches: false };
 
 function updateScrollProgress() {
   const doc = document.documentElement;
@@ -769,9 +772,10 @@ async function homeInit() {
 
     if (runToJump && runToJump.isRunning()) {
       const progress = runToJump.time / runToJump.getClip().duration;
+      const homeCameraX = aboutCameraNarrowViewport.matches ? -1.3 : -1.6;
       nahomeModel.position.z = THREE.MathUtils.lerp(-8, 0, progress);
       nahomeModel.position.y = THREE.MathUtils.lerp(-2, 0, progress);
-      homeCamera.position.lerp(new THREE.Vector3(-1.600, 1.380, 2.820), progress);
+      homeCamera.position.lerp(new THREE.Vector3(homeCameraX, 1.380, 2.820), progress);
       homeCamera.rotation.x = THREE.MathUtils.lerp(homeCamera.rotation.x, 0, progress);
       homeCamera.rotation.y = THREE.MathUtils.lerp(homeCamera.rotation.y, THREE.MathUtils.degToRad(-17.00), progress);
       homeCamera.rotation.z = THREE.MathUtils.lerp(homeCamera.rotation.z, 0, progress);
@@ -812,7 +816,8 @@ async function homeInit() {
           if (a && !a.isRunning()) a.reset().play();
         });
 
-        targetCameraPosition = new THREE.Vector3(-1.600, 1.380, 2.820);
+        const homeCameraX = aboutCameraNarrowViewport.matches ? -1.3 : -1.6;
+        targetCameraPosition = new THREE.Vector3(homeCameraX, 1.380, 2.820);
         targetCameraRotation = new THREE.Vector3(0, THREE.MathUtils.degToRad(-17.00), 0);
 
         if (typing) typing.stop();
@@ -871,7 +876,8 @@ async function homeInit() {
 
         nahomeModel.position.set(0, 0, 0);
 
-        targetCameraPosition = new THREE.Vector3(0, 1.560, 1.460);
+        const aboutCameraX = aboutCameraNarrowViewport.matches ? -0.2 : -0.4;
+        targetCameraPosition = new THREE.Vector3(aboutCameraX, 1.560, 1.460);
         targetCameraRotation = new THREE.Vector3(0, 0, 0);
       }
 
@@ -890,7 +896,8 @@ async function homeInit() {
           smiling.play();
         }
 
-        targetCameraPosition = new THREE.Vector3(0, 1.560, 1.460);
+        const aboutCameraX = aboutCameraNarrowViewport.matches ? -0.2 : -0.4;
+        targetCameraPosition = new THREE.Vector3(aboutCameraX, 1.560, 1.460);
         targetCameraRotation = new THREE.Vector3(0, 0, 0);
       }
 
