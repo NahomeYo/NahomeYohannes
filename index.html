@@ -23,14 +23,6 @@
     </svg>
   </div>
 
-  <div id="rotateGate" hidden>
-    <div class="rotateGateCard">
-      <h2>Rotate Your Device</h2>
-      <p>This experience is optimized for landscape on mobile.</p>
-      <p>Please rotate your phone to continue.</p>
-    </div>
-  </div>
-
   <div class="homeBorder homeBorderSecond">
 
     <a class="homeBtn" href="#home">
@@ -979,7 +971,6 @@
     document.addEventListener("DOMContentLoaded", async () => {
       if (window.__debugSet) window.__debugSet('debug: DOMContentLoaded');
       const loadingScreenStart = performance.now();
-      const rotateGate = document.getElementById("rotateGate");
       const navDesktopLinks = document.querySelector(".navBar .navDesktopLinks");
       const footerFields = document.querySelectorAll(".footer .boxes fieldset");
       const footerIconFactories = [personIcon, mailIcon, phoneIcon, pencilIcon];
@@ -1042,26 +1033,15 @@
         fieldset.prepend(icon);
       });
 
-      const isBlockedByOrientation = () => {
-        const cssWidth = window.innerWidth || document.documentElement.clientWidth || 9999;
-        const viewportWidth = window.visualViewport ? window.visualViewport.width : cssWidth;
-        const screenWidth = window.screen && window.screen.width ? window.screen.width : cssWidth;
-        const effectiveWidth = Math.min(cssWidth, viewportWidth, screenWidth);
-        return effectiveWidth <= 440;
-      };
       const removeDesktopLinksForPhone = () => {
         const cssWidth = window.innerWidth || document.documentElement.clientWidth || 9999;
         if (cssWidth <= 1023 && navDesktopLinks && navDesktopLinks.parentNode) {
           navDesktopLinks.parentNode.removeChild(navDesktopLinks);
         }
       };
-      const setRotateGateState = (blocked) => {
-        if (rotateGate) rotateGate.hidden = !blocked;
-        document.body.classList.toggle("rotationLocked", blocked);
-      };
 
       const maybeBootScene = async () => {
-        if (sceneBooted || isBlockedByOrientation()) return;
+        if (sceneBooted) return;
         try {
           const mod = await import('./main.js');
           initHome = mod.initHome;
@@ -1078,19 +1058,8 @@
         sceneBooted = true;
       };
 
-      const updateRotationGate = async () => {
-        const blocked = isBlockedByOrientation();
-        setRotateGateState(blocked);
-        if (!blocked) await maybeBootScene();
-      };
-
       removeDesktopLinksForPhone();
-      await updateRotationGate();
-      window.addEventListener("resize", updateRotationGate);
-      window.addEventListener("orientationchange", updateRotationGate);
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener("resize", updateRotationGate);
-      }
+      await maybeBootScene();
 
       const aboutContainer = document.querySelector(".about");
       let aboutCanvasInitialized = false;
