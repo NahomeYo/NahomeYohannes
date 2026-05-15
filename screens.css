@@ -1,12 +1,5 @@
-@media screen and (max-width: 90rem) {
-
-  .about>.background li img,
-  .about>.background li svg {
-    box-sizing: border-box;
-    flex: 0 0 auto;
-    width: calc(var(--background-icon-size));
-    height: calc(var(--background-icon-size));
-  }
+/* Keep the desktop hero composition active for typical windowed laptop widths. */
+@media screen and (max-width: 72rem) {
 
   .projects-header>t {
     font-size: 6rem !important;
@@ -33,104 +26,35 @@
     pointer-events: none;
   }
 
-  .upsideDownTrees {
-    content: url('./images/upsideDownMobile.png');
-    width: 100%;
-    z-index: 100;
-    position: absolute;
-    left: 0;
-    top: 0;
-    pointer-events: none;
-    object-fit: fill;
-    object-position: top center;
-    height: 20vh;
-  }
-
   .navBar {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 90vw;
-    padding: 5vh 0;
+    width: auto !important;
+    left: calc(5vw + var(--space-16));
+    right: calc(5vw + var(--space-16));
+    padding: calc(5vh + var(--space-16)) 0 0;
     margin: 0;
     position: absolute;
+    flex-direction: column !important;
+    gap: var(--space-16) !important;
   }
 
   .navBar .name {
-    flex: 0 0 90% !important;
-    max-width: 90% !important;
+    flex: 0 0 auto !important;
+    max-width: min(90vw, 23rem) !important;
   }
 
-  .table {
-    left: 0;
-    top: 0;
-    width: 90vw;
-    grid-template-columns: minmax(0, 0.6fr) minmax(0, 1fr);
-    column-gap: calc(var(--header) * 2);
-    align-items: start;
-    margin: 10vh 5vw;
-    height: 50vh;
-    padding: 0;
-    display: grid;
-    overflow: visible;
-    position: relative;
-    z-index: 3;
+  .navBar .navInfoGroup {
+    width: auto !important;
+    margin-right: 0 !important;
+    margin-top: var(--space-16) !important;
+    align-items: flex-start !important;
   }
 
-  .progressContainer {
-    flex-direction: column;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  .progressContainer li {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 3fr);
-    align-items: center;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    min-height: clamp(1.5rem, 2rem, 2.5rem);
-    height: auto;
-    gap: var(--header);
-    box-sizing: border-box;
-  }
-
-  .progressContainer li .text {
-    order: initial;
-    display: flex;
-    justify-content: center;
-    min-width: 0;
-    width: 100%;
-    height: 100%;
-  }
-
-  .progressContainer .barContainer {
-    order: initial;
-    width: 100%;
-    min-width: 0;
-    height: clamp(1.5rem, 2rem, 2.5rem);
-    align-self: center;
-    box-sizing: border-box;
-    position: relative;
-  }
-
-  .progressContainer li .barContainer .bar {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    height: 100%;
-    min-height: 100%;
-    width: var(--skill-level);
-    transform-origin: left center;
-    transition: width 2s ease-in-out;
-    margin: 0;
-  }
-
-  .progressContainer li .barContainer .bar.expandBar {
-    width: 100%;
-    height: 100%;
+  .navBar .navDesktopLinks {
+    flex-wrap: wrap;
+    row-gap: var(--space-8);
   }
 
   .home .name,
@@ -142,51 +66,26 @@
     padding: 2rem 0rem 0 1rem;
   }
 
-  .navSocialBubbles {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-    align-items: flex-start;
-    position: fixed;
-    left: 3vw;
-    top: 50%;
-    margin: 0;
-    padding: 5vw;
-    filter: url(#gooNav);
-    isolation: isolate;
-    z-index: 200;
-  }
-
-  .navSocialBubbles a {
-    background: var(--secondary);
-  }
-
   .footer span {
     width: 100%;
-    flex-direction: column;
-    gap: 1.5rem;
+    grid-template-columns: 1fr;
+    gap: var(--space-24);
   }
 
   .footer span .desperation {
     width: 100%;
   }
 
-  .footer span .desperation>.desperationCompact {
-    display: block;
-    font-family: NeoJapan;
-    font-size: clamp(1.25rem, 4vw, 2.5rem);
-    line-height: 1.1;
-    text-transform: none;
-    color: var(--fifthly);
-  }
-
-  .footer span .desperation>t,
-  .footer span .desperation>h3:not(.desperationCompact) {
-    display: none;
+  .footer .contactTag {
+    font-size: clamp(1.25rem, 4vw, 2.2rem) !important;
   }
 
   .footer span .boxes {
     width: 100%;
+  }
+
+  .projects-header p {
+    max-width: min(90vw, 32rem);
+    padding-right: 5vw;
   }
 }

@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="./home.css" />
   <link rel="stylesheet" href="./gallery.css" />
   <link rel="stylesheet" href="./projects.css" />
+  <link rel="stylesheet" href="./about.css" />
   <link rel="stylesheet" href="./loadingScreen.css" />
 </head>
 
@@ -72,6 +73,13 @@
     <div class="name">
       <img src="./images/nameBanner.png" />
     </div>
+    <div class="navInfoGroup">
+      <ul class="navDesktopLinks">
+        <li><a href="#about"><h3>About</h3></a></li>
+        <li><a href="#projects"><h3>Projects</h3></a></li>
+        <li><a href="#contact"><h3>Contact</h3></a></li>
+      </ul>
+    </div>
   </div>
 
   <div class="leafsContainer leafsFront">
@@ -81,26 +89,6 @@
   </div>
 
   <div id="nahomeScreen"></div>
-
-  <ul class="navSocialBubbles">
-    <li>
-      <a href="https://www.linkedin.com/in/nahome-y-198b8b294/" target="_blank" rel="noopener">
-        <img src="./icons/Linkedin.svg" alt="LinkedIn" />
-      </a>
-      <a href="https://github.com/NahomeYo" target="_blank" rel="noopener">
-        <img src="./icons/github.svg" alt="GitHub" />
-      </a>
-    </li>
-
-    <li>
-      <a href="https://www.fiverr.com/nahomeyohannes/buying?source=avatar_menu_profile" target="_blank" rel="noopener">
-        <img src="./icons/fiverr.svg" alt="Fiverr" />
-      </a>
-      <a href="https://www.upwork.com/freelancers/~0192a71278f2b630f0" target="_blank" rel="noopener">
-        <img src="./icons/upwork.svg" alt="Upwork" />
-      </a>
-    </li>
-  </ul>
 
   <div id="projectsScreen"></div>
 
@@ -129,7 +117,7 @@
     <img class="frontTrees" src="./images/FrontTrees 1.png" />
   </div>
 
-  <div class="about">
+  <div class="about" id="about">
     <ul class="background">
       <li>
         <img src="./icons/crib.svg" />
@@ -145,7 +133,7 @@
       </li>
       <li>
         <img src="./icons/mail.svg" />
-        <h3>yohannesn1</br>@spu.edu</h3>
+        <h3>yohannesn1<br />@spu.edu</h3>
       </li>
     </ul>
 
@@ -294,21 +282,17 @@
     <img class="upsideDownTrees" src="./images/upsideDownTrees.png" />
 
     <div id="bedRoomScene"></div>
+    <div id="deskApps"></div>
 
     <div class="projects-header">
       <t>projects</t>
+      <p>Choose a lane, open a folder, and jump straight into the work instead of decoding the interface first.</p>
     </div>
 
     <ul class="projects-buttons">
-      <div class="primaryButton">
-        <h3>ALGORITHMS</h3>
-      </div>
-      <div class="primaryButton">
-        <h3>Websites / apps</h3>
-      </div>
-      <div class="primaryButton">
-        <h3>GRAPHICS</h3>
-      </div>
+      <li><div class="primaryButton"><h3>Algorithms</h3></div></li>
+      <li><div class="primaryButton"><h3>Websites / apps</h3></div></li>
+      <li><div class="primaryButton"><h3>Graphics</h3></div></li>
     </ul>
 
     <div class="projects-inner">
@@ -368,26 +352,40 @@
               <span class="window-title">Little Lemon</span>
             </div>
           </div>
-
-          <div class="window-content">
-            <div class="project-details">
-
-              <div class="appContainer" data-project="littleLemon">
-                <img src="./images/textFileIcon.png" alt="Text file icon" />
-                <p class="app-icon-label">description.txt</p>
+          <div class="window-body">
+            <aside class="window-sidebar">
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Projects</h4>
+                <div class="sidebar-item active">Little Lemon</div>
               </div>
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Contents</h4>
+                <div class="sidebar-item">description.txt</div>
+                <div class="sidebar-item">Figma</div>
+                <div class="sidebar-item">GitHub</div>
+              </div>
+            </aside>
+            <div class="window-main">
+              <div class="window-content">
+                <div class="project-details">
+                  <div class="appContainer" data-project="littleLemon">
+                    <img src="./images/textFileIcon.png" alt="Text file icon" />
+                    <p class="app-icon-label">description.txt</p>
+                  </div>
 
-              <a href="https://www.figma.com/design/bUNhnfyYMOgjk9ThRHBdEl/LittleLemon?node-id=640-649&t=pYJuPROKr8BV55v2-1"
-                target="_blank" rel="noopener">
-                <img src="./images/figmaAppIcon.png" alt="Figma" />
-                <p class="app-icon-label">Figma</p>
-              </a>
+                  <a href="https://www.figma.com/design/bUNhnfyYMOgjk9ThRHBdEl/LittleLemon?node-id=640-649&t=pYJuPROKr8BV55v2-1"
+                    target="_blank" rel="noopener" class="appContainer">
+                    <img src="./images/figmaAppIcon.png" alt="Figma" />
+                    <p class="app-icon-label">Figma</p>
+                  </a>
 
-              <a href="https://github.com/NahomeYo/LittleLemonRestraunt" target="_blank" rel="noopener"
-                class="appContainer">
-                <img src="./images/githubAppIcon.png" alt="GitHub" />
-                <p class="app-icon-label">GitHub</p>
-              </a>
+                  <a href="https://github.com/NahomeYo/LittleLemonRestraunt" target="_blank" rel="noopener"
+                    class="appContainer">
+                    <img src="./images/githubAppIcon.png" alt="GitHub" />
+                    <p class="app-icon-label">GitHub</p>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -402,7 +400,7 @@
           </div>
           <div class="text-viewer-title">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="2" width="12" height="14" rx="1" fill="#E8E8E8" stroke="#999" stroke-width="0.5" />
+              <rect x="2" y="2" width="12" height="14" rx="1" fill="#5A3126" stroke="#FFD170" stroke-width="0.5" />
               <line x1="4" y1="5" x2="12" y2="5" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="7" x2="12" y2="7" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="9" x2="10" y2="9" stroke="#666" stroke-width="0.5" />
@@ -435,25 +433,39 @@
               <span class="window-title">Psaltos</span>
             </div>
           </div>
-          <div class="window-content">
-            <div class="project-details">
-
-              <div class="appContainer" data-project="psaltos">
-                <img src="./images/textFileIcon.png" alt="Text file icon" />
-                <p class="app-icon-label">description.txt</p>
+          <div class="window-body">
+            <aside class="window-sidebar">
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Projects</h4>
+                <div class="sidebar-item active">Psaltos</div>
               </div>
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Contents</h4>
+                <div class="sidebar-item">description.txt</div>
+                <div class="sidebar-item">Figma</div>
+                <div class="sidebar-item">GitHub</div>
+              </div>
+            </aside>
+            <div class="window-main">
+              <div class="window-content">
+                <div class="project-details">
+                  <div class="appContainer" data-project="psaltos">
+                    <img src="./images/textFileIcon.png" alt="Text file icon" />
+                    <p class="app-icon-label">description.txt</p>
+                  </div>
 
-              <a href="https://www.figma.com/design/vUX3sreT2aVIvqDTeLoNin/Psaltos_mockup?node-id=0-1&t=1TiEzcAnxiOOy6DR-1"
-                class="appContainer">
-                <img src="./images/figmaAppIcon.png" alt="Figma" />
-                <p class="app-icon-label">Figma</p>
-              </a>
+                  <a href="https://www.figma.com/design/vUX3sreT2aVIvqDTeLoNin/Psaltos_mockup?node-id=0-1&t=1TiEzcAnxiOOy6DR-1"
+                    class="appContainer">
+                    <img src="./images/figmaAppIcon.png" alt="Figma" />
+                    <p class="app-icon-label">Figma</p>
+                  </a>
 
-              <a href="https://github.com/NahomeYo/Psaltos" target="_blank" rel="noopener" class="appContainer">
-                <img src="./images/githubAppIcon.png" alt="GitHub" />
-                <p class="app-icon-label">GitHub</p>
-              </a>
-
+                  <a href="https://github.com/NahomeYo/Psaltos" target="_blank" rel="noopener" class="appContainer">
+                    <img src="./images/githubAppIcon.png" alt="GitHub" />
+                    <p class="app-icon-label">GitHub</p>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -468,7 +480,7 @@
           </div>
           <div class="text-viewer-title">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="2" width="12" height="14" rx="1" fill="#E8E8E8" stroke="#999" stroke-width="0.5" />
+              <rect x="2" y="2" width="12" height="14" rx="1" fill="#5A3126" stroke="#FFD170" stroke-width="0.5" />
               <line x1="4" y1="5" x2="12" y2="5" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="7" x2="12" y2="7" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="9" x2="10" y2="9" stroke="#666" stroke-width="0.5" />
@@ -502,23 +514,39 @@
               <span class="window-title">SMPK</span>
             </div>
           </div>
-          <div class="window-content">
-            <div class="project-details">
-              <div class="appContainer" data-project="smpk">
-                <img src="./images/textFileIcon.png" alt="Text file icon" />
-                <p class="app-icon-label">description.txt</p>
+          <div class="window-body">
+            <aside class="window-sidebar">
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Projects</h4>
+                <div class="sidebar-item active">SMPK</div>
               </div>
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Contents</h4>
+                <div class="sidebar-item">description.txt</div>
+                <div class="sidebar-item">Figma</div>
+                <div class="sidebar-item">GitHub</div>
+              </div>
+            </aside>
+            <div class="window-main">
+              <div class="window-content">
+                <div class="project-details">
+                  <div class="appContainer" data-project="smpk">
+                    <img src="./images/textFileIcon.png" alt="Text file icon" />
+                    <p class="app-icon-label">description.txt</p>
+                  </div>
 
-              <a href="https://www.figma.com/design/sEc6ZNr0ZSsIGZKoc5mDEX/SMPK_mockup?node-id=0-1&t=snAiSq3qM2KrhsQ6-1"
-                target="_blank" rel="noopener" class="appContainer">
-                <img src="./images/figmaAppIcon.png" alt="Figma" />
-                <p class="app-icon-label">Figma</p>
-              </a>
+                  <a href="https://www.figma.com/design/sEc6ZNr0ZSsIGZKoc5mDEX/SMPK_mockup?node-id=0-1&t=snAiSq3qM2KrhsQ6-1"
+                    target="_blank" rel="noopener" class="appContainer">
+                    <img src="./images/figmaAppIcon.png" alt="Figma" />
+                    <p class="app-icon-label">Figma</p>
+                  </a>
 
-              <a href="https://github.com/NahomeYo/SMPK" target="_blank" rel="noopener" class="appContainer">
-                <img src="./images/githubAppIcon.png" alt="GitHub" />
-                <p class="app-icon-label">GitHub</p>
-              </a>
+                  <a href="https://github.com/NahomeYo/SMPK" target="_blank" rel="noopener" class="appContainer">
+                    <img src="./images/githubAppIcon.png" alt="GitHub" />
+                    <p class="app-icon-label">GitHub</p>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -533,7 +561,7 @@
           </div>
           <div class="text-viewer-title">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="2" width="12" height="14" rx="1" fill="#E8E8E8" stroke="#999" stroke-width="0.5" />
+              <rect x="2" y="2" width="12" height="14" rx="1" fill="#5A3126" stroke="#FFD170" stroke-width="0.5" />
               <line x1="4" y1="5" x2="12" y2="5" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="7" x2="12" y2="7" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="9" x2="10" y2="9" stroke="#666" stroke-width="0.5" />
@@ -566,17 +594,32 @@
               <span class="window-title">Rust Game</span>
             </div>
           </div>
-          <div class="window-content">
-            <div class="project-details">
-              <div class="appContainer" data-project="rustGame">
-                <img src="./images/textFileIcon.png" alt="Text file icon" />
-                <p class="app-icon-label">description.txt</p>
+          <div class="window-body">
+            <aside class="window-sidebar">
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Projects</h4>
+                <div class="sidebar-item active">Rust Game</div>
               </div>
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Contents</h4>
+                <div class="sidebar-item">description.txt</div>
+                <div class="sidebar-item">GitHub</div>
+              </div>
+            </aside>
+            <div class="window-main">
+              <div class="window-content">
+                <div class="project-details">
+                  <div class="appContainer" data-project="rustGame">
+                    <img src="./images/textFileIcon.png" alt="Text file icon" />
+                    <p class="app-icon-label">description.txt</p>
+                  </div>
 
-              <a class="appContainer">
-                <img src="./images/githubAppIcon.png" alt="GitHub" />
-                <p class="app-icon-label">GitHub</p>
-              </a>
+                  <a class="appContainer">
+                    <img src="./images/githubAppIcon.png" alt="GitHub" />
+                    <p class="app-icon-label">GitHub</p>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -591,7 +634,7 @@
           </div>
           <div class="text-viewer-title">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="2" width="12" height="14" rx="1" fill="#E8E8E8" stroke="#999" stroke-width="0.5" />
+              <rect x="2" y="2" width="12" height="14" rx="1" fill="#5A3126" stroke="#FFD170" stroke-width="0.5" />
               <line x1="4" y1="5" x2="12" y2="5" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="7" x2="12" y2="7" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="9" x2="10" y2="9" stroke="#666" stroke-width="0.5" />
@@ -620,22 +663,38 @@
               <span class="window-title">Pretz Allez!</span>
             </div>
           </div>
-          <div class="window-content">
-            <div class="project-details">
-              <div class="appContainer" data-project="pretzAllez">
-                <img src="./images/textFileIcon.png" alt="Text file icon" />
-                <p class="app-icon-label">description.txt</p>
+          <div class="window-body">
+            <aside class="window-sidebar">
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Projects</h4>
+                <div class="sidebar-item active">Pretz Allez!</div>
               </div>
+              <div class="sidebar-section">
+                <h4 class="sidebar-title">Contents</h4>
+                <div class="sidebar-item">description.txt</div>
+                <div class="sidebar-item">Figma</div>
+                <div class="sidebar-item">GitHub</div>
+              </div>
+            </aside>
+            <div class="window-main">
+              <div class="window-content">
+                <div class="project-details">
+                  <div class="appContainer" data-project="pretzAllez">
+                    <img src="./images/textFileIcon.png" alt="Text file icon" />
+                    <p class="app-icon-label">description.txt</p>
+                  </div>
 
-              <a href="https://www.figma.com/design/lnoPtdkQ8s9LB9D583XQhU/Untitled?node-id=0-1&t=y4IyeHv28UrbvwFm-1"
-                target="_blank" rel="noopener" class="appContainer">
-                <img src="./images/figmaAppIcon.png" alt="Figma" />
-                <p class="app-icon-label">Figma</p>
-              </a>
-              <a href="https://github.com/SPU-Epee/PretsAllez" target="_blank" rel="noopener" class="appContainer">
-                <img src="./images/githubAppIcon.png" alt="GitHub" />
-                <p class="app-icon-label">GitHub</p>
-              </a>
+                  <a href="https://www.figma.com/design/lnoPtdkQ8s9LB9D583XQhU/Untitled?node-id=0-1&t=y4IyeHv28UrbvwFm-1"
+                    target="_blank" rel="noopener" class="appContainer">
+                    <img src="./images/figmaAppIcon.png" alt="Figma" />
+                    <p class="app-icon-label">Figma</p>
+                  </a>
+                  <a href="https://github.com/SPU-Epee/PretsAllez" target="_blank" rel="noopener" class="appContainer">
+                    <img src="./images/githubAppIcon.png" alt="GitHub" />
+                    <p class="app-icon-label">GitHub</p>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -650,7 +709,7 @@
           </div>
           <div class="text-viewer-title">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-              <rect x="2" y="2" width="12" height="14" rx="1" fill="#E8E8E8" stroke="#999" stroke-width="0.5" />
+              <rect x="2" y="2" width="12" height="14" rx="1" fill="#5A3126" stroke="#FFD170" stroke-width="0.5" />
               <line x1="4" y1="5" x2="12" y2="5" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="7" x2="12" y2="7" stroke="#666" stroke-width="0.5" />
               <line x1="4" y1="9" x2="10" y2="9" stroke="#666" stroke-width="0.5" />
@@ -872,15 +931,14 @@
     </script>
   </div>
 
-  <div class="footer">
+  <div class="footer" id="contact">
 
     <span>
       <div class="desperation">
-        <h3 class="desperationCompact">CONTACT ME, let's work TOGETHER!</h3>
-        <h3>Contact</h3>
-        <t>ME</t>
-        <h3>Let's Work</h3>
-        <h3>Together!</h3>
+        <h3 class="contactTag">CONTACT ME</h3>
+        <p class="footerLead">
+          Have a project, role, or collaboration in mind? <b>Fill out my form!</b>
+        </p>
       </div>
 
       <div class="boxes">
@@ -888,29 +946,29 @@
           <legend>
             <h3>NAME</h3>
           </legend>
-          <input type="text" name="from_name" id="name" required />
+          <input type="text" name="from_name" id="name" placeholder="Your name" required />
         </fieldset>
         <fieldset>
           <legend>
             <h3>Email</h3>
           </legend>
-          <input type="email" name="from_email" id="email" required />
+          <input type="email" name="from_email" id="email" placeholder="you@example.com" required />
         </fieldset>
         <fieldset>
           <legend>
             <h3>Phone number</h3>
           </legend>
-          <input type="tel" name="phone" id="phone" />
+          <input type="tel" name="phone" id="phone" placeholder="Optional" />
         </fieldset>
         <fieldset>
           <legend>
             <h3>Message</h3>
           </legend>
-          <textarea name="message" id="message" required></textarea>
+          <textarea name="message" id="message" placeholder="Tell me a bit about what you want to build." required></textarea>
         </fieldset>
-        <div class='primaryButton' type="submit" id="submit-btn">
-          <h2>submit</h2>
-        </div>
+        <button class="primaryButton" type="button" id="submit-btn">
+          <h2>Send message</h2>
+        </button>
       </div>
     </span>
 
@@ -1104,7 +1162,6 @@
       const cherryBranch = document.querySelector(".home .branch");
       const homeContainer = document.querySelector(".home");
       const leafLayers = document.querySelectorAll(".leafsFront, .leafsBack");
-      const navSocialAnchors = document.querySelectorAll(".navSocialBubbles a");
       let appReady = false;
 
       const navScrollMap = {
@@ -1167,10 +1224,6 @@
               text.classList.remove("expandBar");
             });
 
-            navSocialAnchors.forEach((btn) => {
-              btn.classList.add("isInactive");
-            });
-
             if (!window.__menuToggleBound) {
               window.__menuToggleBound = true;
               menuSpan001.addEventListener("click", () => {
@@ -1191,10 +1244,6 @@
             nyLogo.classList.remove("rotateLogo");
             iconButtons.forEach((btn) => {
               btn.classList.remove("menuExpand");
-            });
-
-            navSocialAnchors.forEach((btn) => {
-              btn.classList.remove("isInactive");
             });
 
             iconButtons.forEach((btn, index) => {
@@ -1342,16 +1391,6 @@
         }
 
         loadingScreen();
-        document.body.classList.add("navSocialIntro");
-        if (navSocialAnchors) {
-          navSocialAnchors.forEach((btn) => {
-            btn.classList.remove("isActive");
-            btn.classList.remove("isInactive");
-          });
-        }
-        setTimeout(() => {
-          document.body.classList.remove("navSocialIntro");
-        }, 2200);
         appReady = true;
         window.__loadingCompleteFired = true;
         window.dispatchEvent(new Event("loadingComplete"));
@@ -1392,6 +1431,10 @@
             document.querySelectorAll(".boxes input").forEach((input) => {
               input.value = "";
             });
+            const messageField = document.getElementById("message");
+            if (messageField) {
+              messageField.value = "";
+            }
           })
           .catch((error) => {
             console.error("EmailJS error:", error);

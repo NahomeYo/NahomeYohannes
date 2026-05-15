@@ -21,6 +21,7 @@ let nahomeModel,
   photoshop,
   react,
   bedroomModel,
+  deskAppsModel,
   chairModel;
 
 let chairInitialPosition = null;
@@ -112,6 +113,7 @@ let lastCameraRotation = new THREE.Euler();
 let sceneNeedsRender = true;
 let cssSceneNeedsRender = true;
 let bedroomSceneNeedsRender = true;
+let deskAppsSceneNeedsRender = true;
 let animationFramesSinceLastRender = 0;
 const maxFramesBetweenRenders = 3;
 let hasLoadingCompleted = false;
@@ -373,6 +375,10 @@ function addModel(scene, modelPath) {
           });
         }
 
+        if (modelPath.includes("deskApps.glb")) {
+          deskAppsModel = root;
+        }
+
         if (modelPath.includes("chair.glb")) {
           chairModel = root;
           chairInitialPosition = root.position.clone();
@@ -584,6 +590,7 @@ async function homeInit() {
   const container = document.getElementById("nahomeScreen");
   const projectsScreenContainer = document.getElementById("projectsScreen");
   const bedRoomSceneContainer = document.getElementById("bedRoomScene");
+  const deskAppsContainer = document.getElementById("deskApps");
 
   const scene = new THREE.Scene();
   homeCamera = new THREE.PerspectiveCamera(
@@ -598,6 +605,12 @@ async function homeInit() {
   const bedRoomScene = new THREE.Scene();
   const bedRoomRenderer = createRenderer(bedRoomSceneContainer, homeCamera);
   addLights(bedRoomScene);
+
+  const deskAppsScene = new THREE.Scene();
+  const deskAppsRenderer = deskAppsContainer
+    ? createRenderer(deskAppsContainer, homeCamera)
+    : null;
+  addLights(deskAppsScene);
 
   // Load models
   try {
@@ -619,6 +632,11 @@ async function homeInit() {
     await addModel(bedRoomScene, "./bedRoom.glb");
   } catch (err) {
     console.error("bedRoom.glb failed to load:", err);
+  }
+  try {
+    await addModel(deskAppsScene, "./deskApps.glb");
+  } catch (err) {
+    console.error("deskApps.glb failed to load:", err);
   }
 
   if (nahomeModel) {
@@ -661,6 +679,9 @@ async function homeInit() {
     renderer.setSize(window.innerWidth, window.innerHeight);
     cssRenderer.setSize(window.innerWidth, window.innerHeight);
     bedRoomRenderer.setSize(window.innerWidth, window.innerHeight);
+    if (deskAppsRenderer) {
+      deskAppsRenderer.setSize(window.innerWidth, window.innerHeight);
+    }
   });
 
   function applyOrangeTint(model) {
@@ -687,6 +708,7 @@ async function homeInit() {
     applyOrangeTint(app);
   });
   applyOrangeTint(bedroomModel);
+  applyOrangeTint(deskAppsModel);
 
   const projectsHeader = document.querySelector('.projects-header');
   const projectCategories = document.querySelectorAll(".projects-buttons .primaryButton");
@@ -767,6 +789,9 @@ async function homeInit() {
       renderer.render(scene, homeCamera);
       cssRenderer.render(cssScene, homeCamera);
       bedRoomRenderer.render(bedRoomScene, homeCamera);
+      if (deskAppsRenderer) {
+        deskAppsRenderer.render(deskAppsScene, homeCamera);
+      }
       return;
     }
 
@@ -1135,6 +1160,7 @@ async function homeInit() {
       sceneNeedsRender = true;
       cssSceneNeedsRender = true;
       bedroomSceneNeedsRender = true;
+      deskAppsSceneNeedsRender = true;
     }
 
     animationFramesSinceLastRender++;
@@ -1142,6 +1168,7 @@ async function homeInit() {
       sceneNeedsRender = true;
       cssSceneNeedsRender = true;
       bedroomSceneNeedsRender = true;
+      deskAppsSceneNeedsRender = true;
       animationFramesSinceLastRender = 0;
     }
 
@@ -1162,6 +1189,12 @@ async function homeInit() {
     if (bedroomSceneNeedsRender) {
       bedRoomRenderer.render(bedRoomScene, homeCamera);
       bedroomSceneNeedsRender = false;
+      renderedAnyScene = true;
+    }
+
+    if (deskAppsRenderer && deskAppsSceneNeedsRender) {
+      deskAppsRenderer.render(deskAppsScene, homeCamera);
+      deskAppsSceneNeedsRender = false;
       renderedAnyScene = true;
     }
 

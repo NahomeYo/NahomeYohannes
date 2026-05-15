@@ -13,9 +13,22 @@ html {
   --b: 0.5rem;
   --header: 1rem;
   --g: 0.5rem;
+  --space-8: 0.5rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+  --frame-safe-x: clamp(1.75rem, 3vw, 3.5rem);
+  --radius-18: 1.125rem;
+  --radius-28: 1.75rem;
+  --radius-36: 2.25rem;
+  --radius-chip: var(--radius-18);
+  --radius-card: var(--radius-28);
+  --radius-hero: var(--radius-36);
   --letterSpacing: 0.25rem;
   --iconSize: 1rem;
-  --background: #bc6654;
+  --background: #cf7a66;
   --primary: #ffbf75;
   --secondary: #FFD170;
   --thirdly: #af6243;
@@ -38,45 +51,64 @@ html {
   --type-body-size: clamp(0.9rem, 0.2vw + 0.84rem, 1.05rem);
   --type-small-size: clamp(0.78rem, 0.12vw + 0.75rem, 0.9rem);
   --type-caption-size: clamp(0.68rem, 0.12vw + 0.65rem, 0.82rem);
+  --type-display-family: Forza, sans-serif;
+  --type-heading-family: NeoJapanBold, sans-serif;
+  --type-body-family: NeoJapan, sans-serif;
+  --type-body-line: 1.6;
+  --type-heading-line: 1.1;
 }
 
 t {
-  font-family: Forza;
+  font-family: var(--type-display-family);
   color: var(--secondary);
-  -webkit-text-stroke: 2px var(--fifthly);
   z-index: 0;
   line-height: 100%;
   font-size: var(--type-t-size);
 }
 
 h1 {
-  font-family: LondrinaSketch;
+  font-family: var(--type-heading-family);
   text-transform: uppercase;
   color: var(--secondary);
-  font-weight: 100;
+  font-weight: 700;
   font-size: var(--type-h1-size);
+  line-height: var(--type-heading-line);
+  letter-spacing: 0.04em;
 }
 
 h2 {
-  font-family: LondrinaSolid;
+  font-family: var(--type-heading-family);
   color: var(--primary);
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.04em;
   text-decoration: none;
   font-size: var(--type-h2-size);
+  line-height: var(--type-heading-line);
 }
 
 h3 {
-  font-family: NeoJapanBold;
+  font-family: var(--type-heading-family);
   font-size: var(--type-h3-size) !important;
   color: var(--fifthly) !important;
-  letter-spacing: var(--letterSpacing);
+  letter-spacing: 0.08em;
+  line-height: 1.15;
 }
 
 p {
-  font-family: LondrinaSolidLight;
+  font-family: var(--type-body-family);
   font-size: var(--type-body-size);
   color: var(--secondary);
+  line-height: var(--type-body-line);
+}
+
+body,
+input,
+textarea,
+button,
+select,
+label,
+a {
+  font-family: var(--type-body-family);
 }
 
 @font-face {
@@ -120,22 +152,24 @@ p {
 }
 
 .primaryButton {
-  border-radius: var(--header);
-  border: var(--secondary) calc(var(--b) / 4) solid;
-  box-shadow: 0px 5px 0px var(--fourthly);
-  background: none;
+  border-radius: var(--radius-chip);
+  border: 1px solid rgba(255, 209, 112, 0.18);
+  box-shadow: none;
+  background: rgba(127, 63, 50, 0.88);
   transition: all 0.25s ease-in-out;
   pointer-events: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: var(--b);
+  padding: var(--space-16) var(--space-24);
+  min-height: 3.25rem;
+  gap: var(--space-8);
 }
 
 .primaryButton h2 {
-  color: var(--primary);
+  color: var(--sixthly);
   -webkit-text-stroke: none;
-  font-family: NeoJapanBold;
+  font-family: var(--type-heading-family);
   margin: 0;
   text-align: center;
 }
@@ -148,6 +182,11 @@ p {
 }
 
 .primaryButton:hover {
-  background: var(--fourthly);
-  flex-grow: 0.25;
+  background: rgba(94, 47, 36, 0.94);
+  transform: translateY(-2px);
+}
+
+.primaryButton:focus-visible {
+  outline: 3px solid rgba(127, 63, 50, 0.35);
+  outline-offset: 3px;
 }
